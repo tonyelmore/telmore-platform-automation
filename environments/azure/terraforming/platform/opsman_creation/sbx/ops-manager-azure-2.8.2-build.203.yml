@@ -1,0 +1,5 @@
+---
+west_us: https://opsmanagerwestus.blob.core.windows.net/images/ops-manager-2.8.2-build.203.vhd
+east_us: https://opsmanagereastus.blob.core.windows.net/images/ops-manager-2.8.2-build.203.vhd
+west_europe: https://opsmanagerwesteurope.blob.core.windows.net/images/ops-manager-2.8.2-build.203.vhd
+southeast_asia: https://opsmanagersoutheastasia.blob.core.windows.net/images/ops-manager-2.8.2-build.203.vhd

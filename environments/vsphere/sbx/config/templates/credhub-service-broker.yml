@@ -1,0 +1,25 @@
+errand-config:
+  delete-all:
+    pre-delete-state: ((delete-all_pre_delete_state))
+  deploy-all:
+    post-deploy-state: ((deploy-all_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: credhub-service-broker
+product-properties:
+  .properties.credhub_broker_enable_global_access_to_plans:
+    value: ((credhub_broker_enable_global_access_to_plans))
+resource-config:
+  delete-all:
+    instance_type:
+      id: ((delete-all_instance_type))
+    max_in_flight: ((delete-all_max_in_flight))
+  deploy-all:
+    instance_type:
+      id: ((deploy-all_instance_type))
+    max_in_flight: ((deploy-all_max_in_flight))

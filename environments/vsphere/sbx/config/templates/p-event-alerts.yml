@@ -1,0 +1,47 @@
+errand-config:
+  deploy-pcf-event-alerts:
+    post-deploy-state: ((deploy-pcf-event-alerts_post_deploy_state))
+  destroy-pcf-event-alerts:
+    pre-delete-state: ((destroy-pcf-event-alerts_pre_delete_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-event-alerts
+product-properties:
+  .deploy-pcf-event-alerts.instance_count:
+    value: ((deploy-pcf-event-alerts_instance_count))
+  .deploy-pcf-event-alerts.metrics_forwarder_enabled:
+    value: ((deploy-pcf-event-alerts_metrics_forwarder_enabled))
+  .properties.mysql:
+    value: MySQL Service
+  .properties.mysql.internal.plan_name:
+    value: ((mysql_internal_plan_name))
+  .properties.smtp_selector:
+    value: Enabled
+  .properties.smtp_selector.enabled.smtp_address:
+    value: ((smtp_selector_enabled_smtp_address))
+  .properties.smtp_selector.enabled.smtp_credentials:
+    value:
+      identity: ((smtp_selector_enabled_smtp_credentials_identity))
+      password: ((smtp_selector_enabled_smtp_credentials_password))
+  .properties.smtp_selector.enabled.smtp_from:
+    value: ((smtp_selector_enabled_smtp_from))
+  .properties.smtp_selector.enabled.smtp_insecure_skip_verify:
+    value: ((smtp_selector_enabled_smtp_insecure_skip_verify))
+  .properties.smtp_selector.enabled.smtp_port:
+    value: ((smtp_selector_enabled_smtp_port))
+  .properties.smtp_selector.enabled.smtp_tls_enabled:
+    value: ((smtp_selector_enabled_smtp_tls_enabled))
+resource-config:
+  deploy-pcf-event-alerts:
+    instance_type:
+      id: ((deploy-pcf-event-alerts_instance_type))
+    max_in_flight: ((deploy-pcf-event-alerts_max_in_flight))
+  destroy-pcf-event-alerts:
+    instance_type:
+      id: ((destroy-pcf-event-alerts_instance_type))
+    max_in_flight: ((destroy-pcf-event-alerts_max_in_flight))

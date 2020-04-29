@@ -1,0 +1,11 @@
+---
+network_name: PAS-Deployment
+service_network_name: PAS-Services
+singleton_availability_zone: pas-az1
+
+# turn off those errands
+broker-registrar_post_deploy_state: off
+on-demand-broker-smoke-tests_post_deploy_state: off
+register-broker_post_deploy_state: off
+smoke-tests_post_deploy_state: off
+upgrade-all-service-instances_post_deploy_state: off

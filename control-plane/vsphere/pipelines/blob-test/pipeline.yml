@@ -1,0 +1,48 @@
+---
+resource_types:
+- name: gcs-resource
+  type: docker-image
+  source:
+    repository: frodenas/gcs-resource
+
+resources:
+- name: somefile
+  type: gcs-resource
+  source:
+    bucket: telmore-vsphere-opsman-exports
+    json_key: ((opsman_export_cloud_storage_key))
+    versioned_file: testfile.txt
+
+jobs:
+- name: show-s3-resource
+  plan:
+  - get: somefile
+  - task: show-somefile
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+      inputs:
+        - name: somefile
+      run:
+        path: sh
+        args: [-c, 'echo Contents of somefile...; cat somefile/testfile.txt']
+
+# - name: put-s3-resource
+#   plan:
+#   - get: statefile
+#   - put: statefile
+#     params:
+#       file: state.yml
+#   - task: put-file
+#     config:
+#       platform: linux
+#       image_resource:
+#         type: docker-image
+#         source: {repository: busybox}
+#       run:
+#         path: sh
+#         args: [-c, 'echo Contents of statefile...; cat $statefile; echo $(date) > $statefile']
+#     params: 
+#       statefile: ((statefile))

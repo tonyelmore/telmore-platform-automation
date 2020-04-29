@@ -1,0 +1,30 @@
+errand-config:
+  destroy-brokers:
+    pre-delete-state: ((destroy-brokers_pre_delete_state))
+  register-brokers:
+    post-deploy-state: ((register-brokers_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  - name: ((az2_name))
+  - name: ((az3_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p_spring-cloud-services
+product-properties:
+  .properties.config_server_access:
+    value: ((config_server_access))
+  .properties.java_buildpack:
+    value: ((java_buildpack))
+  .properties.status_change_timeout_minutes:
+    value: ((status_change_timeout_minutes))
+resource-config:
+  spring-cloud-services:
+    instance_type:
+      id: ((spring-cloud-services_instance_type))
+    instances: ((spring-cloud-services_instances))
+    max_in_flight: ((spring-cloud-services_max_in_flight))
+    persistent_disk:
+      size_mb: ((spring-cloud-services_persistent_disk_size))

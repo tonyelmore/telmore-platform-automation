@@ -1,0 +1,16 @@
+---
+jobs:
+- name: job-hello-world
+  public: true
+  plan:
+  - task: get-credhub-value
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+      run:
+        path: sh
+        args: [-c, 'echo test value: $test_value']
+    params:
+      test_value: ((testvalue))

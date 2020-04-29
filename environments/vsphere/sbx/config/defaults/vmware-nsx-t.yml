@@ -1,0 +1,5 @@
+enable_snat: true
+log_dropped_traffic: false
+ncp_debug_log: false
+nsx_node_agent_debug_log: false
+subnet_prefix: 24

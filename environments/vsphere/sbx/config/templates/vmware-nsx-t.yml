@@ -1,0 +1,42 @@
+network-properties: null
+product-name: VMware-NSX-T
+product-properties:
+  .properties.container_ip_blocks:
+    value:
+    - cidr: ((container_ip_blocks_0_cidr))
+      name: ((container_ip_blocks_0_name))
+  .properties.enable_snat:
+    value: ((enable_snat))
+  .properties.exit_on_disconnection:
+    value: enable
+  .properties.external_ip_pools:
+    value:
+    - allocation_ranges: ((external_ip_pools_0_allocation_ranges))
+      cidr: ((external_ip_pools_0_cidr))
+      name: ((external_ip_pools_0_name))
+  .properties.foundation_name:
+    value: ((foundation_name))
+  .properties.log_dropped_traffic:
+    value: ((log_dropped_traffic))
+  .properties.ncp_debug_log:
+    value: ((ncp_debug_log))
+  .properties.nsx_api_ca_cert:
+    value: ((nsx_api_ca_cert))
+  .properties.nsx_api_managers:
+    value: ((nsx_api_managers))
+  .properties.nsx_auth:
+    selected_option: simple
+    value: simple
+  .properties.nsx_auth.simple.nsx_api_password:
+    value:
+      secret: ((nsx_auth_simple_nsx_api_password))
+  .properties.nsx_auth.simple.nsx_api_user:
+    value: ((nsx_auth_simple_nsx_api_user))
+  .properties.nsx_node_agent_debug_log:
+    value: ((nsx_node_agent_debug_log))
+  .properties.overlay_tz:
+    value: ((overlay_tz))
+  .properties.subnet_prefix:
+    value: ((subnet_prefix))
+  .properties.tier0_router:
+    value: ((tier0_router))

@@ -1,0 +1,6 @@
+deploy-service-broker_post_deploy_state: default
+destroy-broker_pre_delete_state: default
+deploy-service-broker_instance_type: automatic
+deploy-service-broker_max_in_flight: default
+destroy-broker_instance_type: automatic
+destroy-broker_max_in_flight: default

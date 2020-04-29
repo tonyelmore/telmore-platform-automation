@@ -1,0 +1,8 @@
+---
+network_name: PAS-Deployment
+singleton_availability_zone: pas-az1
+
+delete-prior-space_post_deploy_state: off
+migrate-route_post_deploy_state: off
+push-apps_post_deploy_state: off
+smoke-tests_post_deploy_state: off

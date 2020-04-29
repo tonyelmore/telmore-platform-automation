@@ -1,0 +1,37 @@
+metrics_polling_interval: 30
+on-demand-broker_canaries: 1
+on-demand-broker_global_service_instance_quota: 20
+on-demand-broker_max_in_flight: 3
+on_demand_broker_plan_1_cf_service_access: enable
+on_demand_broker_plan_1_description: This plan provides a single dedicated RabbitMQ
+  3.7 node
+on_demand_broker_plan_1_features: RabbitMQ 3.7
+on_demand_broker_plan_1_instance_quota: 10
+on_demand_broker_plan_1_name: single-node-3.7
+on_demand_broker_plan_1_paid: false
+on_demand_broker_plan_1_rabbitmq_cluster_partition_handling_strategy: pause_minority
+on_demand_broker_plan_1_rabbitmq_number_of_nodes: 1
+syslog_selector_enabled_syslog_tls: false
+syslog_selector_enabled_syslog_transport: tcp
+broker-deregistrar_pre_delete_state: default
+broker-registrar_post_deploy_state: default
+delete-all-service-instances_pre_delete_state: default
+deregister-broker_pre_delete_state: default
+on-demand-broker-smoke-tests_post_deploy_state: default
+recreate-all-service-instances_post_deploy_state: default
+register-broker_post_deploy_state: default
+smoke-tests_post_deploy_state: default
+upgrade-all-service-instances_post_deploy_state: default
+on-demand-broker_instance_type: automatic
+on-demand-broker_instances: automatic
+on-demand-broker_persistent_disk_size: automatic
+rabbitmq-broker_instance_type: automatic
+rabbitmq-broker_instances: automatic
+rabbitmq-broker_max_in_flight: default
+rabbitmq-haproxy_instance_type: automatic
+rabbitmq-haproxy_instances: automatic
+rabbitmq-haproxy_max_in_flight: default
+rabbitmq-server_instance_type: automatic
+rabbitmq-server_instances: automatic
+rabbitmq-server_max_in_flight: default
+rabbitmq-server_persistent_disk_size: automatic

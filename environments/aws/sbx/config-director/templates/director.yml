@@ -1,0 +1,157 @@
+---
+az-configuration:
+- name: ((az1))
+- name: ((az2))
+- name: ((az3))
+network-assignment:
+  network:
+    name: ((infra_network_name))
+  singleton_availability_zone:
+    name: ((az1))
+networks-configuration:
+  icmp_checks_enabled: false
+  networks:
+  - name: ((infra_network-name))
+    subnets:
+    - availability_zone_names:
+      - ((az1))
+      cidr: ((infra_az1_network_cidr))
+      dns: ((infra_network_dns))
+      iaas_identifier: ((infra_az1_network_id))
+      gateway: ((infra_az1_network_gateway))
+      reserved_ip_ranges: ((infra_az1_network_reserved_ip_range))
+    - availability_zone_names:
+      - ((az2))
+      cidr: ((infra_az2_network_cidr))
+      dns: ((infra_network_dns))
+      iaas_identifier: ((infra_az2_network_id))
+      gateway: ((infra_az2_network_gateway))
+      reserved_ip_ranges: ((infra_az2_network_reserved_ip_range))
+    - availability_zone_names:
+      - ((az3))
+      cidr: ((infra_az3_network_cidr))
+      dns: ((infra_network_dns))
+      iaas_identifier: ((infra_az3_network_id))
+      gateway: ((infra_az3_network_gateway))
+      reserved_ip_ranges: ((infra_az3_network_reserved_ip_range))
+  - name: ((pas_network_name))
+    subnets:
+    - availability_zone_names:
+      - ((az1))
+      cidr: ((pas_network_az1_cidr))
+      dns: ((pas_network_dns))
+      iaas_identifier: ((pas_network_az1_network_id))
+      gateway: ((pas_network_az1_gateway))
+      reserved_ip_ranges: ((pas_network_az1_reserved_ip_range))
+    - availability_zone_names:
+      - ((az2))
+      cidr: ((pas_network_az2_cidr))
+      dns: ((pas_network_dns))
+      iaas_identifier: ((pas_network_az2_network_id))
+      gateway: ((pas_network_az2_gateway))
+      reserved_ip_ranges: ((pas_network_az2_reserved_ip_range))
+    - availability_zone_names:
+      - ((az3))
+      cidr: ((pas_network_az3_cidr))
+      dns: ((pas_network_dns))
+      iaas_identifier: ((pas_network_az3_network_id))
+      gateway: ((pas_network_az3_gateway))
+      reserved_ip_ranges: ((pas_network_az3_reserved_ip_range))
+  - name: ((pks_network_name))
+    subnets:
+    - availability_zone_names:
+      - ((az1))
+      cidr: ((pks_network_az1_cidr))
+      dns: ((pks_network_dns))
+      iaas_identifier: ((pks_network_az1_network_id))
+      gateway: ((pks_network_az1_gateway))
+      reserved_ip_ranges: ((pks_network_az1_reserved_ip_range))
+    - availability_zone_names:
+      - ((az2))
+      cidr: ((pks_network_az2_cidr))
+      dns: ((pks_network_dns))
+      iaas_identifier: ((pks_network_az2_network_id))
+      gateway: ((pks_network_az2_gateway))
+      reserved_ip_ranges: ((pks_network_az2_reserved_ip_range))
+    - availability_zone_names:
+      - ((az3))
+      cidr: ((pks_network_az3_cidr))
+      dns: ((pks_network_dns))
+      iaas_identifier: ((pks_network_az3_network_id))
+      gateway: ((pks_network_az3_gateway))
+      reserved_ip_ranges: ((pks_network_az3_reserved_ip_range))
+  - name: ((service_network_name))
+    subnets:
+    - availability_zone_names:
+      - ((az1))
+      cidr: ((service_network_az1_cidr))
+      dns: ((service_network_dns))
+      iaas_identifier: ((service_network_az1_network_id))
+      gateway: ((service_network_az1_gateway))
+      reserved_ip_ranges: ((service_network_az1_reserved_ip_range))
+    - availability_zone_names:
+      - ((az2))
+      cidr: ((service_network_az2_cidr))
+      dns: ((service_network_dns))
+      iaas_identifier: ((service_network_az2_network_id))
+      gateway: ((service_network_az2_gateway))
+      reserved_ip_ranges: ((service_network_az2_reserved_ip_range))
+    - availability_zone_names:
+      - ((az3))
+      cidr: ((service_network_az3_cidr))
+      dns: ((service_network_dns))
+      iaas_identifier: ((service_network_az3_network_id))
+      gateway: ((service_network_az3_gateway))
+      reserved_ip_ranges: ((service_network_az3_reserved_ip_range))
+properties-configuration:
+  director_configuration:
+    ntp_servers_string: ((ntp_servers_string))
+  iaas_configuration:
+    access_key_id: ((ops_manager_iam_user_access_key))
+    secret_access_key: ((ops_manager_iam_user_secret_key))
+    iam_instance_profile: ((ops_manager_iam_instance_profile_name))
+    vpc_id: ((vpc_id))
+    security_group: ((platform_vms_security_group_id))
+    key_pair_name: ((ops_manager_key_pair_name))
+    ssh_private_key: ((ops_manager_ssh_private_key))
+    region: ((region))
+resource-configuration:
+  compilation:
+    instance_type:
+      id: automatic
+vmextensions-configuration:
+- name: web-lb-security-groups
+  cloud_properties:
+    security_groups:
+    - ((web_lb_security_group_id))
+    - ((platform_vms_security_group_id))
+- name: ssh-lb-security-groups
+  cloud_properties:
+    security_groups:
+    - ((ssh_lb_security_group_id))
+    - ((platform_vms_security_group_id))
+- name: tcp-lb-security-groups
+  cloud_properties:
+    security_groups:
+    - ((tcp_lb_security_group_id))
+    - ((platform_vms_security_group_id))
+- name: pks-api-lb-security-groups
+  cloud_properties:
+    security_groups:
+    - ((pks_api_lb_security_group_id))
+    - ((platform_vms_security_group_id))
+vmextensions-configuration:
+- name: concourse-lb
+  cloud_properties:
+    lb_target_groups:
+      - ((environment_name))-concourse-tg-tcp
+      - ((environment_name))-concourse-tg-ssh
+      - ((environment_name))-concourse-tg-credhub
+      - ((environment_name))-concourse-tg-uaa
+    security_groups:
+      - ((environment_name))-concourse-sg
+      - ((platform_vms_security_group_id))
+- name: increased-disk
+  cloud_properties:
+    type: gp2
+    size: 512000

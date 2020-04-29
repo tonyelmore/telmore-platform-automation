@@ -1,0 +1,9 @@
+container_ip_blocks_0_cidr: null
+container_ip_blocks_0_name: PAS-Org-IPs
+tier0_router: T0-Router
+nsx_api_managers: nsxmgr-01.haas-244.pez.pivotal.io
+external_ip_pools_0_allocation_ranges: null
+external_ip_pools_0_cidr: null
+external_ip_pools_0_name: external-ip-pool
+foundation_name: PAS-
+overlay_tz: overlay-tz

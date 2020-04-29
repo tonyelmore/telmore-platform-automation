@@ -1,0 +1,151 @@
+---
+az-configuration:
+  - name: ((az1_name))
+    iaas_configuration_name: default
+  - name: ((az2_name))
+    iaas_configuration_name: default
+  - name: ((az3_name))
+    iaas_configuration_name: default
+iaas-configurations:
+- additional_cloud_properties: {}
+  encrypted: false
+  iam_instance_profile: ((iam_instance_profile))
+  key_pair_name: ((key_pair_name))
+  name: ((iaas_configuration_name))
+  region: ((iaas_configuration_region))
+  security_group: ((security_group))
+  ssh_private_key: ((ssh_private_key))
+network-assignment:
+  network:
+    name: ((infra_network_name))
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: ((az1_name))
+networks-configuration:
+  icmp_checks_enabled: ((icmp_checks_enabled))
+  networks:
+  - name: ((infra_network_name))
+    subnets:
+    - iaas_identifier: ((infra_network_az1_iaas_name))
+      cidr: ((infra_network_az1_cidr))
+      reserved_ip_ranges: ((infra_network_az1_reserved_ip_range))
+      gateway: ((infra_network_az1_gateway))
+      dns: ((infra_network_dns))
+      availability_zone_names:
+      - ((az1_name))
+    - iaas_identifier: ((infra_network_az2_iaas_name))
+      cidr: ((infra_network_az2_cidr))
+      reserved_ip_ranges: ((infra_network_az2_reserved_ip_range))
+      gateway: ((infra_network_az2_gateway))
+      dns: ((infra_network_dns))
+      availability_zone_names:
+      - ((az2_name))
+    - iaas_identifier: ((infra_network_az3_iaas_name))
+      cidr: ((infra_network_az3_cidr))
+      reserved_ip_ranges: ((infra_network_az3_reserved_ip_range))
+      gateway: ((infra_network_az3_gateway))
+      dns: ((infra_network_dns))
+      availability_zone_names:
+      - ((az3_name))
+  - name: ((deployment_network_name))
+    subnets:
+    - iaas_identifier: ((deployment_network_az1_iaas_name))
+      cidr: ((deployment_network_az1_cidr))
+      reserved_ip_ranges: ((deployment_network_az1_reserved_ip_range))
+      gateway: ((deployment_network_az1_gateway))
+      dns: ((deployment_network_dns))
+      availability_zone_names:
+      - ((az1_name))
+    - iaas_identifier: ((deployment_network_az2_iaas_name))
+      cidr: ((deployment_network_az2_cidr))
+      reserved_ip_ranges: ((deployment_network_az2_reserved_ip_range))
+      gateway: ((deployment_network_az2_gateway))
+      dns: ((deployment_network_dns))
+      availability_zone_names:
+      - ((az2_name))
+    - iaas_identifier: ((deployment_network_az3_iaas_name))
+      cidr: ((deployment_network_az3_cidr))
+      reserved_ip_ranges: ((deployment_network_az3_reserved_ip_range))
+      gateway: ((deployment_network_az3_gateway))
+      dns: ((deployment_network_dns))
+      availability_zone_names:
+      - ((az3_name))
+  - name: ((service_network_name))
+    subnets:
+    - iaas_identifier: ((service_network_az1_iaas_name))
+      cidr: ((service_network_az1_cidr))
+      reserved_ip_ranges: ((service_network_az1_reserved_ip_range))
+      gateway: ((service_network_az1_gateway))
+      dns: ((service_network_dns))
+      availability_zone_names:
+      - ((az1_name))
+    - iaas_identifier: ((service_network_az2_iaas_name))
+      cidr: ((service_network_az2_cidr))
+      reserved_ip_ranges: ((service_network_az2_reserved_ip_range))
+      gateway: ((service_network_az2_gateway))
+      dns: ((service_network_dns))
+      availability_zone_names:
+      - ((az2_name))
+    - iaas_identifier: ((service_network_az3_iaas_name))
+      cidr: ((service_network_az3_cidr))
+      reserved_ip_ranges: ((service_network_az3_reserved_ip_range))
+      gateway: ((service_network_az3_gateway))
+      dns: ((service_network_dns))
+      availability_zone_names:
+      - ((az3_name))
+properties-configuration:
+  director_configuration:
+    allow_legacy_agents: true
+    blobstore_type: ((blobstore_type))
+    bosh_recreate_on_next_deploy: ((bosh_recreate_on_next_deploy))
+    bosh_recreate_persistent_disks_on_next_deploy: ((bosh_recreate_persistent_disks_on_next_deploy))
+    custom_ssh_banner: ((custom_ssh_banner))
+    database_type: ((database_type))
+    director_hostname: ((director_hostname))
+    director_worker_count: ((director_worker_count))
+    disable_dns_release: ((disable_dns_release))
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    identification_tags: ((identification_tags))
+    keep_unreachable_vms: ((keep_unreachable_vms))
+    local_blobstore_options:
+      tls_enabled: ((local_blobstore_tls_enabled))
+    max_threads: ((max_threads))
+    metrics_ip: ((metrics_ip))
+    ntp_servers_string: ((ntp_servers_string))
+    opentsdb_ip: ((opentsdb_ip))
+    post_deploy_enabled: ((post_deploy_enabled))
+    resurrector_enabled: ((resurrector_enabled))
+    retry_bosh_deploys: ((retry_bosh_deploys))
+    skip_director_drain: true
+  security_configuration:
+    trusted_certificates: ((trusted_certificates))
+    generate_vm_passwords: ((generate_vm_passwords))
+  syslog_configuration:
+    enabled: ((syslog_enabled))
+resource-configuration:
+  compilation:
+    additional_vm_extensions: []
+    elb_names: []
+    instance_type:
+      id: ((compilation_instance_type))
+    instances: ((compilation_instances))
+    internet_connected: false
+    swap_as_percent_of_memory_size: automatic
+  director:
+    additional_vm_extensions: []
+    elb_names: []
+    instance_type:
+      id: ((director_instance_type))
+    instances: automatic
+    internet_connected: false
+    persistent_disk:
+      size_mb: ((director_disk_size_mb))
+    swap_as_percent_of_memory_size: automatic
+vmextensions-configuration: []
+vmtypes-configuration: {}

@@ -1,0 +1,14 @@
+{
+    "name": "pas_ssh_vm_extension",
+    "cloud_properties": {
+        "nsxt": {
+            "lb": {
+                "server_pools": [
+                    {
+                        "name": "pas-ssh-pool"
+                    }
+                ]
+            }
+        }
+    }
+}

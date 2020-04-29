@@ -1,0 +1,22 @@
+### This is just a shell that has been starte
+### It has NOT been ran or tested or even proof-read
+
+resource_types:
+resources:
+- name: state
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore.git
+    username: ((github_username))
+
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config-director"

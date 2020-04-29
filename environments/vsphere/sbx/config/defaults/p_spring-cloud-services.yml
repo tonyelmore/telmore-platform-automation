@@ -1,0 +1,9 @@
+config_server_access: global
+java_buildpack: java_buildpack_offline
+status_change_timeout_minutes: 30
+destroy-brokers_pre_delete_state: default
+register-brokers_post_deploy_state: default
+spring-cloud-services_instance_type: automatic
+spring-cloud-services_instances: automatic
+spring-cloud-services_max_in_flight: default
+spring-cloud-services_persistent_disk_size: automatic

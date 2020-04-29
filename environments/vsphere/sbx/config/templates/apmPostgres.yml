@@ -1,0 +1,59 @@
+errand-config:
+  delete-prior-space:
+    post-deploy-state: ((delete-prior-space_post_deploy_state))
+  delete-space:
+    pre-delete-state: ((delete-space_pre_delete_state))
+  migrate-route:
+    post-deploy-state: ((migrate-route_post_deploy_state))
+  push-apps:
+    post-deploy-state: ((push-apps_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: apmPostgres
+product-properties:
+  .errand-runner.ingestor_instance_count:
+    value: ((errand-runner_ingestor_instance_count))
+  .errand-runner.logs_queue_instance_count:
+    value: ((errand-runner_logs_queue_instance_count))
+  .errand-runner.logs_queue_max_retention_percentage:
+    value: ((errand-runner_logs_queue_max_retention_percentage))
+  .errand-runner.logs_queue_retention_percentage_interval:
+    value: ((errand-runner_logs_queue_retention_percentage_interval))
+  .errand-runner.logs_retention_window:
+    value: ((errand-runner_logs_retention_window))
+  .errand-runner.metrics_queue_instance_count:
+    value: ((errand-runner_metrics_queue_instance_count))
+  .errand-runner.metrics_retention_window:
+    value: ((errand-runner_metrics_retention_window))
+  .errand-runner.push_apps_log_level:
+    value: ((errand-runner_push_apps_log_level))
+  .errand-runner.server_instance_count:
+    value: ((errand-runner_server_instance_count))
+resource-config:
+  errand-runner:
+    instance_type:
+      id: ((errand-runner_instance_type))
+    persistent_disk:
+      size_mb: ((errand-runner_persistent_disk_size))
+  mysql:
+    instance_type:
+      id: ((mysql_instance_type))
+    persistent_disk:
+      size_mb: ((mysql_persistent_disk_size))
+  postgres:
+    instance_type:
+      id: ((postgres_instance_type))
+    persistent_disk:
+      size_mb: ((postgres_persistent_disk_size))
+  redis:
+    instance_type:
+      id: ((redis_instance_type))
+    persistent_disk:
+      size_mb: ((redis_persistent_disk_size))

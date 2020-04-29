@@ -1,0 +1,49 @@
+cf-redis-broker_redis_maxmemory: 512MB
+cf-redis-broker_service_instance_limit: 5
+large_plan_selector_active_cf_service_access: enable
+large_plan_selector_active_description: This plan provides a large on-demand Redis
+  instance, tailored for caching use-cases with persistence to disk enabled
+large_plan_selector_active_instance_limit: 20
+large_plan_selector_active_lua_scripting: false
+large_plan_selector_active_maxclients: 10000
+large_plan_selector_active_name: cache-large
+large_plan_selector_active_tcp_keepalive: 60
+large_plan_selector_active_timeout: 3600
+medium_plan_selector_active_cf_service_access: enable
+medium_plan_selector_active_description: This plan provides a medium on-demand Redis
+  instance, tailored for caching use-cases with persistence to disk enabled
+medium_plan_selector_active_instance_limit: 20
+medium_plan_selector_active_lua_scripting: false
+medium_plan_selector_active_maxclients: 5000
+medium_plan_selector_active_name: cache-medium
+medium_plan_selector_active_tcp_keepalive: 60
+medium_plan_selector_active_timeout: 3600
+metrics_polling_interval: 30
+redis-on-demand-broker_maximum_parallel_upgrades: 1
+redis-on-demand-broker_service_instance_limit: 20
+redis-on-demand-broker_upgrade_canary_number: 1
+small_plan_selector_active_cf_service_access: enable
+small_plan_selector_active_description: This plan provides a small on-demand Redis
+  instance, tailored for caching use-cases with persistence to disk enabled
+small_plan_selector_active_instance_limit: 20
+small_plan_selector_active_lua_scripting: false
+small_plan_selector_active_maxclients: 1000
+small_plan_selector_active_name: cache-small
+small_plan_selector_active_tcp_keepalive: 60
+small_plan_selector_active_timeout: 3600
+syslog_selector_active_syslog_transport: tcp
+broker-deregistrar_pre_delete_state: default
+broker-registrar_post_deploy_state: default
+delete-all-service-instances-and-deregister-broker_pre_delete_state: default
+on-demand-broker-smoke-tests_post_deploy_state: default
+orphan-deployments_post_deploy_state: default
+recreate-all-service-instances_post_deploy_state: default
+register-broker_post_deploy_state: default
+smoke-tests_post_deploy_state: default
+upgrade-all-service-instances_post_deploy_state: default
+cf-redis-broker_instance_type: automatic
+cf-redis-broker_max_in_flight: default
+cf-redis-broker_persistent_disk_size: automatic
+redis-on-demand-broker_instance_type: automatic
+redis-on-demand-broker_instances: automatic
+redis-on-demand-broker_max_in_flight: default

@@ -1,0 +1,126 @@
+---
+properties-configuration:
+  iaas_configuration:
+    name: ((iaas_configuration_name))
+    vcenter_host: ((vcenter_host))
+    datacenter: ((datacenter))
+    ephemeral_datastores_string: ((ephemeral_datastores_string))
+    persistent_datastores_string: ((persistent_datastores_string))
+    vcenter_username: ((vcenter_username))
+    vcenter_password: ((vcenter_password))
+    bosh_vm_folder: ((bosh_vm_folder))
+    bosh_template_folder: ((bosh_template_folder))
+    bosh_disk_path: ((bosh_disk_path))
+    ssl_verification_enabled: ((ssl_verification_enabled))
+    nsx_networking_enabled: ((nsx_networking_enabled))
+    nsx_address: ((nsx_address))
+    nsx_ca_certificate: ((nsx_ca_certificate))
+    nsx_mode: ((nsx_mode))
+    nsx_networking_enabled: ((nsx_networking_enabled))
+    nsx_username: ((nsx_username))
+  director_configuration:
+    allow_legacy_agents: true
+    blobstore_type: ((blobstore_type))
+    bosh_recreate_on_next_deploy: ((bosh_recreate_on_next_deploy))
+    bosh_recreate_persistent_disks_on_next_deploy: ((bosh_recreate_persistent_disks_on_next_deploy))
+    custom_ssh_banner: ((custom_ssh_banner))
+    database_type: ((database_type))
+    director_hostname: ((director_hostname))
+    director_worker_count: ((director_worker_count))
+    disable_dns_release: ((disable_dns_release))
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    identification_tags: ((identification_tags))
+    keep_unreachable_vms: ((keep_unreachable_vms))
+    local_blobstore_options:
+      tls_enabled: ((local_blobstore_tls_enabled))
+    max_threads: ((max_threads))
+    metrics_ip: ((metrics_ip))
+    ntp_servers_string: ((ntp_servers_string))
+    opentsdb_ip: ((opentsdb_ip))
+    post_deploy_enabled: ((post_deploy_enabled))
+    resurrector_enabled: ((resurrector_enabled))
+    retry_bosh_deploys: ((retry_bosh_deploys))
+    skip_director_drain: true
+  security_configuration:
+    trusted_certificates: ((trusted_certificates))
+    generate_vm_passwords: ((generate_vm_passwords))
+  syslog_configuration:
+    enabled: ((syslog_enabled))
+az-configuration:
+  - name: ((az1_name))
+    clusters:
+    - cluster: ((az1_cluster))
+      resource_pool: ((az1_resource_pool))
+networks-configuration:
+  icmp_checks_enabled: ((icmp_checks_enabled))
+  networks:
+  - name: ((infra_network_name))
+    subnets:
+    - iaas_identifier: ((infra_network_vsphere_name))
+      cidr: ((infra_network_cidr))
+      reserved_ip_ranges: ((infra_network_reserved_ip_range))
+      gateway: ((infra_network_gateway))
+      dns: ((infra_network_dns))
+      availability_zone_names: &1
+      - ((az1_name))
+  - name: ((deployment_network_name))
+    subnets:
+    - iaas_identifier: ((deployment_network_vsphere_name))
+      cidr: ((deployment_network_cidr))
+      reserved_ip_ranges: ((deployment_network_reserved_ip_range))
+      gateway: ((deployment_network_gateway))
+      dns: ((deployment_network_dns))
+      availability_zone_names: *1
+  - name: ((service_network_name))
+    subnets:
+    - iaas_identifier: ((service_network_vsphere_name))
+      cidr: ((service_network_cidr))
+      reserved_ip_ranges: ((service_network_reserved_ip_range))
+      gateway: ((service_network_gateway))
+      dns: ((service_network_dns))
+      availability_zone_names: *1
+network-assignment:
+  network:
+    name: ((infra_network_name))
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: ((az1_name))
+resource-configuration:
+  compilation:
+    instances: ((compilation_instances))
+    instance_type:
+      id: ((compilation_instance_type))
+  director:
+    instances: automatic
+    persistent_disk:
+      size_mb: ((director_disk_size_mb))
+    instance_type:
+      id: ((director_instance_type))
+vmextensions-configuration:
+- name: pas_ssh_vm_extension
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: pas-ssh-pool
+- name: pas_tcp_vm_extension
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: pas-tcp-pool
+- name: http_https_lb
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: PAS-GoRouter443ServerPool
+          port: 443
+        - name: PAS-GoRouter80ServerPool
+          port: 80

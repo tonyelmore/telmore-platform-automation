@@ -1,0 +1,16 @@
+---
+jobs:
+- name: test-credhub-integration
+  public: true
+  plan:
+  - task: get-test-token
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+      run:
+        path: sh
+        args: [-c, 'echo Credhub value: $credhub_token']
+    params: 
+      credhub_token: ((test))

@@ -1,0 +1,31 @@
+---
+platform: linux
+
+inputs:
+  - name: config # contains download-file config file
+
+outputs:
+  - name: downloaded-release
+
+params:
+  CONFIG_FILE: download-config.yml
+  # - Required
+  # - Filepath to the product configuration yaml file
+  # - The path is relative to the root of the `config` input
+
+run:
+  path: bash
+  args:
+    - "-c"
+    - |
+      cat /var/version && echo ""
+      set -euxo pipefail
+
+      REPOSITORY="$(grep '^repository:' config/${CONFIG_FILE} | sed -e 's/^repository:[ ]//')"
+      VERSION="$(grep '^version:' config/${CONFIG_FILE} | sed -e 's/^version:[ ]//')"
+      SHA1="$(grep '^sha1:' config/${CONFIG_FILE} | sed -e 's/^sha1:[ ]//')"
+
+      curl -L https://bosh.io/d/github.com/${REPOSITORY}?v=${VERSION} \
+        -o downloaded-release/release.tgz
+
+      echo "${SHA1} downloaded-release/release.tgz" | sha1sum -c -

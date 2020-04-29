@@ -1,0 +1,306 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: installation
+  type: s3
+  source:
+    bucket: ((concourse_s3_om_bucket))
+    region_name: us-east-2
+    versioned_file: ((iaas))/((foundation))/installation.zip
+    access_key_id: ((concourse_s3_access_key))
+    secret_access_key: ((concourse_s3_secret_key))
+
+- name: state
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    username: ((github_username))
+
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config-director"
+
+- name: lock
+  type: pool
+  source:
+    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    branch: master
+    username: ((github_username))
+    password: ((github_token))
+    pool: locks/((lock_pool_name))
+    retry_delay: 1m
+
+jobs:
+- name: force-unlock
+  serial: true
+  plan:
+  - get: lock
+  - put: lock
+    params:
+      release: lock
+
+- name: lock-director
+  serial: true
+  plan:
+  - aggregate:
+    - put: lock
+      params: {acquire: true}
+    - get: director-configuration
+      trigger: true
+
+- name: validate-director-configuration
+  plan:
+  - aggregate:
+    - get: director-configuration
+      trigger: true
+      passed: ["lock-director"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &director_credhub_interpolate_params
+      CREDHUB_SERVER: https://credhub.plane.smarsh.cloud:443
+      # CREDHUB_CA_CERT: ((concourse_credhub_ca))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+    input_mapping:
+      files: director-configuration
+
+- name: install-opsman
+  plan:
+  - aggregate:
+    - get: director-configuration
+      trigger: true
+      passed: ["validate-director-configuration"]
+    - get: state
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *director_credhub_interpolate_params
+    input_mapping:
+      files: director-configuration
+
+  - task: download-create-opsman
+    image: platform-automation-image
+    file: director-configuration/ci/tasks-proposed/download-create-opsman.yml
+    input_mapping:
+      download-config: director-configuration
+      state: state
+      config: director-configuration
+      vars: director-configuration
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/versions/opsman.yml
+      STATE_FILE: environments/((iaas))/((foundation))/state/state.yml
+      OPSMAN_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/opsman.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/common-director/opsman.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
+        secrets/environments/((iaas))/((foundation))/config-director/secrets/opsman.yml
+        secrets/environments/((iaas))/((foundation))/config-director/secrets/pivnet.yml
+
+    ensure: &make-state-commit
+      do:
+        - task: make-git-commit
+          image: platform-automation-image
+          file: director-configuration/ci/tasks-proposed/z_make-commit.yml
+          input_mapping:
+            repository: state
+            file-source: generated-state
+          output_mapping:
+            repository-commit: state-commit
+          params:
+            FILE_SOURCE_PATH: state.yml
+            FILE_DESTINATION_PATH: environments/((iaas))/((foundation))/state/state.yml
+            GIT_AUTHOR_EMAIL: "john.dee@smarch.com"
+            GIT_AUTHOR_NAME: "Platform Automation"
+            COMMIT_MESSAGE: 'Update state file'
+        - put: state
+          params:
+            repository: state-commit
+            merge: true
+
+  - task: configure-authentication
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-authentication.yml
+    attempts: 20
+    input_mapping:
+      env: interpolated-files
+      config: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+      AUTH_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/secrets/auth.yml
+
+  - task: configure-director
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-director.yml
+    input_mapping:
+      config: director-configuration
+      env: interpolated-files
+      vars: director-configuration
+      secrets: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+      DIRECTOR_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/director.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/common-director/director.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/director.yml
+        secrets/environments/((iaas))/((foundation))/config-director/secrets/director.yml
+
+  - task: apply-director-changes
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/apply-director-changes.yml
+    input_mapping:
+      env: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+
+- name: export-installation
+  plan:
+  - aggregate:
+    - get: director-configuration
+      trigger: true
+      passed: [ install-opsman ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *director_credhub_interpolate_params
+    input_mapping:
+      files: director-configuration
+
+  - task: export-installation
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/export-installation.yml
+    input_mapping:
+      env: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+  - put: installation
+    params:
+      file: installation/installation-*.zip
+
+- name: upgrade-opsman
+  plan:
+  - aggregate:
+    - get: director-configuration
+      trigger: true
+      passed: [ export-installation ]
+    - get: state
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+    - get: installation
+      passed: [ export-installation ]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *director_credhub_interpolate_params
+    input_mapping:
+      files: director-configuration
+
+  - task: download-upgrade-opsman
+    image: platform-automation-image
+    file: director-configuration/ci/tasks-proposed/download-upgrade-opsman.yml
+    input_mapping:
+      download-config: director-configuration
+      state: state
+      config: director-configuration
+      vars: director-configuration
+      secrets: interpolated-files
+      installation: installation
+      env: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/versions/opsman.yml
+      STATE_FILE: environments/((iaas))/((foundation))/state/state.yml
+      OPSMAN_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/opsman.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/common-director/opsman.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
+        secrets/environments/((iaas))/((foundation))/config-director/secrets/opsman.yml
+        secrets/environments/((iaas))/((foundation))/config-director/secrets/pivnet.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+    ensure: *make-state-commit
+
+  - task: apply-director-changes
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/apply-director-changes.yml
+    input_mapping:
+      env: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+
+- name: unlock-director
+  serial: true
+  plan:
+  - get: director-configuration
+    trigger: true
+    passed:
+    - "upgrade-opsman"
+  - get: lock
+  - put: lock
+    params:
+      release: lock

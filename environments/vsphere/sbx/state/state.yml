@@ -1,0 +1,2 @@
+iaas: vsphere
+vm_id: /Datacenter/vm/opsman/opsmgr-01.haas-244.pez.pivotal.io

@@ -1,0 +1,8 @@
+---
+service_network_name: PAS-Services
+plan1_selector_single_node_az_multi_select: ["pas-az1"]
+plan2_selector_single_node_az_multi_select: ["pas-az1"]
+plan3_selector_single_node_az_multi_select: ["pas-az1"]
+
+global_recipient_email: test@me.com
+deprecated_bindings_string: X

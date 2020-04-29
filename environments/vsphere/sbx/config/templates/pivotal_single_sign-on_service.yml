@@ -1,0 +1,23 @@
+errand-config:
+  deploy-service-broker:
+    post-deploy-state: ((deploy-service-broker_post_deploy_state))
+  destroy-broker:
+    pre-delete-state: ((destroy-broker_pre_delete_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: Pivotal_Single_Sign-On_Service
+product-properties: {}
+resource-config:
+  deploy-service-broker:
+    instance_type:
+      id: ((deploy-service-broker_instance_type))
+    max_in_flight: ((deploy-service-broker_max_in_flight))
+  destroy-broker:
+    instance_type:
+      id: ((destroy-broker_instance_type))
+    max_in_flight: ((destroy-broker_max_in_flight))

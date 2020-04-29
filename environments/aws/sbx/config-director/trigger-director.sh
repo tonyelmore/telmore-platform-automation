@@ -1,0 +1,1 @@
+date > trigger-director

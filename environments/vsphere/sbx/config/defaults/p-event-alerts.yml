@@ -1,0 +1,10 @@
+deploy-pcf-event-alerts_instance_count: 5
+deploy-pcf-event-alerts_metrics_forwarder_enabled: true
+smtp_selector_enabled_smtp_insecure_skip_verify: false
+smtp_selector_enabled_smtp_tls_enabled: true
+deploy-pcf-event-alerts_post_deploy_state: default
+destroy-pcf-event-alerts_pre_delete_state: default
+deploy-pcf-event-alerts_instance_type: automatic
+deploy-pcf-event-alerts_max_in_flight: default
+destroy-pcf-event-alerts_instance_type: automatic
+destroy-pcf-event-alerts_max_in_flight: default

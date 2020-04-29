@@ -1,0 +1,7 @@
+confirm_tls_setup: X
+network_name: PAS-Deployment
+service_network_name: PAS-Services
+singleton_availability_zone: pas-az1
+plan1_enable_service_plan_enable_service_instance_azs: ["pas-az1"]
+dev_plan_enable_service_plan_enable_service_instance_azs: ["pas-az1"]
+small_footprint_enable_service_plan_enable_service_instance_azs: ["pas-az1"]

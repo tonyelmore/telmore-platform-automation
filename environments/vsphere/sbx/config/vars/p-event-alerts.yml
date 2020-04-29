@@ -1,0 +1,7 @@
+---
+mysql_internal_plan_name: db-small
+network_name: PAS-Deployment
+singleton_availability_zone:  pas-az1
+smtp_selector_enabled_smtp_address: in-v3.mailjet.com
+smtp_selector_enabled_smtp_from: noreply@healthwatch.com
+smtp_selector_enabled_smtp_port: 25

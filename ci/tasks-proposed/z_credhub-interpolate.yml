@@ -1,0 +1,69 @@
+---
+platform: linux
+
+inputs:
+- name: files
+# contains YAML files with extension `.yml`.
+# Each one of these files will have their values interpolated from credhub.
+# For examples, run: `credhub interpolate --help`
+# (minimum version >= 2.1.0 required)
+
+outputs:
+- name: interpolated-files
+# Contains only yaml files found and interpolated by this task.
+# Maintains the filestructure of the `files` input.
+
+# all params are required to be filled out
+params:
+
+  CREDHUB_CLIENT:
+  CREDHUB_SECRET:
+  CREDHUB_SERVER:
+  # - Required
+  # - Credentials to talk to credhub server
+
+  CREDHUB_CA_CERT:
+  # - Optional
+  # - This is only necessary if your Concourse worker
+  #   is not already configured to trust the CA used for Credhub
+
+  PREFIX:
+  # - Required
+  # - Prefix flag used by credhub interpolate
+
+  INTERPOLATION_PATHS: '.'
+  # - Required
+  # - Path the contains the files to read from
+  # - This is a space separated list of directories
+  #   the paths are all evaluated relative to files/
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -euo pipefail
+
+    # NOTE: The credhub cli does not ignore empty/null environment variables.
+    # https://github.com/cloudfoundry-incubator/credhub-cli/issues/68
+    if [ -z "$CREDHUB_CA_CERT" ]; then
+      unset CREDHUB_CA_CERT
+    fi
+
+    credhub --version
+
+    if [ -z "$PREFIX" ]; then
+      echo "Please specify a PREFIX. It is required."
+      exit 1
+    fi
+
+    # $INTERPOLATION_PATHS needs to be globbed to read multiple files
+    # shellcheck disable=SC2086
+    files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
+
+    for file in $files; do
+      echo "interpolating files/$file"
+      mkdir -p interpolated-files/"$(dirname "$file")"
+      credhub interpolate --prefix "$PREFIX" \
+      --file files/"$file" > interpolated-files/"$file"
+    done

@@ -1,0 +1,14 @@
+iaas_configuration_name: default
+iaas_configuration_region: us-east-2
+    
+# AZ Config:
+az1_name: us-east-2a
+az2_name: us-east-2b
+az3_name: us-east-2c
+
+# networks-configuration:
+icmp_checks_enabled: false
+
+infra_network_dns: 10.10.0.2
+deployment_network_dns: 10.10.0.2
+service_network_dns: 10.10.0.2

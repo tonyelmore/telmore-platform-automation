@@ -1,0 +1,55 @@
+---
+platform: linux
+
+inputs:
+- name: config
+- name: env
+- name: files
+- name: vars # variable files to be made available
+  optional: true
+- name: secrets
+  # secret files to be made available
+  # separate from vars, so they can be store securely
+  optional: true
+
+params:
+  NAME:
+  CONFIG_FILE: product.yml
+  ENV_FILE: env.yml
+  OPSMAN_SSH_PRIVATE_KEY:
+  VARS_FILES:
+  # - Optional
+  # - Filepath to the Ops Manager vars yaml file
+  # - The path is relative to root of the task build,
+  #   so `vars` and `secrets` can be used.
+
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -eu
+
+    if [ -z "$NAME" ]; then
+      echo "Must set NAME parameter"
+      exit 1
+    fi
+
+    if [ ! -z "$OPSMAN_SSH_PRIVATE_KEY" ]; then
+      ssh_key=$(mktemp)
+      echo "${OPSMAN_SSH_PRIVATE_KEY}" > ${ssh_key}
+      eval "$(om --env env/${ENV_FILE} bosh-env --ssh-private-key ${ssh_key})"
+    else
+      eval "$(om --env env/${ENV_FILE} bosh-env)"
+    fi
+
+    bosh upload-release files/*.tgz
+
+    vars_files_args=("")
+    for vf in ${VARS_FILES}
+    do
+      vars_files_args+=("--vars-file ${vf}")
+    done
+
+    bosh -n update-config --type runtime --name ${NAME} config/${CONFIG_FILE} ${vars_files_args[@]}

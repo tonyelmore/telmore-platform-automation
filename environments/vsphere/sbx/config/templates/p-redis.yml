@@ -1,0 +1,102 @@
+errand-config:
+  broker-deregistrar:
+    pre-delete-state: ((broker-deregistrar_pre_delete_state))
+  broker-registrar:
+    post-deploy-state: ((broker-registrar_post_deploy_state))
+  delete-all-service-instances-and-deregister-broker:
+    pre-delete-state: ((delete-all-service-instances-and-deregister-broker_pre_delete_state))
+  on-demand-broker-smoke-tests:
+    post-deploy-state: ((on-demand-broker-smoke-tests_post_deploy_state))
+  orphan-deployments:
+    post-deploy-state: ((orphan-deployments_post_deploy_state))
+  recreate-all-service-instances:
+    post-deploy-state: ((recreate-all-service-instances_post_deploy_state))
+  register-broker:
+    post-deploy-state: ((register-broker_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+  upgrade-all-service-instances:
+    post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-redis
+product-properties:
+  .cf-redis-broker.redis_maxmemory:
+    value: ((cf-redis-broker_redis_maxmemory))
+  .cf-redis-broker.service_instance_limit:
+    value: ((cf-redis-broker_service_instance_limit))
+  .properties.backups_selector:
+    value: No Backups
+  .properties.canary_org_space_selector:
+    value: "No"
+  .properties.large_plan_selector:
+    selected_option: inactive
+    value: Plan Inactive
+  .properties.medium_plan_selector:
+    value: Plan Active
+  .properties.medium_plan_selector.active.az_multi_select:
+    value: ((medium_plan_selector_active_az_multi_select))
+  .properties.medium_plan_selector.active.cf_service_access:
+    value: ((medium_plan_selector_active_cf_service_access))
+  .properties.medium_plan_selector.active.description:
+    value: ((medium_plan_selector_active_description))
+  .properties.medium_plan_selector.active.instance_limit:
+    value: ((medium_plan_selector_active_instance_limit))
+  .properties.medium_plan_selector.active.maxclients:
+    value: ((medium_plan_selector_active_maxclients))
+  .properties.medium_plan_selector.active.name:
+    value: ((medium_plan_selector_active_name))
+  .properties.medium_plan_selector.active.tcp_keepalive:
+    value: ((medium_plan_selector_active_tcp_keepalive))
+  .properties.medium_plan_selector.active.timeout:
+    value: ((medium_plan_selector_active_timeout))
+  .properties.metrics_polling_interval:
+    value: ((metrics_polling_interval))
+  .properties.small_plan_selector:
+    value: Plan Active
+  .properties.small_plan_selector.active.az_multi_select:
+    value: ((small_plan_selector_active_az_multi_select))
+  .properties.small_plan_selector.active.cf_service_access:
+    value: ((small_plan_selector_active_cf_service_access))
+  .properties.small_plan_selector.active.description:
+    value: ((small_plan_selector_active_description))
+  .properties.small_plan_selector.active.instance_limit:
+    value: ((small_plan_selector_active_instance_limit))
+  .properties.small_plan_selector.active.maxclients:
+    value: ((small_plan_selector_active_maxclients))
+  .properties.small_plan_selector.active.name:
+    value: ((small_plan_selector_active_name))
+  .properties.small_plan_selector.active.tcp_keepalive:
+    value: ((small_plan_selector_active_tcp_keepalive))
+  .properties.small_plan_selector.active.timeout:
+    value: ((small_plan_selector_active_timeout))
+  .properties.syslog_selector:
+    selected_option: inactive
+    value: "No"
+  .properties.tls_enable_selector:
+    value: Optional - Developers may configure their apps to use TLS.
+  .redis-on-demand-broker.maximum_parallel_upgrades:
+    value: ((redis-on-demand-broker_maximum_parallel_upgrades))
+  .redis-on-demand-broker.service_instance_limit:
+    value: ((redis-on-demand-broker_service_instance_limit))
+  .redis-on-demand-broker.upgrade_canary_number:
+    value: ((redis-on-demand-broker_upgrade_canary_number))
+resource-config:
+  cf-redis-broker:
+    instance_type:
+      id: ((cf-redis-broker_instance_type))
+    max_in_flight: ((cf-redis-broker_max_in_flight))
+    persistent_disk:
+      size_mb: ((cf-redis-broker_persistent_disk_size))
+  redis-on-demand-broker:
+    instance_type:
+      id: ((redis-on-demand-broker_instance_type))
+    instances: ((redis-on-demand-broker_instances))
+    max_in_flight: ((redis-on-demand-broker_max_in_flight))

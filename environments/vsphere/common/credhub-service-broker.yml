@@ -1,0 +1,4 @@
+network_name: PAS-Deployment
+singleton_availability_zone: pas-az1 
+
+deploy-all_post_deploy_state: false

@@ -1,0 +1,6 @@
+---
+team: main
+foundation: sbx
+iaas: aws
+lock_pool_name: aws-sbx
+concourse_user: admin

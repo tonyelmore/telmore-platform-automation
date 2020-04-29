@@ -1,0 +1,37 @@
+---
+infra_network_name: management
+deployment_network_name: pas
+service_network_name: services
+
+ntp_servers_string: 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
+
+blobstore_type: local
+bosh_recreate_on_next_deploy: false
+bosh_recreate_persistent_disks_on_next_deploy: false
+custom_ssh_banner:
+database_type: internal
+director_hostname:
+director_worker_count: 5
+disable_dns_release: false
+identification_tags: {}
+keep_unreachable_vms: false
+local_blobstore_tls_enabled: false
+max_threads:
+metrics_ip:
+
+opentsdb_ip:
+post_deploy_enabled: false
+resurrector_enabled: true
+retry_bosh_deploys: false
+
+# security_configuration:
+generate_vm_passwords: true
+
+# syslog_configuration:
+syslog_enabled: false
+
+#resource configuration
+compilation_instances: automatic
+compilation_instance_type: automatic
+director_disk_size_mb: "204800"
+director_instance_type: automatic

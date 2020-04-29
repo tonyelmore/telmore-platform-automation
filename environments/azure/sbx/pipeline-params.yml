@@ -1,0 +1,6 @@
+---
+team: dev-poc
+foundation: sandbox
+iaas: azure
+lock_pool_name: azure-sandbox
+concourse_user: admin

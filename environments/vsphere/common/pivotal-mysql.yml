@@ -1,0 +1,8 @@
+---
+network_name: PAS-Deployment
+singleton_availability_zone: pas-az1
+
+#errands
+register-broker_post_deploy_state: off
+smoke-tests_post_deploy_state: off
+upgrade-all-service-instances_post_deploy_state: off

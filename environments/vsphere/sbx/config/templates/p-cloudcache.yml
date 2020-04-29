@@ -1,0 +1,99 @@
+errand-config:
+  delete-all-service-instances-and-deregister-broker:
+    pre-delete-state: ((delete-all-service-instances-and-deregister-broker_pre_delete_state))
+  register-broker:
+    post-deploy-state: ((register-broker_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+  upgrade-all-service-instances:
+    post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-cloudcache
+product-properties:
+  .properties.authenticate_with_uaa:
+    value: disable
+  .properties.canary_selection_params:
+    value: disable
+  .properties.confirm_tls_setup:
+    value: ((confirm_tls_setup))
+  .properties.default_distributed_system_id:
+    value: ((default_distributed_system_id))
+  .properties.dev_plan_enable_service_plan:
+    value: enable
+  .properties.dev_plan_enable_service_plan.enable.cf_service_access:
+    value: ((dev_plan_enable_service_plan_enable_cf_service_access))
+  .properties.dev_plan_enable_service_plan.enable.plan_description:
+    value: ((dev_plan_enable_service_plan_enable_plan_description))
+  .properties.dev_plan_enable_service_plan.enable.plan_name:
+    value: ((dev_plan_enable_service_plan_enable_plan_name))
+  .properties.dev_plan_enable_service_plan.enable.service_instance_azs:
+    value: ((dev_plan_enable_service_plan_enable_service_instance_azs))
+  .properties.dev_plan_enable_service_plan.enable.service_instance_quota:
+    value: ((dev_plan_enable_service_plan_enable_service_instance_quota))
+  .properties.enable_secure_binding:
+    value: ((enable_secure_binding))
+  .properties.number_simultaneous_upgrades:
+    value: ((number_simultaneous_upgrades))
+  .properties.number_upgrade_canary_instances:
+    value: ((number_upgrade_canary_instances))
+  .properties.plan1_enable_service_plan:
+    value: enable
+  .properties.plan1_enable_service_plan.enable.cf_service_access:
+    value: ((plan1_enable_service_plan_enable_cf_service_access))
+  .properties.plan1_enable_service_plan.enable.default_num_servers:
+    value: ((plan1_enable_service_plan_enable_default_num_servers))
+  .properties.plan1_enable_service_plan.enable.max_servers_per_cluster:
+    value: ((plan1_enable_service_plan_enable_max_servers_per_cluster))
+  .properties.plan1_enable_service_plan.enable.plan_description:
+    value: ((plan1_enable_service_plan_enable_plan_description))
+  .properties.plan1_enable_service_plan.enable.plan_name:
+    value: ((plan1_enable_service_plan_enable_plan_name))
+  .properties.plan1_enable_service_plan.enable.service_instance_azs:
+    value: ((plan1_enable_service_plan_enable_service_instance_azs))
+  .properties.plan1_enable_service_plan.enable.service_instance_quota:
+    value: ((plan1_enable_service_plan_enable_service_instance_quota))
+  .properties.plan2_enable_service_plan:
+    selected_option: disable
+    value: disable
+  .properties.plan3_enable_service_plan:
+    selected_option: disable
+    value: disable
+  .properties.plan4_enable_service_plan:
+    selected_option: disable
+    value: disable
+  .properties.plan5_enable_service_plan:
+    selected_option: disable
+    value: disable
+  .properties.settings_shareable_instances:
+    value: "No"
+  .properties.small_footprint_enable_service_plan:
+    value: enable
+  .properties.small_footprint_enable_service_plan.enable.cf_service_access:
+    value: ((small_footprint_enable_service_plan_enable_cf_service_access))
+  .properties.small_footprint_enable_service_plan.enable.max_servers_per_cluster:
+    value: ((small_footprint_enable_service_plan_enable_max_servers_per_cluster))
+  .properties.small_footprint_enable_service_plan.enable.plan_description:
+    value: ((small_footprint_enable_service_plan_enable_plan_description))
+  .properties.small_footprint_enable_service_plan.enable.plan_name:
+    value: ((small_footprint_enable_service_plan_enable_plan_name))
+  .properties.small_footprint_enable_service_plan.enable.service_instance_azs:
+    value: ((small_footprint_enable_service_plan_enable_service_instance_azs))
+  .properties.small_footprint_enable_service_plan.enable.service_instance_quota:
+    value: ((small_footprint_enable_service_plan_enable_service_instance_quota))
+  .properties.syslog:
+    value: disable
+resource-config:
+  cloudcache-broker:
+    instance_type:
+      id: ((cloudcache-broker_instance_type))
+    max_in_flight: ((cloudcache-broker_max_in_flight))
+    persistent_disk:
+      size_mb: ((cloudcache-broker_persistent_disk_size))

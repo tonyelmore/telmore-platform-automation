@@ -1,0 +1,5 @@
+features/nsx_auth-simple.yml
+optional/add-nsx_api_ca_cert.yml
+optional/add-foundation_name.yml
+optional/add-overlay_tz.yml
+optional/add-1-external_ip_pools.yml
