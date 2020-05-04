@@ -1,0 +1,135 @@
+errand-config:
+  clone-db:
+    post-deploy-state: ((clone-db_post_deploy_state))
+  delete-all-clusters:
+    pre-delete-state: ((delete-all-clusters_pre_delete_state))
+  pks-nsx-t-precheck:
+    post-deploy-state: ((pks-nsx-t-precheck_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+  upgrade-all-service-instances:
+    post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
+  wavefront-alert-creation:
+    post-deploy-state: ((wavefront-alert-creation_post_deploy_state))
+  wavefront-alert-deletion:
+    pre-delete-state: ((wavefront-alert-deletion_pre_delete_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: pivotal-container-service
+product-properties:
+  .pivotal-container-service.pks_tls:
+    value:
+      cert_pem: ((pivotal-container-service_pks_tls_certificate))
+      private_key_pem: ((pivotal-container-service_pks_tls_privatekey))
+  .properties.log_sink_resources_deploy:
+    value: ((log_sink_resources_deploy))
+  .properties.metric_sink_resources_deploy:
+    value: ((metric_sink_resources_deploy))
+  .properties.network_selector:
+    value: flannel
+  .properties.network_selector.flannel.pod_network_cidr:
+    value: ((network_selector_flannel_pod_network_cidr))
+  .properties.network_selector.flannel.service_cluster_cidr:
+    value: ((network_selector_flannel_service_cluster_cidr))
+  .properties.node_exporter_deploy:
+    value: ((node_exporter_deploy))
+  .properties.oidc_selector:
+    value: disabled
+  .properties.pks-vrli:
+    value: disabled
+  .properties.pks-vrops:
+    value: disabled
+  .properties.pks_api_hostname:
+    value: ((pks_api_hostname))
+  .properties.plan1_selector:
+    value: Plan Active
+  .properties.plan1_selector.active.description:
+    value: ((plan1_selector_active_description))
+  .properties.plan1_selector.active.master_az_placement:
+    value: ((plan1_selector_active_master_az_placement))
+  .properties.plan1_selector.active.master_instances:
+    value: ((plan1_selector_active_master_instances))
+  .properties.plan1_selector.active.max_worker_instances:
+    value: ((plan1_selector_active_max_worker_instances))
+  .properties.plan1_selector.active.name:
+    value: ((plan1_selector_active_name))
+  .properties.plan1_selector.active.worker_az_placement:
+    value: ((plan1_selector_active_worker_az_placement))
+  .properties.plan1_selector.active.worker_instances:
+    value: ((plan1_selector_active_worker_instances))
+  .properties.plan2_selector:
+    value: Plan Inactive
+  .properties.plan3_selector:
+    value: Plan Inactive
+  .properties.plan4_selector:
+    value: Plan Inactive
+  .properties.plan5_selector:
+    value: Plan Inactive
+  .properties.plan6_selector:
+    value: Plan Inactive
+  .properties.plan7_selector:
+    value: Plan Inactive
+  .properties.plan8_selector:
+    value: Plan Inactive
+  .properties.plan9_selector:
+    value: Plan Inactive
+  .properties.plan10_selector:
+    value: Plan Inactive
+  .properties.plan11_selector:
+    value: Plan Inactive
+  .properties.plan12_selector:
+    value: Plan Inactive
+  .properties.plan13_selector:
+    value: Plan Inactive
+  .properties.proxy_selector:
+    value: Disabled
+  .properties.syslog_selector:
+    value: disabled
+  .properties.telegraf_selector:
+    value: disabled
+  .properties.telemetry_selector:
+    value: enabled
+  .properties.telemetry_selector.enabled.billing_polling_interval:
+    value: ((telemetry_selector_enabled_billing_polling_interval))
+  .properties.telemetry_selector.enabled.environment_provider:
+    value: ((telemetry_selector_enabled_environment_provider))
+  .properties.telemetry_selector.enabled.telemetry_polling_interval:
+    value: ((telemetry_selector_enabled_telemetry_polling_interval))
+  .properties.telemetry_selector.enabled.telemetry_url:
+    value: ((telemetry_selector_enabled_telemetry_url))
+  .properties.tmc:
+    value: disabled
+  .properties.uaa:
+    value: internal
+  .properties.uaa_pks_cli_access_token_lifetime:
+    value: ((uaa_pks_cli_access_token_lifetime))
+  .properties.uaa_pks_cli_refresh_token_lifetime:
+    value: ((uaa_pks_cli_refresh_token_lifetime))
+  .properties.uaa_pks_cluster_client_access_token_lifetime:
+    value: ((uaa_pks_cluster_client_access_token_lifetime))
+  .properties.uaa_pks_cluster_client_refresh_token_lifetime:
+    value: ((uaa_pks_cluster_client_refresh_token_lifetime))
+  .properties.wavefront:
+    value: disabled
+  .properties.worker_max_in_flight:
+    value: ((worker_max_in_flight))
+resource-config:
+  pivotal-container-service:
+    instance_type:
+      id: ((pivotal-container-service_instance_type))
+    max_in_flight: ((pivotal-container-service_max_in_flight))
+    persistent_disk:
+      size_mb: ((pivotal-container-service_persistent_disk_size))
+  pks-db:
+    instance_type:
+      id: ((pks-db_instance_type))
+    max_in_flight: ((pks-db_max_in_flight))
+    persistent_disk:
+      size_mb: ((pks-db_persistent_disk_size))
