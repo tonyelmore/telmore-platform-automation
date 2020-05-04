@@ -77,3 +77,5 @@ tf2credhub 'ops_manager_security_group_id'
 tf2credhub 'management_subnet_ids'
 tf2credhub 'platform_vms_security_group_id'
 tf2credhub 'vpc_id'
+tf2credhub 'pks_api_lb_security_group_id'
+
