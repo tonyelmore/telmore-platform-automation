@@ -35,7 +35,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore.git
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
 
 - name: configuration
@@ -43,7 +43,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore.git
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/pipeline.yml"
@@ -54,7 +54,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore.git
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/config-director"
@@ -62,7 +62,7 @@ resources:
 - name: lock
   type: pool
   source:
-    uri: https://github.com/tonyelmore/telmore.git
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     branch: master
     username: ((github_username))
     password: ((github_token))

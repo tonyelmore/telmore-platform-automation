@@ -2,7 +2,7 @@ resources:
 - name: lock
   type: pool
   source:
-    uri: hhttps://github.com/tonyelmore/telmore.git
+    uri: hhttps://github.com/tonyelmore/telmore-platform-automation.git
     branch: master
     username: ((github_username))
     password: ((github_token))
