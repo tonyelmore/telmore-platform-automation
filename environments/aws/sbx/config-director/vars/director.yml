@@ -1,6 +1,6 @@
 environment_name: sbx
 
-vpc_id: vpc-098b8fa451c7bd2a3
+vpc_id: vpc-0e14501d9456e4348
 username: opsman
 
 # env
@@ -11,13 +11,13 @@ skip-ssl-validation: true     # default false
 opsman_host: opsmanager.sbx.viewlifeline.com
 ops_manager_iam_instance_profile_name: sbx-ops-manager
 ops_manager_key_pair_name: sbx-ops-manager-key
-ops_manager_public_ip: 35.155.70.211
+ops_manager_public_ip: 54.188.41.144
 region: us-west-2
 aws_region: us-west-2
-ops_manager_security_group_id: sg-014f9ac989348efe8
-ops_manager_subnet_id: subnet-0cb4f341aa7ac5b7a
+ops_manager_security_group_id: sg-08f16c8d611f82dc8
+ops_manager_subnet_id: subnet-03ace534b63ffab78
 ops_manager_iam_instance_profile_name: sbx-ops-manager
-platform_vms_security_group_id: sg-05655886c2f0278dd
+platform_vms_security_group_id: sg-0b2eeffe71d59d696
 
 
 
@@ -42,61 +42,61 @@ icmp_checks_enabled: false
 infra_network-name: Infrastructure
 infra_network_dns: 169.254.169.253
 infra_az1_network_cidr: 10.0.16.0/24
-infra_az1_network_reserved_ip_range: 10.0.16.1-10.0.16.10
+infra_az1_network_reserved_ip_range: 10.0.16.1-10.0.16.9
 infra_az1_network_gateway: 10.0.16.1
-infra_az1_network_id: subnet-08a42a0305ddf254a
+infra_az1_network_id: subnet-0538cd96cf2691c9d
 infra_az2_network_cidr: 10.0.17.0/24
-infra_az2_network_reserved_ip_range: 10.0.17.1-10.0.17.10
+infra_az2_network_reserved_ip_range: 10.0.17.1-10.0.17.9
 infra_az2_network_gateway: 10.0.17.1
-infra_az2_network_id: subnet-0a74567bba66ceec5
+infra_az2_network_id: subnet-0686abd286da471a0
 infra_az3_network_cidr: 10.0.18.0/24
-infra_az3_network_reserved_ip_range: 10.0.18.1-10.0.18.10
+infra_az3_network_reserved_ip_range: 10.0.18.1-10.0.18.9
 infra_az3_network_gateway: 10.0.18.1
-infra_az3_network_id: subnet-0754e24dfaf67a3e2
+infra_az3_network_id: subnet-07697d5beebfde819
 
 pas_network_name: PAS-Deployment
 pas_network_dns: 169.254.169.253
 pas_network_az1_cidr: 10.0.4.0/24
-pas_network_az1_reserved_ip_range: 10.0.4.1-10.0.4.10
+pas_network_az1_reserved_ip_range: 10.0.4.1-10.0.4.9
 pas_network_az1_gateway: 10.0.4.1
-pas_network_az1_network_id: subnet-0634e20954cc2fa9c
+pas_network_az1_network_id: subnet-04ff4167240e03754
 pas_network_az2_cidr: 10.0.5.0/24
-pas_network_az2_reserved_ip_range: 10.0.5.1-10.0.5.10
+pas_network_az2_reserved_ip_range: 10.0.5.1-10.0.5.9
 pas_network_az2_gateway: 10.0.5.1
-pas_network_az2_network_id: subnet-0d57068253fe181d6
+pas_network_az2_network_id: subnet-039d98d49703676e6
 pas_network_az3_cidr: 10.0.6.0/24
-pas_network_az3_reserved_ip_range: 10.0.6.1-10.0.6.10
+pas_network_az3_reserved_ip_range: 10.0.6.1-10.0.6.9
 pas_network_az3_gateway: 10.0.6.1
-pas_network_az3_network_id: subnet-0e5b9f4ab82be2ca4
+pas_network_az3_network_id: subnet-0b8e946fdac228eb2
 
 pks_network_name: PKS-Deployment
 pks_network_dns: 169.254.169.253
 pks_network_az1_cidr: 10.0.12.0/24
-pks_network_az1_reserved_ip_range: 10.0.12.1-10.0.12.10
+pks_network_az1_reserved_ip_range: 10.0.12.1-10.0.12.9
 pks_network_az1_gateway: 10.0.12.1
-pks_network_az1_network_id: subnet-0896c841d5ddce09f
+pks_network_az1_network_id: subnet-094ea36edb468bc16
 pks_network_az2_cidr: 10.0.13.0/24
-pks_network_az2_reserved_ip_range: 10.0.13.1-10.0.13.10
+pks_network_az2_reserved_ip_range: 10.0.13.1-10.0.13.9
 pks_network_az2_gateway: 10.0.13.1
-pks_network_az2_network_id: subnet-092b126db8004105f
+pks_network_az2_network_id: subnet-0356065bbb35b07c9
 pks_network_az3_cidr: 10.0.14.0/24
-pks_network_az3_reserved_ip_range: 10.0.14.1-10.0.14.10
+pks_network_az3_reserved_ip_range: 10.0.14.1-10.0.14.9
 pks_network_az3_gateway: 10.0.12.1
-pks_network_az3_network_id: subnet-0301413e07e595949
+pks_network_az3_network_id: subnet-00b62c51ebb9ac58c
 
 service_network_name: Services
 service_network_dns: 169.254.169.253
 service_network_az1_cidr: 10.0.8.0/24
 service_network_az1_gateway: 10.0.8.1
-service_network_az1_reserved_ip_range: 10.0.8.1-10.0.8.10
-service_network_az1_network_id: subnet-066f0ce6ec31af928
+service_network_az1_reserved_ip_range: 10.0.8.1-10.0.8.9
+service_network_az1_network_id: subnet-0c635c547ec90d910
 service_network_az2_cidr: 10.0.9.0/24
 service_network_az2_gateway: 10.0.9.1
-service_network_az2_reserved_ip_range: 10.0.9.1-10.0.9.10
-service_network_az2_network_id: subnet-0fdb0ffb981bcf842
+service_network_az2_reserved_ip_range: 10.0.9.1-10.0.9.9
+service_network_az2_network_id: subnet-03b17d599377a2de6
 service_network_az3_cidr: 10.0.10.0/24
 service_network_az3_gateway: 10.0.10.1
-service_network_az3_reserved_ip_range: 10.0.10.1-10.0.10.10
-service_network_az3_network_id: subnet-0f49a215d00f8e547
+service_network_az3_reserved_ip_range: 10.0.10.1-10.0.10.9
+service_network_az3_network_id: subnet-09b22e95eb9cc1d62
 
 director_disk_size_mb: "204800"
