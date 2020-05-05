@@ -81,7 +81,7 @@ pks_network_az2_gateway: 10.0.13.1
 pks_network_az2_network_id: subnet-0356065bbb35b07c9
 pks_network_az3_cidr: 10.0.14.0/24
 pks_network_az3_reserved_ip_range: 10.0.14.1-10.0.14.9
-pks_network_az3_gateway: 10.0.12.1
+pks_network_az3_gateway: 10.0.14.1
 pks_network_az3_network_id: subnet-00b62c51ebb9ac58c
 
 service_network_name: Services
