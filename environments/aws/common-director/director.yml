@@ -23,7 +23,7 @@ max_threads:
 metrics_ip:
 
 opentsdb_ip:
-post_deploy_enabled: false
+post_deploy_enabled: true
 resurrector_enabled: true
 retry_bosh_deploys: false
 
