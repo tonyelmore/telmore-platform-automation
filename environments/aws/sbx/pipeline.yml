@@ -667,6 +667,111 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: healthwatch-forwarder/first
 
+- name: pivotal-container-service
+  serial: true
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ p-healthwatch ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-container-service.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-container-service-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-container-service.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-container-service.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/pivotal-container-service.yml
+        vars/environments/((iaas))/common/pivotal-container-service.yml
+        vars/environments/((iaas))/((foundation))/config/vars/pivotal-container-service.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/pivotal-container-service.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-container-service.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+- name: pivotal-container-service-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pivotal-container-service ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: run-smoke_tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-container-service.yml
+      ERRAND_NAME: smoke_tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      # INSTANCE: clock_global/first
+
 - name: unlock-tile
   serial: true
   plan:
@@ -675,6 +780,7 @@ jobs:
     passed:
     - "pas-errands"
     - "p-healthwatch-errands"
+    - "pivotal-container-service-errands"
   - get: lock
   - put: lock
     params:

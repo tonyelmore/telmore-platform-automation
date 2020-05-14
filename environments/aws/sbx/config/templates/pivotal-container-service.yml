@@ -6,7 +6,7 @@ errand-config:
   pks-nsx-t-precheck:
     post-deploy-state: ((pks-nsx-t-precheck_post_deploy_state))
   smoke-tests:
-    post-deploy-state: ((smoke-tests_post_deploy_state))
+    post-deploy-state: ((c))
   upgrade-all-service-instances:
     post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
   wavefront-alert-creation:
@@ -18,6 +18,8 @@ network-properties:
     name: ((network_name))
   other_availability_zones:
   - name: ((singleton_availability_zone))
+  - name: ((az2_name))
+  - name: ((az3_name))
   service_network:
     name: ((service_network_name))
   singleton_availability_zone:
@@ -28,6 +30,13 @@ product-properties:
     value:
       cert_pem: ((pivotal-container-service_pks_tls_certificate))
       private_key_pem: ((pivotal-container-service_pks_tls_privatekey))
+  .properties.cloud_provider:
+    selected_option: aws
+    value: AWS
+  .properties.cloud_provider.aws.iam_instance_profile_master:
+    value: ((cloud_provider_aws_iam_instance_profile_master))
+  .properties.cloud_provider.aws.iam_instance_profile_worker:
+    value: ((cloud_provider_aws_iam_instance_profile_worker))
   .properties.log_sink_resources_deploy:
     value: ((log_sink_resources_deploy))
   .properties.metric_sink_resources_deploy:
@@ -94,6 +103,9 @@ product-properties:
     value: disabled
   .properties.telegraf_selector:
     value: disabled
+  .properties.telemetry_installation_purpose_selector:
+    selected_option: demo_or_poc
+    value: demo_or_poc
   .properties.telemetry_selector:
     value: enabled
   .properties.telemetry_selector.enabled.billing_polling_interval:
@@ -122,6 +134,7 @@ product-properties:
     value: ((worker_max_in_flight))
 resource-config:
   pivotal-container-service:
+    elb_names: ((pivotal-container-service_elb_names))
     instance_type:
       id: ((pivotal-container-service_instance_type))
     max_in_flight: ((pivotal-container-service_max_in_flight))
