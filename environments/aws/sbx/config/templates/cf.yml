@@ -170,9 +170,8 @@ product-properties:
   .properties.haproxy_client_cert_validation:
     value: none
   .properties.haproxy_forward_tls:
-    value: enable
-  .properties.haproxy_forward_tls.enable.backend_ca:
-    value: ((haproxy_forward_tls_enable_backend_ca))
+    selected_option: disable
+    value: disable
   .properties.haproxy_hsts_support:
     value: disable
   .properties.haproxy_max_buffer_size:
