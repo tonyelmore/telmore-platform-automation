@@ -413,7 +413,7 @@ jobs:
   - task: apply-product-changes
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-    attempts: 10
+    attempts: 2
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -609,7 +609,7 @@ jobs:
   - task: apply-product-changes
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-    attempts: 10
+    attempts: 2
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -727,7 +727,7 @@ jobs:
   - task: apply-product-changes
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-    attempts: 10
+    attempts: 2
     input_mapping:
       config: configuration
       env: interpolated-files
