@@ -1,0 +1,6 @@
+---
+network_name: PAS-Deployment
+service_network_name: Services
+
+push-apps_post_deploy_state: off
+smoke-tests_post_deploy_state: off
