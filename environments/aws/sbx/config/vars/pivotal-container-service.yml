@@ -1,7 +1,7 @@
 network_name: PKS-Deployment
 service_network_name: Services
 pks_api_hostname: api.pks.sbx.viewlifeline.com
-plan1_selector_active_master_az_placement: us-west-2a
+plan1_selector_active_master_az_placement: ["us-west-2a"]
 plan1_selector_active_worker_az_placement: ["us-west-2a","us-west-2b","us-west-2c"]
 singleton_availability_zone: us-west-2a
 
