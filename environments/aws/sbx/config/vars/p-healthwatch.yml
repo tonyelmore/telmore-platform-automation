@@ -1,5 +1,5 @@
 ---
-singleton_availability_zone: az1
-healthwatch-forwarder_health_check_az: az1
+singleton_availability_zone: us-west-2a
+healthwatch-forwarder_health_check_az: us-west-2a
 opsman_enable_url: https://opsmanager.sbx.viewlifeline.com
 boshtasks_enable_bosh_taskcheck_username: hwboshchecker
