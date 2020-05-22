@@ -73,6 +73,8 @@ product-properties:
     value: ((plan1_selector_active_worker_az_placement))
   .properties.plan1_selector.active.worker_instances:
     value: ((plan1_selector_active_worker_instances))
+  .properties.plan1_selector.active.worker_vm_type:
+    value: ((plan1_selector_active_worker_vm_type))
   .properties.plan2_selector:
     value: Plan Inactive
   .properties.plan3_selector:

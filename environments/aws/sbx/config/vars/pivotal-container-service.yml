@@ -14,26 +14,3 @@ pivotal-container-service_elb_names: "alb:sbx-pks-tg-8443,alb:sbx-pks-tg-9021"
 upgrade-all-service-instances_post_deploy_state: false
 smoke-tests_post_deploy_state: false
 
-pivotal-container-service_pks_tls_certificate: |-
-  -----BEGIN CERTIFICATE-----
-  MIIDjzCCAnegAwIBAgIUPQkdQH1LbvFOSNMyuyxLCLYGUS0wDQYJKoZIhvcNAQEL
-  BQAwHzELMAkGA1UEBhMCVVMxEDAOBgNVBAoMB1Bpdm90YWwwHhcNMjAwNTEyMjMy
-  NTQxWhcNMjIwNTEyMjMyNTQxWjBGMQswCQYDVQQGEwJVUzEQMA4GA1UECgwHUGl2
-  b3RhbDElMCMGA1UEAwwcYXBpLnBrcy5zYngudmlld2xpZmVsaW5lLmNvbTCCASIw
-  DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMaL6apMWOU01ScuAHGdQvQVrrIz
-  h5EAM0wqjo00o2oHss4cAq0PLpiAqiK7oYW+twCpHvHkhW24pkwrYT02B6Po6ePL
-  c8M+/aoc/JiLfVqLbrOQ3JnFOQAq8YtMOgyyaCJ2edG2ThBOTwywpyqqP8mGZ+8y
-  CX2FAxMx+kUCkfef/kfG8IC8sSLDOagUqfhQB5BYBNajuErGd85x3BGEx1OcZuFG
-  Fh7wpwPUh3fWAa25rfvmhlNGAOkEucWSxRzQGvJeJuD7HLQi7lPDVYBf7n91whp7
-  71qUkgbWajP1wYwz5amOGb3fcxeQaq1ahj8BDQpJx+tXCjcQ1/wzDf8EgXECAwEA
-  AaOBmzCBmDAdBgNVHQ4EFgQU4snicPBjUMKv/YZ/x9pIc183mEswHwYDVR0jBBgw
-  FoAUWr/oHLo/Ut8SGl3vpu+8X2Od/nUwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsG
-  AQUFBwMBMA4GA1UdDwEB/wQEAwIHgDAnBgNVHREEIDAeghxhcGkucGtzLnNieC52
-  aWV3bGlmZWxpbmUuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQBqMg7m2Zcwqx7Vdgr7
-  ZelUcJ8DCI6bnK+zLC6ScTsVOYfXaSrRVy8tGDb32O28EN77OwX3CjGb2fxSR3Kl
-  +8eAMzaypa9RqCLL8WGvRKgqcy1p34CgI6g+4+H1ZlmImNC3Odd/2LC3aQ2+Pen1
-  DkTbs6FK8rcNyXZ8MAS3TpQm55wxAFL+Cei+qNwLwj961DlmdRjLKcdJvNhyXJ7p
-  QPUgWEZ01hy3lsPl0SomuNNHivnkjvM+TrYThS4SJWhlkagm/9tH1tBsws67U48U
-  JkIt8RQf5FoLzuJ4/Je0RUtiD4alZZbVcXlqJjCeafIyvfpyQGWdR8W4oiJJD3uD
-  1sl4
-  -----END CERTIFICATE-----
