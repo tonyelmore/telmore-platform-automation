@@ -38,5 +38,3 @@ pivotal-container-service_persistent_disk_size: automatic
 pks-db_instance_type: automatic
 pks-db_max_in_flight: default
 pks-db_persistent_disk_size: automatic
-
-plan1_selector_active_worker_vm_type: automatic
