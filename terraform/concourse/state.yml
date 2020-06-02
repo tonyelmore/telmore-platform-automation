@@ -1,2 +1,2 @@
-iaas: aws
-vm_id: i-094c8d334672dbc24
+iaas: azure
+vm_id: my3votes-concourse-ops-manager-vm

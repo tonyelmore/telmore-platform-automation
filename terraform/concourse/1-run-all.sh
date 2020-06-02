@@ -3,12 +3,12 @@
 # set -x
 
 TOOLKIT_IMAGE_VERSION="4.3.4"
-export IAAS="aws"
+export IAAS="azure"
 
 echo "*********** Getting terraform output..."
-terraform output -state=../paving-aws-concourse/terraform.tfstate stable_config > terraform-outputs.yml
+terraform output -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config > terraform-outputs-${IAAS}.yml
 
-export CONCOURSE_URL="$(terraform output -state=../paving-aws-concourse/terraform.tfstate concourse_url)"
+export CONCOURSE_URL="$(terraform output -state=../paving-${IAAS}-concourse/terraform.tfstate concourse_url)"
 
 : ${OM_USERNAME?"Need to set OM_USERNAME ... Please run '. ./0-set-env.sh'"}
 : ${OM_PASSWORD?"Need to set OM_PASSWORD ... Please run '. ./0-set-env.sh'"}
@@ -27,11 +27,11 @@ fi
 echo "*********** Creating opsman"
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
   p-automator create-vm \
-    --config config-files/opsman-config.yml \
-    --image-file downloaded-resources/opsman-image/ops-manager-aws*.yml \
-    --vars-file terraform-outputs.yml
+    --config config-files/opsman-config-${IAAS}.yml \
+    --image-file downloaded-resources/opsman-image/${IAAS}/ops-manager-${IAAS}*.yml \
+    --vars-file terraform-outputs-${IAAS}.yml
 
-export OM_TARGET="$(om interpolate -c terraform-outputs.yml --path /ops_manager_dns)"
+export OM_TARGET="$(om interpolate -c terraform-outputs-${IAAS}.yml --path /ops_manager_dns)"
 
 echo "*********** Sleep for 2 min to allow opsman vm time to initialize"
 sleep 120
@@ -44,15 +44,15 @@ om --env config-files/env.yml configure-authentication \
 
 echo "*********** Configuring Director"
 om --env config-files/env.yml configure-director \
-   --config config-files/director-config.yml \
-   --vars-file terraform-outputs.yml
+   --config config-files/director-config-${IAAS}.yml \
+   --vars-file terraform-outputs-${IAAS}.yml
 
 echo "*********** Applying Changes for Director configuration"
 om --env config-files/env.yml apply-changes \
    --skip-deploy-products
 
 om interpolate \
-  -c terraform-outputs.yml \
+  -c terraform-outputs-${IAAS}.yml \
   --path /ops_manager_ssh_private_key > /tmp/private_key
 
 eval "$(om --env config-files/env.yml bosh-env --ssh-private-key=/tmp/private_key)"
@@ -70,7 +70,7 @@ bosh upload-release downloaded-resources/releases/credhub-release*.tgz
 bosh upload-release downloaded-resources/releases/backup-and-restore-sdk-release*.tgz
 
 echo "*********** Uploading stemcell"
-bosh upload-stemcell downloaded-resources/stemcells/*stemcell*.tgz
+bosh upload-stemcell downloaded-resources/stemcells/${IAAS}/*stemcell-${IAAS}*.tgz
 
 credhub set \
    -n /p-bosh/concourse/local_user \
@@ -94,7 +94,7 @@ bosh -n -d concourse deploy downloaded-resources/concourse-bosh-deployment/clust
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
   -o config-files/operations.yml \
-  -l <(om interpolate --config config-files/vars.yml --vars-env CONCOURSE --vars-file terraform-outputs.yml) \
+  -l <(om interpolate --config config-files/vars.yml --vars-env CONCOURSE --vars-file terraform-outputs-${IAAS}.yml) \
   -l downloaded-resources/concourse-bosh-deployment/versions.yml
 
 export CONCOURSE_CREDHUB_SECRET="$(credhub get -n /p-bosh/concourse/credhub_admin_secret -q)"
@@ -116,7 +116,7 @@ curl "https://${CONCOURSE_URL}/api/v1/cli?arch=amd64&platform=${PLATFORM}" \
 chmod +x fly
 
 echo "*********** Logging in to concourse"
-fly -t ci login \
+fly -t ci-${IAAS} login \
   -c "https://${CONCOURSE_URL}" \
   -u "${ADMIN_USERNAME}" \
   -p "${ADMIN_PASSWORD}" \
