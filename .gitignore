@@ -12,5 +12,7 @@ environments/azure/nginx-ingress/
 terraform.tfstate
 terraform/paving-aws-concourse/
 terraform/paving-aws-sbx/
+terraform/paving-azure-concourse/
+terraform/paving-azure-sbx/
 target*.sh
 credhub-input.yml
