@@ -38,7 +38,7 @@ run:
   - "-c"
   - |
     cat /var/version && echo ""
-    set -eux
+    # set -eux
 
     function process-product {
 
