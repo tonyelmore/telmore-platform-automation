@@ -89,10 +89,15 @@ jobs:
       config: configuration
       secrets: interpolated-files
     params:
-      PRODUCT_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
-      STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
+     # PRODUCT_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
+     # STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+      FILES: |
+        environments/((iaas))/((foundation))/config/versions/cf.yml
+        environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
+        environments/((iaas))/((foundation))/config/versions/p-healthwatch.yml
+        environments/((iaas))/((foundation))/config/versions/p-healthwatch-stemcell.yml
       VARS_FILES: |
         secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
         secrets/environments/((iaas))/((foundation))/config/secrets/azure.yml

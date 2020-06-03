@@ -8,11 +8,11 @@ inputs:
 - name: jq
 
 params:
-  PRODUCT_CONFIG_FILE: 
+  # PRODUCT_CONFIG_FILE: 
   # - Filepath to the product configuration yaml file
   # - The path is relative to the root of the `config` input
 
-  STEMCELL_CONFIG_FILE:
+  # STEMCELL_CONFIG_FILE:
   # - Filepath to the stemcell configuration yaml file
   # - The path is relative to the root of the `config` input
 
@@ -32,6 +32,9 @@ params:
 
   PIVNET_SECRETS_PATH:
   # - Path to the pivnet secrets
+
+  CONFIG_FILES:
+  # - Filepaths to the configuration yml files
 
 run:
   path: bash
@@ -103,13 +106,13 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
-    process-product ${PRODUCT_CONFIG_FILE}
+    # process-product ${PRODUCT_CONFIG_FILE}
     # process-product ${STEMCELL_CONFIG_FILE}
 
     # Alternatively - if we want to have a single task with a list of config files
     # which would make the pipeline much simpler and would remove the need for the locks
     # And if you wanted a single product - just write a new pipeline
-    # for vf in ${CONFIG_FILES}
-    # do
-    #   process-product ${vf}
-    # done
+    for vf in ${CONFIG_FILES}
+    do
+      process-product ${vf}
+    done
