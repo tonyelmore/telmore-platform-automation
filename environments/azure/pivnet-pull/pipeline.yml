@@ -93,7 +93,7 @@ jobs:
      # STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
-      FILES: |
+      CONFIG_FILES: |
         environments/((iaas))/((foundation))/config/versions/cf.yml
         environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
         environments/((iaas))/((foundation))/config/versions/p-healthwatch.yml

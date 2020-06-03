@@ -22,8 +22,7 @@ params:
   # - The path is relative to root of the task build,
   #   so `vars` and `secrets` can be used.
   
-  #CONFIG_FILES:
-  # - Optional
+  CONFIG_FILES:
   # - List of all the product and stemcell configuration yaml files
   # - The path is relative to the root of the 'config' input
 
@@ -32,9 +31,6 @@ params:
 
   PIVNET_SECRETS_PATH:
   # - Path to the pivnet secrets
-
-  CONFIG_FILES:
-  # - Filepaths to the configuration yml files
 
 run:
   path: bash
