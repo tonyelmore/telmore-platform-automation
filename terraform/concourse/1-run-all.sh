@@ -4,6 +4,7 @@
 
 TOOLKIT_IMAGE_VERSION="4.3.4"
 export IAAS="azure"
+export PLATFORM="darwin"
 
 echo "*********** Getting terraform output..."
 terraform output -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config > terraform-outputs-${IAAS}.yml
@@ -25,11 +26,15 @@ fi
 
 
 echo "*********** Creating opsman"
+
+# copy iaas specific state file 
+cp state-${IAAAS}.yml state.yml
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
   p-automator create-vm \
-    --config config-files/opsman-config-${IAAS}.yml \
+    --config config-files/${IAAS}/opsman-config.yml \
     --image-file downloaded-resources/opsman-image/${IAAS}/ops-manager-${IAAS}*.yml \
     --vars-file terraform-outputs-${IAAS}.yml
+cp state.yml state-${IAAS}.yml
 
 export OM_TARGET="$(om interpolate -c terraform-outputs-${IAAS}.yml --path /ops_manager_dns)"
 
@@ -44,7 +49,7 @@ om --env config-files/env.yml configure-authentication \
 
 echo "*********** Configuring Director"
 om --env config-files/env.yml configure-director \
-   --config config-files/director-config-${IAAS}.yml \
+   --config config-files/${IAAS}/director-config.yml \
    --vars-file terraform-outputs-${IAAS}.yml
 
 echo "*********** Applying Changes for Director configuration"
@@ -70,7 +75,7 @@ bosh upload-release downloaded-resources/releases/credhub-release*.tgz
 bosh upload-release downloaded-resources/releases/backup-and-restore-sdk-release*.tgz
 
 echo "*********** Uploading stemcell"
-bosh upload-stemcell downloaded-resources/stemcells/${IAAS}/*stemcell-${IAAS}*.tgz
+bosh upload-stemcell downloaded-resources/stemcells/${IAAS}/*.tgz
 
 credhub set \
    -n /p-bosh/concourse/local_user \
@@ -93,8 +98,8 @@ bosh -n -d concourse deploy downloaded-resources/concourse-bosh-deployment/clust
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
-  -o config-files/operations.yml \
-  -l <(om interpolate --config config-files/vars.yml --vars-env CONCOURSE --vars-file terraform-outputs-${IAAS}.yml) \
+  -o config-files/${IAAS}/operations.yml \
+  -l <(om interpolate --config config-files/${IAAS}/vars.yml --vars-env CONCOURSE --vars-file terraform-outputs-${IAAS}.yml) \
   -l downloaded-resources/concourse-bosh-deployment/versions.yml
 
 export CONCOURSE_CREDHUB_SECRET="$(credhub get -n /p-bosh/concourse/credhub_admin_secret -q)"
@@ -108,19 +113,6 @@ credhub login \
   --client-name=credhub_admin \
   --client-secret="${CONCOURSE_CREDHUB_SECRET}" \
   --ca-cert "${CONCOURSE_CA_CERT}"
-
-echo "*********** Downloading fly CLI"
-curl "https://${CONCOURSE_URL}/api/v1/cli?arch=amd64&platform=${PLATFORM}" \
-  --output fly \
-  --cacert <(echo "${CONCOURSE_CA_CERT}")
-chmod +x fly
-
-echo "*********** Logging in to concourse"
-fly -t ci-${IAAS} login \
-  -c "https://${CONCOURSE_URL}" \
-  -u "${ADMIN_USERNAME}" \
-  -p "${ADMIN_PASSWORD}" \
-  --ca-cert <(echo "${CONCOURSE_CA_CERT}")
 
 # set +x
 

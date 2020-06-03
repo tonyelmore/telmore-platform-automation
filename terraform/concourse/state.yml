@@ -1,2 +1,2 @@
 iaas: azure
-vm_id: my3votes-concourse-ops-manager-vm
+vm_id: concourse-ops-manager
