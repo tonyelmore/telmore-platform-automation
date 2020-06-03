@@ -17,7 +17,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/config"
