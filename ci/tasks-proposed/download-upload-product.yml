@@ -32,6 +32,18 @@ run:
     cat /var/version && echo ""
     set -eux
 
+    PIVNET_CLI=`find ./pivnet-cli -name "*linux-amd64*"`
+    chmod +x $PIVNET_CLI
+
+    chmod +x ./jq/jq-linux64
+    JQ_CMD=./jq/jq-linux64
+
+    echo "Checking pivnet cli version"
+    $PIVNET_CLI version
+    echo "checking jq"
+    $JQ_CMD
+    echo "done checking"
+
     function process-product {
 
       product=config/$1.yml
@@ -77,18 +89,6 @@ run:
         echo "The product file for ${product_name} version ${patch_version} is already in azure blob store... skipping."
       fi
     }
-
-    PIVNET_CLI=`find ./pivnet-cli -name "*linux-amd64*"`
-    chmod +x $PIVNET_CLI
-
-    chmod +x ./jq/jq-linux64
-    JQ_CMD=./jq/jq-linux64
-
-    echo "Checking pivnet cli version"
-    $PIVNET_CLI version
-    echo "checking jq"
-    $JQ_CMD
-    echo "done checking"
 
     #process-product ${PRODUCT_CONFIG_FILE}
     #process-product ${STEMCELL_CONFIG_FILE}
