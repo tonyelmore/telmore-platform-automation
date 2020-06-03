@@ -27,7 +27,7 @@ jobs:
   plan:
   - aggregate:
     - get: configuration
-      # trigger: true
+      trigger: true
       # passed: ["validate-director-configuration"]
     - get: platform-automation-image
       resource: platform-automation
