@@ -80,7 +80,7 @@ run:
           --output-directory ${tmpdir} \
           ${vars_files_args[@]}
 
-        full_filename=$(ls ${tmpdir}/${product_glob})
+        full_filename=$(ls ${tmpdir}/[*]${product_glob})
         filename=$(basename $full_filename)
 
         az storage blob upload \
