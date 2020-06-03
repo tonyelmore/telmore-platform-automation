@@ -54,7 +54,7 @@ run:
       azure_account_key="$(om interpolate -s --config secrets/${AZURE_SECRETS_PATH} --path /azure-storage-key | head -n1)"
       PIVNET_TOKEN="$(om interpolate -s --config secrets/${PIVNET_SECRETS_PATH} --path /pivnet-api-token | head -n1)"
 
-      pivnet login --api-token=$PIVNET_TOKEN  
+      $PIVNET_CLI login --api-token=$PIVNET_TOKEN  
 
       patch_version="$( $PIVNET_CLI releases -p ${product_name} --format json | $JQ_CMD '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
 
