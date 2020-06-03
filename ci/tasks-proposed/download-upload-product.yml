@@ -8,14 +8,6 @@ inputs:
 - name: jq
 
 params:
-  # PRODUCT_CONFIG_FILE: 
-  # - Filepath to the product configuration yaml file
-  # - The path is relative to the root of the `config` input
-
-  # STEMCELL_CONFIG_FILE:
-  # - Filepath to the stemcell configuration yaml file
-  # - The path is relative to the root of the `config` input
-
   VARS_FILES:
   # - Optional
   # - Filepath to the Ops Manager vars yaml file
@@ -45,7 +37,7 @@ run:
       product=$1
 
       echo Processing ${product}
-      
+
       product_version_family="$(om interpolate -s --config config/${product} --path /product-version | head -n1)"
       product_name="$(om interpolate -s --config config/${product} --path /pivnet-product-slug | head -n1)"
       product_glob="$(om interpolate -s --config config/${product} --path /pivnet-file-glob | head -n1)"
@@ -108,6 +100,3 @@ run:
     do
       process-product ${config_file}
     done
-
-    # process-product ${PRODUCT_CONFIG_FILE}
-    # process-product ${STEMCELL_CONFIG_FILE}
