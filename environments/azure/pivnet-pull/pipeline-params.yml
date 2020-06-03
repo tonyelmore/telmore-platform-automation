@@ -1,0 +1,5 @@
+---
+team: main
+foundation: sbx
+iaas: azure
+concourse_user: admin

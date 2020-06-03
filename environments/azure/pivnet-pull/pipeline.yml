@@ -1,0 +1,81 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config"
+
+jobs:
+- name: install-opsman
+  plan:
+  - aggregate:
+    - get: configuration
+      # trigger: true
+      # passed: ["validate-director-configuration"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &director_credhub_interpolate_params
+      CREDHUB_SERVER: https://ci.concourse.my3votes.com:8844
+      CREDHUB_CA_CERT: ((concourse_credhub_ca))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+    input_mapping:
+      files: director-configuration
+
+  - task: display-cred
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: miclip/automation-tools
+      run:
+        path: bash
+        args: [-c, "echo Hello, ((provided-by-credhub))"]
+
+  # - task: download-stage-tile-stemcell
+  #   image: platform-automation-image
+  #   file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+  #   input_mapping:
+  #     config: configuration
+  #     download-config: configuration
+  #     env: interpolated-files
+  #     secrets: interpolated-files
+  #   params:
+  #     DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
+  #     DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
+  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+

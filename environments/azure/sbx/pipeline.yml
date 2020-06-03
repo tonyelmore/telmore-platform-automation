@@ -35,7 +35,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    uri: https://github.com/tonyelmore/telmore-platform-automation
     username: ((github_username))
 
 - name: configuration
@@ -43,7 +43,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    uri: https://github.com/tonyelmore/telmore-platform-automation
     username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/pipeline.yml"
@@ -54,7 +54,7 @@ resources:
   source:
     branch: master
     password: ((github_token))
-    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    uri: https://github.com/tonyelmore/telmore-platform-automation
     username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/config-director"
@@ -62,7 +62,7 @@ resources:
 - name: lock
   type: pool
   source:
-    uri: https://github.com/Smarsh/pcf-automation-provisioning
+    uri: https://github.com/tonyelmore/telmore-platform-automation
     branch: master
     username: ((github_username))
     password: ((github_token))
@@ -118,7 +118,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &director_credhub_interpolate_params
-      CREDHUB_SERVER: https://credhub.plane.smarsh.cloud:443
+      CREDHUB_SERVER: https://ci.concourse.viewlifeline.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
@@ -368,7 +368,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &credhub_interpolate_params
-      CREDHUB_SERVER: https://credhub.plane.smarsh.cloud:443
+      CREDHUB_SERVER: https://ci.concourse.viewlifeline.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
