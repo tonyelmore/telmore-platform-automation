@@ -61,10 +61,6 @@ jobs:
         unpack: true
         globs: ["*tasks*"]
     # - get: docker-image
-    - get: om-cli
-      params:
-        globs:
-        - "*-linux"
     - get: pivnet-cli
       params:
         globs:

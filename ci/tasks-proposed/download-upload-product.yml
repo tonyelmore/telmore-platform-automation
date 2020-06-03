@@ -3,6 +3,8 @@ platform: linux
 
 inputs:
 - name: config # contains product and stemcell config files
+- name: pivnet-cli
+- name: jq
 
 params:
   PRODUCT_CONFIG_FILE: 
@@ -88,6 +90,8 @@ run:
     $PIVNET_CLI version
     echo "checking jq"
     $JQ_CMD
+    echo "checking om"
+    om version
     echo "done checking"
 
     #process-product ${PRODUCT_CONFIG_FILE}
