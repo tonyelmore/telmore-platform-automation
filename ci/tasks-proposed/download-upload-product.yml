@@ -3,6 +3,7 @@ platform: linux
 
 inputs:
 - name: config # contains product and stemcell config files
+- name: secrets
 - name: pivnet-cli
 - name: jq
 
@@ -42,11 +43,13 @@ run:
       product_name="$(om interpolate --config ${product} --path /pivnet-product-slug | head -n1)"
       product_glob="$(om interpolate --config ${product} --path /pivnet-file-glob | head -n1)"
       azure_account_name="$(om interpolate --config ${product} --path /azure-storage-account | head -n1)"
-      azure_account_key="$(om interpolate --config ${product} --path /azure-storage-key | head -n1)"
       azure_container="$(om interpolate --config ${product} --path /blobstore-bucket | head -n1)"
-      PIVNET_TOKEN="$(om interpolate --config ${product} --path /pivnet-api-token | head -n1)"
 
-      pivnet login --api-token=$PIVNET_TOKEN  &> /dev/null
+      azure_account_key="$(om interpolate --config secrets/azure.yml --path /azure-storage-key | head -n1)"
+      PIVNET_TOKEN="$(om interpolate --config secrets/pivnet.yml --path /pivnet-api-token | head -n1)"
+
+#&> /dev/null
+      pivnet login --api-token=$PIVNET_TOKEN  
 
       patch_version="$( pivnet releases -p ${product_name} --format json | jq '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
 
@@ -87,7 +90,7 @@ run:
     JQ_CMD=./jq/jq-linux64
 
     process-product ${PRODUCT_CONFIG_FILE}
-    process-product ${STEMCELL_CONFIG_FILE}
+    # process-product ${STEMCELL_CONFIG_FILE}
 
     # Alternatively - if we want to have a single task with a list of config files
     # which would make the pipeline much simpler and would remove the need for the locks

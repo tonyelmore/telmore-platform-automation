@@ -94,6 +94,7 @@ jobs:
     file: configuration/ci/tasks-proposed/download-upload-product.yml
     input_mapping:
       config: configuration
+      secrets: interpolated-files
     params:
       PRODUCT_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
