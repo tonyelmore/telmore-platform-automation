@@ -1,9 +1,9 @@
 resource_types:
-- name: pivnet
-  type: docker-image
-  source:
-    repository: pivotalcf/pivnet-resource
-    tag: latest-final
+# - name: pivnet
+#   type: docker-image
+#   source:
+#     repository: pivotalcf/pivnet-resource
+#     tag: latest-final
 
 resources:
 - name: platform-automation
@@ -22,8 +22,29 @@ resources:
     paths:
     - "environments/((iaas))/((foundation))/config"
 
+- name: om-cli
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: om
+    access_token: ((github_token)) ## Optional: Removing this will cause you to hit the rate limit
+
+- name: pivnet-cli
+  type: github-release
+  source:
+    user: pivotal-cf
+    repository: pivnet-cli
+    access_token: ((github_token)) ## Optional: Removing this will cause you to hit the rate limit
+
+- name: jq
+  type: github-release
+  source:
+    user: stedolan
+    repository: jq
+    access_token: ((github_token)) ## Optional: Removing this will cause you to hit the rate limit
+
 jobs:
-- name: install-opsman
+- name: pull-products-from-pivnet
   plan:
   - aggregate:
     - get: configuration
@@ -39,13 +60,26 @@ jobs:
       params:
         unpack: true
         globs: ["*tasks*"]
+    # - get: docker-image
+    - get: om-cli
+      params:
+        globs:
+        - "*-linux"
+    - get: pivnet-cli
+      params:
+        globs:
+        - "*linux-amd64*"
+    - get: jq
+      params:
+        globs:
+        - "*linux64*"
 
   - task: credhub-interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &credhub_interpolate_params
       CREDHUB_SERVER: https://ci.concourse.my3votes.com:8844
-      CREDHUB_CA_CERT: ((concourse_credhub_ca))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
       PREFIX: '/concourse/((team))'
@@ -53,29 +87,18 @@ jobs:
     input_mapping:
       files: configuration
 
-  - task: display-cred
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: miclip/automation-tools
-      run:
-        path: bash
-        args: [-c, "echo Hello, ((provided-by-credhub))"]
+  # - task: display-cred
+  #   config:
+  #     run:
+  #       path: bash
+  #       args: [-c, "echo Hello, ((provided-by-credhub))"]
 
-  # - task: download-stage-tile-stemcell
-  #   image: platform-automation-image
-  #   file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
-  #   input_mapping:
-  #     config: configuration
-  #     download-config: configuration
-  #     env: interpolated-files
-  #     secrets: interpolated-files
-  #   params:
-  #     DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
-  #     DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-  #     VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+  - task: download-upload-product
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-upload-product.yml
+    input_mapping:
+      config: configuration
+    params:
+      PRODUCT_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
+      STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
 

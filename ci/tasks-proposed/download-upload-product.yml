@@ -78,8 +78,17 @@ run:
       fi
     }
 
-    process-product ${PRODUCT_CONFIG_FILE}
-    process-product ${STEMCELL_CONFIG_FILE}
+    PIVNET_CLI=`find ./pivnet-cli -name "*linux-amd64*"`
+    chmod +x $PIVNET_CLI
+
+    chmod +x ./jq/jq-linux64
+    JQ_CMD=./jq/jq-linux64
+
+    $PIVNET_CLI version
+    $JQ_CMD
+
+    #process-product ${PRODUCT_CONFIG_FILE}
+    #process-product ${STEMCELL_CONFIG_FILE}
 
     # Alternatively - if we want to have a single task with a list of config files
     # which would make the pipeline much simpler and would remove the need for the locks
