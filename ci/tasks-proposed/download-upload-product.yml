@@ -107,10 +107,10 @@ run:
     JQ_CMD=./jq/jq-linux64
 
     echo "entering loop"
-    for config-file in ${CONFIG_FILES}
+    for config_file in ${CONFIG_FILES}
     do
-      echo "processing ${config-file}"
-      process-product ${config-file}
+      echo "processing ${config_file}"
+      process-product ${config_file}
     done
 
     # process-product ${PRODUCT_CONFIG_FILE}
