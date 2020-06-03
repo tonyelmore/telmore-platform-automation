@@ -1,5 +1,5 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
-pivnet-file-glob: "light*-aws-*"
+pivnet-file-glob: "*-azure-*"
 pivnet-product-slug: "stemcells-ubuntu-xenial"
 product-version: "456.112"
