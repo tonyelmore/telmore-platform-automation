@@ -43,15 +43,15 @@ jobs:
   - task: credhub-interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: &director_credhub_interpolate_params
+    params: &credhub_interpolate_params
       CREDHUB_SERVER: https://ci.concourse.my3votes.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
       PREFIX: '/concourse/((team))'
-      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
     input_mapping:
-      files: director-configuration
+      files: configuration
 
   - task: display-cred
     config:
