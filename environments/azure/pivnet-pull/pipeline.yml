@@ -85,12 +85,12 @@ jobs:
       AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
       CONFIG_FILES: |
-        environments/((iaas))/((foundation))/config/versions/cf.yml
-        environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-        environments/((iaas))/((foundation))/config/versions/p-healthwatch.yml
-        environments/((iaas))/((foundation))/config/versions/p-healthwatch-stemcell.yml
-        environments/((iaas))/((foundation))/config/versions/pivotal-container-service.yml
-        environments/((iaas))/((foundation))/config/versions/pivotal-container-service-stemcell.yml
+        environments/((iaas))/pivnet-pull/versions/cf.yml
+        environments/((iaas))/pivnet-pull/versions/cf-stemcell.yml
+        environments/((iaas))/pivnet-pull/versions/p-healthwatch.yml
+        environments/((iaas))/pivnet-pull/versions/p-healthwatch-stemcell.yml
+        environments/((iaas))/pivnet-pull/versions/pivotal-container-service.yml
+        environments/((iaas))/pivnet-pull/versions/pivotal-container-service-stemcell.yml
       VARS_FILES: |
         secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
         secrets/environments/((iaas))/((foundation))/config/secrets/azure.yml
