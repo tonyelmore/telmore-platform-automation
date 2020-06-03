@@ -50,13 +50,13 @@ run:
 
       pivnet login --api-token=$PIVNET_TOKEN  
 
-      patch_version="$( pivnet releases -p ${product_name} --format json | jq '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
+      patch_version="$( $PIVNET_CLI releases -p ${product_name} --format json | $JQ_CMD '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
 
       az_file="$(az storage blob list \
                   --account-name ${azure_account_name} \
                   --account-key ${azure_account_key} \
                   -c ${azure_container} \
-                  | jq '.[] | select(.name | test("'${product_name}','${patch_version}'")) | .name' -r)"
+                  | $JQ_CMD '.[] | select(.name | test("'${product_name}','${patch_version}'")) | .name' -r)"
 
       if [ -z "$az_file" ]; then
         echo "The product file for ${product_name} version ${patch_version} is not found.  Downloading product now"
