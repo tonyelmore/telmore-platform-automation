@@ -106,14 +106,16 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
+    echo "entering loop"
+    for config-file in ${CONFIG_FILES}
+    do
+      echo "processing ${config-file}"
+      process-product ${config-file}
+    done
+
     # process-product ${PRODUCT_CONFIG_FILE}
     # process-product ${STEMCELL_CONFIG_FILE}
 
     # Alternatively - if we want to have a single task with a list of config files
     # which would make the pipeline much simpler and would remove the need for the locks
     # And if you wanted a single product - just write a new pipeline
-    for vf in ${CONFIG_FILES}
-    do
-      echo "processing ${vf}"
-      process-product ${vf}
-    done
