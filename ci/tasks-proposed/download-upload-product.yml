@@ -27,6 +27,12 @@ params:
   # - List of all the product and stemcell configuration yaml files
   # - The path is relative to the root of the 'config' input
 
+  AZURE_SECRETS_PATH:
+  # - Path to the azure secrets
+
+  PIVNET_SECRETS_PATH:
+  # - Path to the pivnet secrets
+
 run:
   path: bash
   args:
@@ -45,8 +51,8 @@ run:
       azure_account_name="$(om interpolate -s --config config/${product} --path /azure-storage-account | head -n1)"
       azure_container="$(om interpolate -s --config config/${product} --path /blobstore-bucket | head -n1)"
 
-      azure_account_key="$(om interpolate -s --config secrets/azure.yml --path /azure-storage-key | head -n1)"
-      PIVNET_TOKEN="$(om interpolate -s --config secrets/pivnet.yml --path /pivnet-api-token | head -n1)"
+      azure_account_key="$(om interpolate -s --config secrets/${AZURE_SECRETS_PATH} --path /azure-storage-key | head -n1)"
+      PIVNET_TOKEN="$(om interpolate -s --config secrets/${PIVNET_SECRETS_PATH} --path /pivnet-api-token | head -n1)"
 
       pivnet login --api-token=$PIVNET_TOKEN  
 

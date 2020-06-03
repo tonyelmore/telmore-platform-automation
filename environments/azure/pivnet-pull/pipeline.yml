@@ -87,8 +87,9 @@ jobs:
     file: configuration/ci/tasks-proposed/download-upload-product.yml
     input_mapping:
       config: configuration
-      secrets: interpolated-files/environments/((iaas))/((foundation))/config/secrets
+      secrets: interpolated-files
     params:
       PRODUCT_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-
+      AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
+      PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
