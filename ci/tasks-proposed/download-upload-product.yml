@@ -39,11 +39,11 @@ run:
 
       product=$1
 
-      product_version_family="$(om interpolate --config ${product} --path /product-version | head -n1)"
-      product_name="$(om interpolate --config ${product} --path /pivnet-product-slug | head -n1)"
-      product_glob="$(om interpolate --config ${product} --path /pivnet-file-glob | head -n1)"
-      azure_account_name="$(om interpolate --config ${product} --path /azure-storage-account | head -n1)"
-      azure_container="$(om interpolate --config ${product} --path /blobstore-bucket | head -n1)"
+      product_version_family="$(om interpolate --config config/${product} --path /product-version | head -n1)"
+      product_name="$(om interpolate --config config/${product} --path /pivnet-product-slug | head -n1)"
+      product_glob="$(om interpolate --config config/${product} --path /pivnet-file-glob | head -n1)"
+      azure_account_name="$(om interpolate --config config/${product} --path /azure-storage-account | head -n1)"
+      azure_container="$(om interpolate --config config/${product} --path /blobstore-bucket | head -n1)"
 
       azure_account_key="$(om interpolate --config secrets/azure.yml --path /azure-storage-key | head -n1)"
       PIVNET_TOKEN="$(om interpolate --config secrets/pivnet.yml --path /pivnet-api-token | head -n1)"
