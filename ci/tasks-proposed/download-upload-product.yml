@@ -44,6 +44,8 @@ run:
 
       product=$1
 
+      echo Processing ${product}
+      
       product_version_family="$(om interpolate -s --config config/${product} --path /product-version | head -n1)"
       product_name="$(om interpolate -s --config config/${product} --path /pivnet-product-slug | head -n1)"
       product_glob="$(om interpolate -s --config config/${product} --path /pivnet-file-glob | head -n1)"
@@ -102,16 +104,10 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
-    echo "entering loop"
     for config_file in ${CONFIG_FILES}
     do
-      echo "processing ${config_file}"
       process-product ${config_file}
     done
 
     # process-product ${PRODUCT_CONFIG_FILE}
     # process-product ${STEMCELL_CONFIG_FILE}
-
-    # Alternatively - if we want to have a single task with a list of config files
-    # which would make the pipeline much simpler and would remove the need for the locks
-    # And if you wanted a single product - just write a new pipeline
