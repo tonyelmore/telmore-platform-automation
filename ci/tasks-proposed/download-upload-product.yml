@@ -84,8 +84,11 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
+    echo "Checking pivnet cli version"
     $PIVNET_CLI version
+    echo "checking jq"
     $JQ_CMD
+    echo "done checking"
 
     #process-product ${PRODUCT_CONFIG_FILE}
     #process-product ${STEMCELL_CONFIG_FILE}
