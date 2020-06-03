@@ -69,7 +69,7 @@ run:
 
         tmpdir=$(mktemp -d)
         echo ${tmpdir}
-        om download-product --config ${product} --product-version ${patch_version} --output-directory ${tmpdir}
+        om download-product --config config/${product} --product-version ${patch_version} --output-directory ${tmpdir}
 
         full_filename=$(ls ${tmpdir}/${product_glob})
         filename=$(basename $full_filename)
