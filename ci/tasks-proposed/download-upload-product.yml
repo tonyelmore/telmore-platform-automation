@@ -37,7 +37,7 @@ run:
 
     function process-product {
 
-      product=config/$1.yml
+      product=$1
 
       product_version_family="$(om interpolate --config ${product} --path /product-version | head -n1)"
       product_name="$(om interpolate --config ${product} --path /pivnet-product-slug | head -n1)"
