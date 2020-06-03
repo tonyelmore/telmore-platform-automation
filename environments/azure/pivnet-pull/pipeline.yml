@@ -1,9 +1,9 @@
 resource_types:
-# - name: pivnet
-#   type: docker-image
-#   source:
-#     repository: pivotalcf/pivnet-resource
-#     tag: latest-final
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
 
 resources:
 - name: platform-automation
