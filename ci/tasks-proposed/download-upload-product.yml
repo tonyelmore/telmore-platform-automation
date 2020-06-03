@@ -114,5 +114,6 @@ run:
     # And if you wanted a single product - just write a new pipeline
     for vf in ${CONFIG_FILES}
     do
+      echo "processing ${vf}"
       process-product ${vf}
     done
