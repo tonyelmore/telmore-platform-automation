@@ -1,8 +1,8 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
-pivnet-file-glob: "cf*.pivotal"
+pivnet-file-glob: "*.pivotal"
 pivnet-product-slug: "elastic-runtime"
-product-version: "2.9.1"
+product-version: "2.6.20"
 
 azure-storage-account: telmoreprodandstemcell
 azure-storage-key: ((azure-storage-key))
