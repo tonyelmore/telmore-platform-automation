@@ -93,3 +93,6 @@ jobs:
       STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+      VARS_FILES: |
+        secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/azure.yml

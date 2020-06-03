@@ -16,7 +16,7 @@ params:
   # - Filepath to the stemcell configuration yaml file
   # - The path is relative to the root of the `config` input
 
-  #VARS_FILES:
+  VARS_FILES:
   # - Optional
   # - Filepath to the Ops Manager vars yaml file
   # - The path is relative to root of the task build,
@@ -67,9 +67,18 @@ run:
       if [ -z "$az_file" ]; then
         echo "The product file for ${product_name} version ${patch_version} is not found.  Downloading product now"
 
+        vars_files_args=("")
+        for vf in ${VARS_FILES}
+        do
+          vars_files_args+=("--vars-file ${vf}")
+        done
+
         tmpdir=$(mktemp -d)
         echo ${tmpdir}
-        om download-product --config config/${product} --product-version ${patch_version} --output-directory ${tmpdir}
+        om download-product --config config/${product} \
+          --product-version ${patch_version} \
+          --output-directory ${tmpdir} \
+          ${vars_files_args[@]}
 
         full_filename=$(ls ${tmpdir}/${product_glob})
         filename=$(basename $full_filename)
