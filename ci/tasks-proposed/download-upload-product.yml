@@ -72,7 +72,7 @@ run:
 
       patch_version="$( $PIVNET_CLI releases -p ${product_name} --format json | $JQ_CMD '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
 
-      if [ ${IAAS} = "azure" ]; then
+      if [ ${IAAS} == "azure" ]; then
         get-azure-file
       fi
 
@@ -95,7 +95,7 @@ run:
         full_filename=$(ls ${tmpdir}/\[*\]${product_glob})
         filename=$(basename $full_filename)
 
-        if [ ${IAAS} = "azure" ]; then
+        if [ ${IAAS} == "azure" ]; then
           put-azure-file
         fi
         
