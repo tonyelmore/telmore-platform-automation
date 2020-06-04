@@ -22,15 +22,15 @@ resources:
     paths:
     - "environments/((iaas))/((foundation))/config"
 
-- name: pivnet-pull-versions
-  type: git
-  source:
-    branch: master
-    password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
-    username: ((github_username))
-    paths:
-    - "environments/((iaas))/((foundation))/pivnet-pull/versions"
+# - name: pivnet-pull-versions
+#   type: git
+#   source:
+#     branch: master
+#     password: ((github_token))
+#     uri: https://github.com/tonyelmore/telmore-platform-automation.git
+#     username: ((github_username))
+#     paths:
+#     - "environments/((iaas))/((foundation))/pivnet-pull/versions"
 
 - name: pivnet-cli
   type: github-release
@@ -51,7 +51,7 @@ jobs:
   plan:
   - aggregate:
     - get: configuration
-    - get: pivnet-pull-versions
+    #- get: pivnet-pull-versions
       trigger: true
     - get: platform-automation-image
       resource: platform-automation
