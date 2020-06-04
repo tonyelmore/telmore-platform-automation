@@ -40,7 +40,7 @@ jobs:
           type: registry-image
           source: { repository: busybox }
         run:
-          path: sleep
+          path: echo
           args: ["Hello, Job A!"]
 
 # - name: unlock-job-a
