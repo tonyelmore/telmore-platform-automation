@@ -92,7 +92,8 @@ jobs:
       config: configuration
       secrets: interpolated-files
     params:
-      AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
+      IAAS: ((iaas))
+      IAAS_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
       CONFIG_FILES: |
         environments/((iaas))/pivnet-pull/versions/opsman.yml
