@@ -36,16 +36,16 @@ run:
     set -eux
 
     function get-azure-file {
-      azure_account_name="$(om interpolate -s --config config/${product} --path /azure-storage-account | head -n1)"
-      azure_container="$(om interpolate -s --config config/${product} --path /blobstore-bucket | head -n1)"
+      export azure_account_name="$(om interpolate -s --config config/${product} --path /azure-storage-account | head -n1)"
+      export azure_container="$(om interpolate -s --config config/${product} --path /blobstore-bucket | head -n1)"
 
-      azure_account_key="$(om interpolate -s --config secrets/${IAAS_SECRETS_PATH} --path /azure-storage-key | head -n1)"
+      export azure_account_key="$(om interpolate -s --config secrets/${IAAS_SECRETS_PATH} --path /azure-storage-key | head -n1)"
 
-      az_file="$(az storage blob list \
-                    --account-name ${azure_account_name} \
-                    --account-key ${azure_account_key} \
-                    -c ${azure_container} \
-                    | $JQ_CMD '.[] | select(.name | test("'${product_name}','${patch_version}'")) | .name' -r)"
+      export az_file="$(az storage blob list \
+                          --account-name ${azure_account_name} \
+                          --account-key ${azure_account_key} \
+                          -c ${azure_container} \
+                          | $JQ_CMD '.[] | select(.name | test("'${product_name}','${patch_version}'")) | .name' -r)"
     }
 
     function put-azure-file {
