@@ -100,7 +100,6 @@ run:
         done
 
         tmpdir=$(mktemp -d)
-        echo ${tmpdir}
         om download-product --config config/${product} \
           --product-version ${patch_version} \
           --output-directory ${tmpdir} \
