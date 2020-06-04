@@ -41,7 +41,7 @@ run:
 
       export azure_account_key="$(om interpolate -s --config secrets/${IAAS_SECRETS_PATH} --path /azure-storage-key | head -n1)"
 
-      export az_file="$(az storage blob list \
+      export blobfile="$(az storage blob list \
                           --account-name ${azure_account_name} \
                           --account-key ${azure_account_key} \
                           -c ${azure_container} \
@@ -57,6 +57,22 @@ run:
         -n ${filename}
     }
 
+    function get-gcp-file {
+      echo "Function not implemented"
+    }
+
+    function put-gcp-file {
+      echo "Function not implemented"
+    }
+
+    function get-aws-file {
+      echo "Function not implemented"
+    }
+
+    function put-aws-file {
+      echo "Function not implemented"
+    }
+        
     function process-product {
 
       product=$1
@@ -72,11 +88,9 @@ run:
 
       patch_version="$( $PIVNET_CLI releases -p ${product_name} --format json | $JQ_CMD '[.[] | select(.availability=="All Users") | select(.version | test("'${product_version_family}'"))] [0].version ' -r )"
 
-      if [ "${IAAS}" == "azure" ]; then
-        get-azure-file
-      fi
+      get-${IAAS}-file
 
-      if [ -z "$az_file" ]; then
+      if [ -z "$blobfile" ]; then
         echo "The product file for ${product_name} version ${patch_version} is not found.  Downloading product now"
 
         vars_files_args=("")
@@ -95,9 +109,7 @@ run:
         full_filename=$(ls ${tmpdir}/\[*\]${product_glob})
         filename=$(basename $full_filename)
 
-        if [ "${IAAS}" == "azure" ]; then
-          put-azure-file
-        fi
+        put-${IAAS}-file
         
         rm -r ${tmpdir}
 
