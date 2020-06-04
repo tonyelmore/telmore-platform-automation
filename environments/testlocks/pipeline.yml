@@ -18,7 +18,7 @@ jobs:
     params:
       release: lock
 
-- name: lock-director
+- name: lock-job-a
   serial: true
   plan:
   - aggregate:
@@ -26,13 +26,49 @@ jobs:
     - put: lock
       params: {acquire: true}
 
-- name: HelloWorld
+- name: job-a
   public: true
   plan:
     - get: lock
       trigger: true
       passed:
-      - "lock-director"
+      - "lock-job-a"
+    - task: PrintItOut
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source: { repository: busybox }
+        run:
+          path: sleep
+          args: ["Hello, Job A!"]
+
+# - name: unlock-job-a
+#   serial: true
+#   plan:
+#   - get: lock
+#     trigger: true
+#     passed:
+#     - "job-a"
+#   - put: lock
+#     params:
+#       release: lock
+
+- name: lock-job-b
+  serial: true
+  plan:
+  - aggregate:
+    - get: lock
+    - put: lock
+      params: {acquire: true}
+
+- name: job-b
+  public: true
+  plan:
+    - get: lock
+      trigger: true
+      passed:
+      - "lock-job-b"
     - task: PrintItOut
       config:
         platform: linux
@@ -41,15 +77,16 @@ jobs:
           source: { repository: busybox }
         run:
           path: echo
-          args: ["Hello, World!"]
+          args: ["Hello, Job B!"]
 
-- name: unlock-director
+- name: unlock-job-b
   serial: true
   plan:
   - get: lock
     trigger: true
     passed:
-    - "HelloWorld"
+    - "job-b"
   - put: lock
     params:
       release: lock
+      
