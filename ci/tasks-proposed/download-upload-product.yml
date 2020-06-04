@@ -33,7 +33,7 @@ run:
   - "-c"
   - |
     cat /var/version && echo ""
-    set -eux
+    # set -eux
 
     function get-azure-file {
       export azure_account_name="$(om interpolate -s --config config/${product} --path /azure-storage-account | head -n1)"
