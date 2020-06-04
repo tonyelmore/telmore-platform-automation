@@ -1,0 +1,9 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*Azure.yml"
+pivnet-product-slug: "ops-manager"
+product-version: "2.4"
+
+azure-storage-account: telmoreprodandstemcell
+azure-storage-key: ((azure-storage-key))
+blobstore-bucket: productstorage

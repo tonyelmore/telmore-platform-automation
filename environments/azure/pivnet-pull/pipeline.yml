@@ -85,6 +85,7 @@ jobs:
       AZURE_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/azure.yml
       PIVNET_SECRETS_PATH: environments/((iaas))/((foundation))/config/secrets/pivnet.yml
       CONFIG_FILES: |
+        environments/((iaas))/pivnet-pull/versions/opsman.yml
         environments/((iaas))/pivnet-pull/versions/cf.yml
         environments/((iaas))/pivnet-pull/versions/cf-stemcell.yml
         environments/((iaas))/pivnet-pull/versions/p-healthwatch.yml
