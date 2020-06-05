@@ -14,7 +14,7 @@ params:
   # - The path is relative to root of the task build,
   #   so `vars` and `secrets` can be used.
   
-  CONFIG_FILES:
+  CONFIG_FILES_PATH:
   # - List of all the product and stemcell configuration yaml files
   # - The path is relative to the root of the 'config' input
 
@@ -123,6 +123,8 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
+
+    CONFIG_FILES=$(cd files && find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
     for config_file in ${CONFIG_FILES}
     do
       process-product ${config_file}
