@@ -126,8 +126,8 @@ run:
     echo "Starting loop thru products"
     echo ${CONFIG_FILES_PATH}
     pwd
-    ls ${CONFIG_FILES_PATH}
-    CONFIG_FILES=$(find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
+    ls config/${CONFIG_FILES_PATH}
+    CONFIG_FILES=$(cd config && find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
     # CONFIG_FILES=$(cd files && find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
     echo ${CONFIG_FILES}
     for config_file in ${CONFIG_FILES}
