@@ -123,8 +123,12 @@ run:
     chmod +x ./jq/jq-linux64
     JQ_CMD=./jq/jq-linux64
 
-
-    CONFIG_FILES=$(cd files && find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
+    echo "Starting loop thru products"
+    echo ${CONFIG_FILES_PATH}
+    ls ${CONFIG_FILES_PATH}
+    CONFIG_FILES=$(find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
+#    CONFIG_FILES=$(cd files && find $CONFIG_FILES_PATH -type f -name '*.yml' -follow)
+    echo ${CONFIG_FILES}
     for config_file in ${CONFIG_FILES}
     do
       process-product ${config_file}
