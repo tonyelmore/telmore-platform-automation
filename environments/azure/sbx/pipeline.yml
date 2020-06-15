@@ -29,7 +29,7 @@ resources:
     container: telmore-azure-opsman-exports
     storage_account_name: ((ops_manager_storage_account_name))
     storage_account_key: ((ops_manager_storage_account_access_key))
-    regexp: ((foundation))/installation-(.*).zip
+    versioned_file: installation.zip
 
 - name: state
   type: git
