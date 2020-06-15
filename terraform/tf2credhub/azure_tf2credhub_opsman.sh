@@ -68,4 +68,5 @@ tf2credhub 'client_id'
 tf2credhub 'client_secret'
 tf2credhub 'ops_manager_storage_account_name'
 tf2credhub 'pas_storage_account_access_key'
+tf2credhub 'ops_manager_ssh_private_key'
 

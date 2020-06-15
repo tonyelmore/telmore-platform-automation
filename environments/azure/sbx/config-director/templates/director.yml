@@ -19,8 +19,8 @@ properties-configuration:
     resource_group_name: ((resource_group_name))
     bosh_storage_account_name: ((bosh_root_storage_account))
     default_security_group: ((bosh_security_group_name))
-    ssh_public_key: ((opsman_ssh.public_key))
-    ssh_private_key: ((opsman_ssh.private_key))
+    ssh_public_key: ((ops_manager_ssh_public_key))
+    ssh_private_key: ((ops_manager_ssh_private_key))
     cloud_storage_type: managed_disks
     storage_account_type: Premium_LRS
     environment: AzureCloud
