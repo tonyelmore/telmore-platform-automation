@@ -1,6 +1,6 @@
 ---
-team: dev-poc
-foundation: sandbox
+team: main
+foundation: sbx
 iaas: azure
-lock_pool_name: azure-sandbox
+lock_pool_name: azure-sbx
 concourse_user: admin
