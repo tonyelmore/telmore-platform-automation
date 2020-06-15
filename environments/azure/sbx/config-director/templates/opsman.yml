@@ -8,7 +8,7 @@ opsman-configuration:
     location: ((location))
     resource_group: ((resource_group_name))
     storage_account: ((ops_manager_storage_account_name))
-    ssh_public_key: ((ssh_public_key))
+    ssh_public_key: ((ops_manager_ssh_public_key))
     subnet_id: ((management_subnet_id))
     public_ip: ((ops_manager_public_ip))
     private_ip: ((ops_manager_private_ip))

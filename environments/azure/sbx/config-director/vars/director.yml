@@ -1,3 +1,6 @@
+iaas_configuration_name: default
+iaas_configuration_region: us-east-2
+    
 # AZ Config:
 az1_name: zone-1
 az2_name: zone-2
@@ -6,12 +9,6 @@ az3_name: zone-3
 # networks-configuration:
 icmp_checks_enabled: false
 
-location: westus2
-resource_group_name: sbx
-ops_manager_storage_account_name: f8jb2qfmj5ixcpz52v2q
-ops_manager_ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC08o3uxkv7nBjfVuElR5no+HFN/Ryo1zF4bjK07vBF3McSsj0IF5FhCgcTab1A4p0oLO9eNC+O06GQUW6fHpDoz9Th/35CYeZ3SYF9V/ZeuF9eunY4jd0YlM7aQIFzk6MMUlGVCxb8TqjvaoThORt6ESPbnElD6IRnB4xRzdwyzdUCbXNSRGivJEQF0zb8myn9e5OEKtr9gxR7oIHJtCfAjmpzWZNX3WECqX5dAjbvnm/9QodyINp/IelXoroCrZM4UvXJL4NLazB9Cjw8XudFPRANsqu+DlEJr8rxOQiTYFVLPP0aOSbo4rmDuBEMWYZIySaVjt+P6zmkYlRyIjorXXV642Z0IQwYKmFkQtj92VxWEdGBirPOfBCNTW2MRfI1WAgHHkygRAZPxv+3vLUApLh2uyw8QmUMuyWapUZFgU8K4/Uk1DPg9CienFSnDFjToB8QC3vw67pw8XXoXF+628JiC8+APyPU3pCAWYc+Mcmts1gD84y9T0PL6I2JiuG7Uce5iDTMRlXFlv0q2yeKYZuv8jdGy6AG96irt1Y/t8Fv8gHbXIbnKEKAAYaRbyWOmMb+7Yey9V0TdMuDxN4J3hPRTOK9P5OC6hsrZO2mpXM2pgwsdb/40/cECBHsXb/AsbxQjCvFX27P+n4CA8WfxcPQOuNpA44QKv76hZYWgQ=="
-management_subnet_id: /subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-management-subnet
-ops_manager_public_ip: 20.187.39.155
-ops_manager_private_ip: 10.0.8.5
-iaas_configuration_environment_azurecloud: AzureCloud
-ops_manager_security_group_name: sbx-ops-manager-network-sg
+infra_network_dns: 10.10.0.2
+deployment_network_dns: 10.10.0.2
+service_network_dns: 10.10.0.2
