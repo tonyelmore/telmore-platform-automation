@@ -4,3 +4,4 @@ foundation: sbx
 iaas: azure
 lock_pool_name: azure-sbx
 concourse_user: admin
+concourse_credhub_url: https://ci.concourse.my3votes.com:8844

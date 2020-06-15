@@ -109,7 +109,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &director_credhub_interpolate_params
-      CREDHUB_SERVER: https://ci.concourse.viewlifeline.com:8844
+      CREDHUB_SERVER: ((concourse_credhub_url))
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
@@ -359,7 +359,7 @@ jobs:
 #     image: platform-automation-image
 #     file: platform-automation-tasks/tasks/credhub-interpolate.yml
 #     params: &credhub_interpolate_params
-#       CREDHUB_SERVER: https://ci.concourse.viewlifeline.com:8844
+#       CREDHUB_SERVER: ((concourse_credhub_url))
 #       CREDHUB_CA_CERT: ((concourse_credhub_ca))
 #       CREDHUB_CLIENT: ((concourse_credhub_client_username))
 #       CREDHUB_SECRET: ((concourse_credhub_client_secret))
