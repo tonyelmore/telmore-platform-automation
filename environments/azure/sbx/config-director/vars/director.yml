@@ -2,9 +2,9 @@ iaas_configuration_name: default
 iaas_configuration_region: us-east-2
     
 # AZ Config:
-az1_name: us-east-2a
-az2_name: us-east-2b
-az3_name: us-east-2c
+az1_name: zone-1
+az2_name: zone-2
+az3_name: zone-3
 
 # networks-configuration:
 icmp_checks_enabled: false

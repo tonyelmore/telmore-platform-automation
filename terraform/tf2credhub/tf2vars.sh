@@ -24,16 +24,11 @@ function vars_append {
   if [[ $2 == *$'\n'*  ]]; then
     val=$(echo "$2" | sed $'s/^/    /')
     cat << EOF >> "$vars_file"
-- name: $1
-  type: value
-  value: |-
-$val
+$1: $val
 EOF
   else
     cat << EOF >> "$vars_file"
-- name: $1
-  type: value
-  value: $2
+$1: $2
 EOF
   fi
 }
@@ -48,7 +43,6 @@ echo "Found environment: $environment_name"
 echo $vars_file
 
 cat << EOF >> "$vars_file"
-credentials:
 EOF
 
 
