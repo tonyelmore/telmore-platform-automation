@@ -82,7 +82,7 @@ jobs:
 - name: lock-director
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - put: lock
       params: {acquire: true}
     - get: director-configuration
@@ -90,7 +90,7 @@ jobs:
 
 - name: validate-director-configuration
   plan:
-  - aggregate:
+  - in_parallel:
     - get: director-configuration
       trigger: true
       passed: ["lock-director"]
@@ -120,7 +120,7 @@ jobs:
 
 - name: install-opsman
   plan:
-  - aggregate:
+  - in_parallel:
     - get: director-configuration
       trigger: true
       passed: ["validate-director-configuration"]
@@ -222,7 +222,7 @@ jobs:
 
 - name: export-installation
   plan:
-  - aggregate:
+  - in_parallel:
     - get: director-configuration
       trigger: true
       passed: [ install-opsman ]
@@ -257,7 +257,7 @@ jobs:
 
 - name: upgrade-opsman
   plan:
-  - aggregate:
+  - in_parallel:
     - get: director-configuration
       trigger: true
       passed: [ export-installation ]
@@ -332,7 +332,7 @@ jobs:
 # - name: lock-tiles
 #   serial: true
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - put: lock
 #       params: {acquire: true}
 #     - get: configuration
@@ -340,7 +340,7 @@ jobs:
 
 # - name: validate-tile-configuration
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: ["lock-tiles"]
@@ -371,7 +371,7 @@ jobs:
 # - name: pas
 #   serial: true
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ validate-tile-configuration ]
@@ -438,7 +438,7 @@ jobs:
 
 # - name: pas-errands
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ pas ]
@@ -567,7 +567,7 @@ jobs:
 # - name: pivotal-mysql
 #   serial: true
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ pas ]
@@ -634,7 +634,7 @@ jobs:
 
 # - name: pivotal-mysql-errands
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ pivotal-mysql ]
@@ -698,7 +698,7 @@ jobs:
 # - name: p-healthwatch
 #   serial: true
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ pivotal-mysql ]
@@ -765,7 +765,7 @@ jobs:
 
 # - name: p-healthwatch-errands
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #     - get: configuration
 #       trigger: true
 #       passed: [ p-healthwatch ]
@@ -816,7 +816,7 @@ jobs:
 # - name: p-rabbitmq
 #   serial: true
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #       - get: configuration
 #         trigger: true
 #         passed: [ p-healthwatch ]
@@ -883,7 +883,7 @@ jobs:
 
 # - name: p-rabbitmq-errands
 #   plan:
-#   - aggregate:
+#   - in_parallel:
 #       - get: configuration
 #         trigger: true
 #         passed: [ p-rabbitmq ]
@@ -973,7 +973,7 @@ jobs:
 # - name: p-redis
 #   serial: true
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ p-rabbitmq ]
@@ -1039,7 +1039,7 @@ jobs:
 
 # - name: p-redis-errands
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ p-redis ]
@@ -1129,7 +1129,7 @@ jobs:
 # - name: apmPostgres
 #   serial: true
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ p-redis ]
@@ -1196,7 +1196,7 @@ jobs:
 
 # - name: apmPostgres-errands
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ apmPostgres ]
@@ -1273,7 +1273,7 @@ jobs:
 # - name: p-cloudcache
 #   serial: true
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ p-event-alerts ]
@@ -1340,7 +1340,7 @@ jobs:
 
 # - name: p-cloudcache-errands
 #   plan:
-#     - aggregate:
+#     - in_parallel:
 #         - get: configuration
 #           trigger: true
 #           passed: [ p-cloudcache ]
