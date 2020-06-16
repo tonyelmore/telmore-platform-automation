@@ -1,6 +1,3 @@
-iaas_configuration_name: default
-iaas_configuration_region: us-east-2
-    
 # AZ Config:
 az1_name: zone-1
 az2_name: zone-2
@@ -9,6 +6,37 @@ az3_name: zone-3
 # networks-configuration:
 icmp_checks_enabled: false
 
-infra_network_dns: 10.10.0.2
-deployment_network_dns: 10.10.0.2
-service_network_dns: 10.10.0.2
+
+management_subnet_cidr: 10.0.8.0/26
+management_subnet_gateway: 10.0.8.1
+management_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-management-subnet"
+management_subnet_range: 10.0.8.10
+pas_subnet_cidr: 10.0.0.0/22
+pas_subnet_gateway: 10.0.0.1
+pas_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-pas-subnet"
+pas_subnet_range: 10.0.0.1-10.0.0.10
+pks_subnet_cidr: 10.0.10.0/24
+pks_subnet_gateway: 10.0.10.1
+pks_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-pks-subnet"
+pks_subnet_range: 10.0.10.1-10.0.10.10
+services_subnet_cidr: 10.0.4.0/22
+services_subnet_gateway: 10.0.4.1
+services_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-services-subnet"
+services_subnet_range: 10.0.4.1-10.0.4.10
+
+resource_group_name: sbx 
+platform_vms_security_group_name: sbx-platform-vms-sg
+
+# pks_api_application_security_group_name": "sbx-pks-api-app-sg"
+pks_api_network_security_group_name: sbx-pks-api-network-sg
+# pks_as_name": "sbx-pks-as"
+# pks_dns": "pks.sbx.my3votes.com"
+# pks_internal_network_security_group_name": "sbx-pks-internal-network-sg"
+# pks_master_application_security_group_name": "sbx-pks-master-app-sg"
+# pks_master_network_security_group_name": "sbx-pks-master-network-sg"
+
+pks_lb_name: sbx-pks-lb
+ssh_lb_name: sbx-diego-ssh-lb
+tcp_lb_name: sbx-tcp-lb
+web_lb_name: sbx-web-lb
+# web_security_group: 

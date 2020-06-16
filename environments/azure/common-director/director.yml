@@ -1,9 +1,18 @@
 ---
-infra_network_name: management
-deployment_network_name: pas
-service_network_name: services
+management_network: management
+pas_network: pas
+services_network: services
+pks_network: pks
 
 ntp_servers_string: 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
+dns: 168.63.129.16
+# infra_network_dns: 10.10.0.2
+# deployment_network_dns: 10.10.0.2
+# service_network_dns: 10.10.0.2
+
+# ntp: 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
+storage_sku: "Premium_LRS"
+cloud_storage_type: managed_disks
 
 blobstore_type: local
 bosh_recreate_on_next_deploy: false
