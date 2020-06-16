@@ -47,14 +47,15 @@ properties-configuration:
     cloud_storage_type: ((cloud_storage_type))
     storage_account_type: ((storage_sku))
     environment: AzureCloud
-    availability_mode: availability_sets
+    availability_mode: ((availability_mode))
 network-assignment:
   network:
     name: ((management_network))
   other_availability_zones: 
-    name: ((az1_name))
+  - ((az2_name))
+  - ((az3_name))
   singleton_availability_zone:
-    name: ((az2_name))
+    name: ((az1_name))
 networks-configuration:
   icmp_checks_enabled: ((icmp_checks_enabled))
   networks:

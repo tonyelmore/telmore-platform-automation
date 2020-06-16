@@ -5,7 +5,7 @@ az3_name: zone-3
 
 # networks-configuration:
 icmp_checks_enabled: false
-
+availability_mode: availability_zones
 
 management_subnet_cidr: 10.0.8.0/26
 management_subnet_gateway: 10.0.8.1
