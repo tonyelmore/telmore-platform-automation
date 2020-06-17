@@ -69,7 +69,7 @@ networks-configuration:
       availability_zone_names:
       - "zone-1"
       - "zone-2"
-      - "zone-3s" 
+      - "zone-3" 
   - name: ((pas_network))
     subnets:
     - iaas_identifier: ((pas_subnet_id))
