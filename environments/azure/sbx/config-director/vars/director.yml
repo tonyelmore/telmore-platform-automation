@@ -9,19 +9,19 @@ availability_mode: availability_zones
 
 management_subnet_cidr: 10.0.8.0/26
 management_subnet_gateway: 10.0.8.1
-management_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-management-subnet"
+management_subnet_id: sbx-platform/sbx-management-subnet
 management_subnet_range: 10.0.8.10
 pas_subnet_cidr: 10.0.0.0/22
 pas_subnet_gateway: 10.0.0.1
-pas_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-pas-subnet"
+pas_subnet_id: sbx-platform/sbx-pas-subnet
 pas_subnet_range: 10.0.0.1-10.0.0.10
 pks_subnet_cidr: 10.0.10.0/24
 pks_subnet_gateway: 10.0.10.1
-pks_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-pks-subnet"
+pks_subnet_id: sbx-platform/sbx-pks-subnet
 pks_subnet_range: 10.0.10.1-10.0.10.10
 services_subnet_cidr: 10.0.4.0/22
 services_subnet_gateway: 10.0.4.1
-services_subnet_id: "/subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-services-subnet"
+services_subnet_id: sbx-platform/sbx-services-subnet
 services_subnet_range: 10.0.4.1-10.0.4.10
 
 resource_group_name: sbx 
