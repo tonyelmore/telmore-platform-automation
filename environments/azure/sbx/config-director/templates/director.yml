@@ -67,9 +67,9 @@ networks-configuration:
       gateway: ((management_subnet_gateway))
       dns: ((dns))
       availability_zone_names:
-      - "((az1_name))"
-      - "((az2_name))"
-      - "((az3_name))" 
+      - "zone-1"
+      - "zone-2"
+      - "zone-3s" 
   - name: ((pas_network))
     subnets:
     - iaas_identifier: ((pas_subnet_id))
@@ -78,9 +78,9 @@ networks-configuration:
       gateway: ((pas_subnet_gateway))
       dns: ((dns))
       availability_zone_names:
-      - "((az1_name))"
-      - "((az2_name))"
-      - "((az3_name))" 
+      - "zone-1"
+      - "zone-2"
+      - "zone-3" 
   - name: ((services_network))
     subnets:
     - iaas_identifier: ((services_subnet_id))
@@ -89,9 +89,9 @@ networks-configuration:
       gateway: ((services_subnet_gateway))
       dns: ((dns))
       availability_zone_names:
-      - "((az1_name))"
-      - "((az2_name))"
-      - "((az3_name))" 
+      - "zone-1"
+      - "zone-2"
+      - "zone-3" 
   - name: ((pks_network))
     subnets:
     - iaas_identifier: ((pks_subnet_id))
@@ -100,9 +100,9 @@ networks-configuration:
       gateway: ((pks_subnet_gateway))
       dns: ((dns))
       availability_zone_names:
-      - "((az1_name))"
-      - "((az2_name))"
-      - "((az3_name))" 
+      - "zone-1"
+      - "zone-2"
+      - "zone-3" 
 resource-configuration:
   compilation:
     instances: ((compilation_instances))
