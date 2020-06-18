@@ -10,7 +10,7 @@ availability_mode: availability_zones
 management_subnet_cidr: 10.0.8.0/26
 management_subnet_gateway: 10.0.8.1
 management_subnet_id: sbx-platform/sbx-management-subnet
-management_subnet_range: 10.0.8.10
+management_subnet_range: 10.0.8.1-10.0.8.10
 pas_subnet_cidr: 10.0.0.0/22
 pas_subnet_gateway: 10.0.0.1
 pas_subnet_id: sbx-platform/sbx-pas-subnet
