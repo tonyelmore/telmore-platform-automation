@@ -11,10 +11,10 @@
 tf_output_file="$1"
 [[ -z "$tf_output_file" ]] && { echo "Error: expected the path to the terraform output file"; exit 1; }
 
-credhub_import_file="$2"
+credhub_import_file="output/$2"
 [[ -z "$credhub_import_file" ]] && { echo "Error: expected an output path to the credhub import file"; exit 1; }
 
-secrets_file="$3"
+secrets_file="output/$3"
 [[ -z "$secrets_file" ]] && { echo "Error: expected an output path to the secrets file"; exit 1; }
 
 function tf_value {

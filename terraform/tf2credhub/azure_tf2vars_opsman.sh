@@ -11,7 +11,7 @@ set -eu
 tf_output_file="$1"
 [[ -z "$tf_output_file" ]] && { echo "Error: expected the path to the terraform output file"; exit 1; }
 
-vars_file="$2"
+vars_file="output/$2"
 [[ -z "$vars_file" ]] && { echo "Error: expected an output path to the director vars file"; exit 1; }
 
 
