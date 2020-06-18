@@ -51,7 +51,6 @@ EOF
 tf2vars 'location'
 tf2vars 'resource_group_name'
 tf2vars 'ops_manager_storage_account_name'
-tf2vars 'ops_manager_ssh_public_key'
 tf2vars 'management_subnet_id'
 tf2vars 'ops_manager_public_ip'
 tf2vars 'ops_manager_private_ip'
