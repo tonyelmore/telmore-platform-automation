@@ -1,3 +1,33 @@
+# Terraform to VARS
+
+Here is how this works.
+* The assumption is that you have used terraform to create the infrastructure
+* The goal is to pull all the vars from the terraform output and create the vars file 
+  or the secrets file and the credhub import file
+
+If there are vars that are used then pull that from terraform and create the key:value pairs in the var file
+If there are secrets then create the key:value pair in the secrets file AND create the credhub import
+
+Steps:
+* run the terraform (../paving-xxxxxxx directories)
+* pull the terraform output into terraform-outputs.yml
+  "terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml"
+* create the secrets
+  "./azure_tf2credhub_opsman.sh terraform-outputs.yml opsman-creds.yml opsman-secrets.yml"
+* create the vars
+  "./azure_tf2vars_opsman.sh terraform-outputs.yml opsman-vars.yml"
+
+All output will be in the outputs folder
+
+I've started on the director vars - but not done yet.
+
+
+
+
+=============================
+the instructions below are from the original repo that I got from SNEAL
+============================
+
 # Pivotal Platform Configuration Repo
 
 This contains all the configuration and scripts to build and maintain
