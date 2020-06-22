@@ -2,8 +2,9 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*-azure-*"
 pivnet-product-slug: "stemcells-ubuntu-xenial"
-product-version: "621.71"
+product-version: "621.76"
 
-azure-storage-account: telmoreprodandstemcell
-azure-storage-key: ((azure-storage-key))
-blobstore-bucket: productstorage
+# Use these vars when pulling from azure blobstore
+# azure-storage-account: telmoreprodandstemcell
+# azure-storage-key: ((azure-storage-key))
+# blobstore-bucket: productstorage

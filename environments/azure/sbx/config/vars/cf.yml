@@ -1,0 +1,3 @@
+cloud_controller_apps_domain: apps.sbx.my3votes.com
+cloud_controller_system_domain: sys.sbx.my3votes.com
+singleton_availability_zone: eastus
