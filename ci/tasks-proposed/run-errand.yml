@@ -29,12 +29,9 @@ run:
     fi
 
     product=$(bosh int config/${CONFIG_FILE} --path /product-name)
-    echo ${product}
 
     staged_products=$(mktemp)
     om --env env/${ENV_FILE} curl -p /api/v0/staged/products  > ${staged_products}
-    echo "returned from the curl"
-    cat ${staged_products}
 
     installation=$(bosh int ${staged_products} --path /type=${product}/installation_name)
 
