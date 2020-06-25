@@ -1,3 +1,8 @@
 features/haproxy_forward_tls-disable.yml
 network/3-az-configuration.yml
 resource/router_elb_names.yml
+resource/router_additional_vm_extensions.yml
+resource/tcp_router_elb_names.yml
+resource/tcp_router_additional_vm_extensions.yml
+resource/diego_brain_elb_names.yml
+resource/diego_brain_additional_vm_extensions.yml
