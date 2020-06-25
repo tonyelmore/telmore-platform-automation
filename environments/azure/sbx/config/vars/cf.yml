@@ -6,7 +6,7 @@ az3_name: zone-3
 
 router_elb_names: ["sbx-web-lb"]
 router_additional_vm_extensions: ["sbx-platform-vms-sg"]
-diego_brain_additional_vm_extensions: ["sbx-ssh-lb"]
+diego_brain_additional_vm_extensions: ["sbx-diego-ssh-lb"]
 diego_brain_elb_names: ["sbx-platform-vms-sg"]
 tcp_router_additional_vm_extensions: ["sbx-tcp-lb"]
 tcp_router_elb_names: ["sbx-platform-vms-sg"]
