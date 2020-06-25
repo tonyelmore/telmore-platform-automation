@@ -468,6 +468,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: smoke_tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-usage-service
@@ -481,6 +482,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: push-usage-service
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-apps-manager
@@ -494,6 +496,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: push-apps-manager
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-notifications
@@ -507,6 +510,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: deploy-notifications
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-notifications-ui
@@ -520,6 +524,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-autoscaler
@@ -533,6 +538,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: deploy-autoscaler
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-nfsbrokerpush
@@ -546,6 +552,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: nfsbrokerpush
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
   - task: run-test-autoscaling
@@ -559,6 +566,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: clock_global/first
 
 # - name: pivotal-mysql

@@ -439,6 +439,7 @@ resource-config:
     instances: ((route_syncer_instances))
     max_in_flight: ((route_syncer_max_in_flight))
   router:
+    elb_names: ((router_elb_names))
     instance_type:
       id: ((router_instance_type))
     instances: ((router_instances))
