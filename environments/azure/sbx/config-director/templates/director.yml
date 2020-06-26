@@ -30,6 +30,7 @@ properties-configuration:
     retry_bosh_deploys: ((retry_bosh_deploys))
     skip_director_drain: true
   security_configuration:
+    opsmanager_root_ca_trusted_certs: ((opsmanageer_root_ca_trusted_certs))
     trusted_certificates: ((trusted_certificates))
     generate_vm_passwords: ((generate_vm_passwords))
   syslog_configuration:

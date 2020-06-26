@@ -9,9 +9,9 @@ dns: 168.63.129.16
 # infra_network_dns: 10.10.0.2
 # deployment_network_dns: 10.10.0.2
 # service_network_dns: 10.10.0.2
+opsmanageer_root_ca_trusted_certs: true
 
-# ntp: 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
-storage_sku: "Premium_LRS"
+sstorage_sku: "Premium_LRS"
 cloud_storage_type: managed_disks
 
 blobstore_type: local
