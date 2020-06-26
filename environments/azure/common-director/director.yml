@@ -11,7 +11,7 @@ dns: 168.63.129.16
 # service_network_dns: 10.10.0.2
 opsmanageer_root_ca_trusted_certs: true
 
-sstorage_sku: "Premium_LRS"
+storage_sku: "Premium_LRS"
 cloud_storage_type: managed_disks
 
 blobstore_type: local
