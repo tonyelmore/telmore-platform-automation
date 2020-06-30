@@ -16,6 +16,7 @@ credhub generate -n concourse/main/uaa_service_provider_key_credentials -t certi
 
 # To get the CA to add as "trusted certs" in director configuration (security tab)
 # credhub get -n concourse/main/pas_network_cert -k ca 
+# Or could add pas_network_cert.ca to "trusted-certs" in the director config  (I think it is .ca)
 
 # Network -> *.app.sbx.my3votes.com, *.sys.sbx.my3votes.com, *.login.sys.sbx.my3votes.com, *.uaa.sys.sbx.my3votes.com
 # UAA -> *.login.sys.sbx.my3votes.com
