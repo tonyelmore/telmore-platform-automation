@@ -792,19 +792,6 @@ jobs:
     input_mapping:
       files: configuration
 
-  - task: push-apps
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch.yml
-      ERRAND_NAME: push-apps
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: healthwatch-forwarder/first
-
   - task: smoke-tests
     attempts: 5
     image: platform-automation-image
@@ -816,6 +803,21 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch.yml
       ERRAND_NAME: smoke-tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
+      INSTANCE: healthwatch-forwarder/first
+
+  - task: push-apps
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch.yml
+      ERRAND_NAME: push-apps
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh.private_key))
       INSTANCE: healthwatch-forwarder/first
 
 # - name: p-rabbitmq
