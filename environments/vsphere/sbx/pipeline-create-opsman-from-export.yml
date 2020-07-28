@@ -160,7 +160,7 @@ jobs:
       env: interpolated-files
       installation: installation
     params:
-      INSTALLATION_FILE: installation-*.zip
+      INSTALLATION_FILE: installation*.zip
       ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
 
   # Apply Change to Director
