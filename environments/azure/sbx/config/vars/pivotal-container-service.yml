@@ -11,7 +11,7 @@ plan1_selector_active_worker_az_placement: ["zone-1","zone-2","zone-3"]
 cloud_provider_azure_azure_cloud_name: AzurePublicCloud
 cloud_provider_azure_azure_master_managed_identity: sbx-pks-master
 cloud_provider_azure_azure_worker_managed_identity: sbx-pks-worker
-cloud_provider_azure_default_security_group: sbx-pks-internal-network-sg
+cloud_provider_azure_default_security_group: sbx-pks-api-network-sgs
 cloud_provider_azure_disable_outbound_snat: false
 cloud_provider_azure_location: eastus
 cloud_provider_azure_primary_availability_set: sbx-pks-as
