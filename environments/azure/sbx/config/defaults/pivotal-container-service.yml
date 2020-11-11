@@ -16,7 +16,6 @@ plan1_selector_active_master_instances: 1
 plan1_selector_active_max_worker_instances: 50
 plan1_selector_active_name: small
 plan1_selector_active_worker_instances: 3
-telemetry_selector_enabled_billing_polling_interval: 60
 telemetry_selector_enabled_environment_provider: none
 telemetry_selector_enabled_telemetry_polling_interval: 21600
 telemetry_selector_enabled_telemetry_url: https://vcsa.vmware.com/ph

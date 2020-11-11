@@ -1,0 +1,3 @@
+plan1_selector_single_node_az_multi_select: ["zone-1"]
+plan2_selector_single_node_az_multi_select: ["zone-1"]
+plan3_selector_single_node_az_multi_select: ["zone-1"]

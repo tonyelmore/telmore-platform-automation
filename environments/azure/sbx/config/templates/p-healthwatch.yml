@@ -34,6 +34,8 @@ product-properties:
     value: ((healthwatch-forwarder_opsman_instance_count))
   .healthwatch-forwarder.publish_to_eva:
     value: ((healthwatch-forwarder_publish_to_eva))
+  .healthwatch-forwarder.push_apps_in_parallel:
+    value: ((healthwatch-forwarder_push_apps_in_parallel))
   .healthwatch-forwarder.worker_instance_count:
     value: ((healthwatch-forwarder_worker_instance_count))
   .properties.boshtasks:
@@ -49,22 +51,22 @@ product-properties:
 resource-config:
   healthwatch-forwarder:
     instance_type:
-      id: ((healthwatch-forwarder_instance_type))
-    instances: ((healthwatch-forwarder_instances))
-    max_in_flight: ((healthwatch-forwarder_max_in_flight))
+      id: ((resource-var-healthwatch-forwarder_instance_type))
+    instances: ((resource-var-healthwatch-forwarder_instances))
+    max_in_flight: ((resource-var-healthwatch-forwarder_max_in_flight))
     persistent_disk:
-      size_mb: ((healthwatch-forwarder_persistent_disk_size))
+      size_mb: ((resource-var-healthwatch-forwarder_persistent_disk_size))
   mysql:
     instance_type:
-      id: ((mysql_instance_type))
-    instances: ((mysql_instances))
-    max_in_flight: ((mysql_max_in_flight))
+      id: ((resource-var-mysql_instance_type))
+    instances: ((resource-var-mysql_instances))
+    max_in_flight: ((resource-var-mysql_max_in_flight))
     persistent_disk:
-      size_mb: ((mysql_persistent_disk_size))
+      size_mb: ((resource-var-mysql_persistent_disk_size))
   redis:
     instance_type:
-      id: ((redis_instance_type))
-    instances: ((redis_instances))
-    max_in_flight: ((redis_max_in_flight))
+      id: ((resource-var-redis_instance_type))
+    instances: ((resource-var-redis_instances))
+    max_in_flight: ((resource-var-redis_max_in_flight))
     persistent_disk:
-      size_mb: ((redis_persistent_disk_size))
+      size_mb: ((resource-var-redis_persistent_disk_size))

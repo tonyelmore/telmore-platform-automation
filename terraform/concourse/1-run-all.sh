@@ -28,7 +28,8 @@ fi
 echo "*********** Creating opsman"
 
 # copy iaas specific state file 
-cp state-${IAAAS}.yml state.yml
+touch state-${IAAS}.yml
+cp state-${IAAS}.yml state.yml
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
   p-automator create-vm \
     --config config-files/${IAAS}/opsman-config.yml \

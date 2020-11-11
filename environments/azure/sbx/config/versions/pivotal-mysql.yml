@@ -1,8 +1,8 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*.pivotal"
-pivnet-product-slug: "pivotal-container-service"
-product-version: "1.9.1"
+pivnet-product-slug: "pivotal-mysql"
+product-version: "2.9.2"
 
 # Use these vars when pulling from azure blobstore
 # azure-storage-account: telmoreprodandstemcell

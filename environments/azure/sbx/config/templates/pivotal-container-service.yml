@@ -126,8 +126,6 @@ product-properties:
     value: demo_or_poc
   .properties.telemetry_selector:
     value: enabled
-  .properties.telemetry_selector.enabled.billing_polling_interval:
-    value: ((telemetry_selector_enabled_billing_polling_interval))
   .properties.telemetry_selector.enabled.environment_provider:
     value: ((telemetry_selector_enabled_environment_provider))
   .properties.telemetry_selector.enabled.telemetry_polling_interval:

@@ -86,6 +86,10 @@ product-properties:
     value: ((mysql_proxy_startup_delay))
   .nfs_server.blobstore_internal_access_rules:
     value: ((nfs_server_blobstore_internal_access_rules))
+  .properties.app_graceful_shutdown_period_in_seconds:
+    value: ((app_graceful_shutdown_period_in_seconds))
+  .properties.app_log_rate_limiting:
+    value: disable
   .properties.autoscale_api_disable_connection_pooling:
     value: ((autoscale_api_disable_connection_pooling))
   .properties.autoscale_api_instance_count:
@@ -113,6 +117,8 @@ product-properties:
   .properties.cf_networking_internal_domains:
     value:
     - name: apps.internal
+  .properties.cloud_controller_audit_events_cutoff_age_in_days:
+    value: ((cloud_controller_audit_events_cutoff_age_in_days))
   .properties.cloud_controller_completed_tasks_cutoff_age_in_days:
     value: ((cloud_controller_completed_tasks_cutoff_age_in_days))
   .properties.cloud_controller_default_health_check_timeout:
@@ -143,8 +149,8 @@ product-properties:
       primary: ((credhub_internal_provider_keys_0_primary))
   .properties.diego_database_max_open_connections:
     value: ((diego_database_max_open_connections))
-  .properties.diego_log_timestamp_format:
-    value: rfc3339
+  .properties.disable_logs_in_firehose:
+    value: ((disable_logs_in_firehose))
   .properties.enable_garden_containerd_mode:
     value: ((enable_garden_containerd_mode))
   .properties.enable_log_cache_syslog_ingestion:
@@ -174,12 +180,12 @@ product-properties:
     value: ((haproxy_max_buffer_size))
   .properties.haproxy_ssl_ciphers:
     value: ((haproxy_ssl_ciphers))
-  .properties.istio:
-    value: disable
   .properties.locket_database_max_open_connections:
     value: ((locket_database_max_open_connections))
   .properties.log_cache_max_per_source:
     value: ((log_cache_max_per_source))
+  .properties.logging_timestamp_format:
+    value: rfc3339
   .properties.metric_registrar_blacklisted_tags:
     value: ((metric_registrar_blacklisted_tags))
   .properties.metric_registrar_enabled:
@@ -204,20 +210,26 @@ product-properties:
     value: enable
   .properties.push_apps_manager_app_poll_interval:
     value: ((push_apps_manager_app_poll_interval))
+  .properties.push_apps_manager_buildpack:
+    value: ((push_apps_manager_buildpack))
   .properties.push_apps_manager_currency_lookup:
     value: ((push_apps_manager_currency_lookup))
   .properties.push_apps_manager_display_plan_prices:
     value: ((push_apps_manager_display_plan_prices))
   .properties.push_apps_manager_enable_invitations:
     value: ((push_apps_manager_enable_invitations))
+  .properties.push_apps_manager_invitations_buildpack:
+    value: ((push_apps_manager_invitations_buildpack))
   .properties.push_apps_manager_nav_links:
     value:
-    - href: https://docs.pivotal.io/pivotalcf/2-8/pas/intro.html
+    - href: https://docs.pivotal.io/pivotalcf/2-10/pas/intro.html
       name: Docs
     - href: /tools
       name: Tools
   .properties.push_apps_manager_poll_interval:
     value: ((push_apps_manager_poll_interval))
+  .properties.push_apps_manager_search_server_buildpack:
+    value: ((push_apps_manager_search_server_buildpack))
   .properties.push_usage_service_cutoff_age_in_days:
     value: ((push_usage_service_cutoff_age_in_days))
   .properties.route_integrity:
@@ -238,6 +250,9 @@ product-properties:
     value: ((router_enable_proxy))
   .properties.router_keepalive_connections:
     value: enable
+  .properties.router_sticky_session_cookie_names:
+    value:
+    - name: JSESSIONID
   .properties.routing_disable_http:
     value: ((routing_disable_http))
   .properties.routing_log_client_ips:
@@ -252,6 +267,8 @@ product-properties:
     value: ((secure_service_instance_credentials))
   .properties.security_acknowledgement:
     value: ((security_acknowledgement))
+  .properties.service_discovery_controller_staleness_threshold:
+    value: ((service_discovery_controller_staleness_threshold))
   .properties.silk_database_max_open_connections:
     value: ((silk_database_max_open_connections))
   .properties.smoke_tests:
@@ -276,6 +293,8 @@ product-properties:
     value: ((system_blobstore_ccpackage_max_valid_packages_stored))
   .properties.system_database:
     value: internal_pxc
+  .properties.system_metrics_scraper_scrape_interval:
+    value: ((system_metrics_scraper_scrape_interval))
   .properties.tcp_routing:
     value: disable
   .properties.uaa:
@@ -339,123 +358,123 @@ product-properties:
 resource-config:
   backup_restore:
     instance_type:
-      id: ((backup_restore_instance_type))
-    instances: ((backup_restore_instances))
-    max_in_flight: ((backup_restore_max_in_flight))
+      id: ((resource-var-backup_restore_instance_type))
+    instances: ((resource-var-backup_restore_instances))
+    max_in_flight: ((resource-var-backup_restore_max_in_flight))
     persistent_disk:
-      size_mb: ((backup_restore_persistent_disk_size))
+      size_mb: ((resource-var-backup_restore_persistent_disk_size))
   clock_global:
     instance_type:
-      id: ((clock_global_instance_type))
-    instances: ((clock_global_instances))
-    max_in_flight: ((clock_global_max_in_flight))
+      id: ((resource-var-clock_global_instance_type))
+    instances: ((resource-var-clock_global_instances))
+    max_in_flight: ((resource-var-clock_global_max_in_flight))
   cloud_controller:
     instance_type:
-      id: ((cloud_controller_instance_type))
-    instances: ((cloud_controller_instances))
-    max_in_flight: ((cloud_controller_max_in_flight))
+      id: ((resource-var-cloud_controller_instance_type))
+    instances: ((resource-var-cloud_controller_instances))
+    max_in_flight: ((resource-var-cloud_controller_max_in_flight))
   cloud_controller_worker:
     instance_type:
-      id: ((cloud_controller_worker_instance_type))
-    instances: ((cloud_controller_worker_instances))
-    max_in_flight: ((cloud_controller_worker_max_in_flight))
+      id: ((resource-var-cloud_controller_worker_instance_type))
+    instances: ((resource-var-cloud_controller_worker_instances))
+    max_in_flight: ((resource-var-cloud_controller_worker_max_in_flight))
   credhub:
     instance_type:
-      id: ((credhub_instance_type))
-    instances: ((credhub_instances))
-    max_in_flight: ((credhub_max_in_flight))
+      id: ((resource-var-credhub_instance_type))
+    instances: ((resource-var-credhub_instances))
+    max_in_flight: ((resource-var-credhub_max_in_flight))
   diego_brain:
-    additional_vm_extensions: ((diego_brain_additional_vm_extensions))
-    elb_names: ((diego_brain_elb_names))
+    additional_vm_extensions: ((resource-var-diego_brain_additional_vm_extensions))
+    elb_names: ((resource-var-diego_brain_elb_names))
     instance_type:
-      id: ((diego_brain_instance_type))
-    instances: ((diego_brain_instances))
-    max_in_flight: ((diego_brain_max_in_flight))
+      id: ((resource-var-diego_brain_instance_type))
+    instances: ((resource-var-diego_brain_instances))
+    max_in_flight: ((resource-var-diego_brain_max_in_flight))
   diego_cell:
     instance_type:
-      id: ((diego_cell_instance_type))
-    instances: ((diego_cell_instances))
-    max_in_flight: ((diego_cell_max_in_flight))
+      id: ((resource-var-diego_cell_instance_type))
+    instances: ((resource-var-diego_cell_instances))
+    max_in_flight: ((resource-var-diego_cell_max_in_flight))
   diego_database:
     instance_type:
-      id: ((diego_database_instance_type))
-    instances: ((diego_database_instances))
-    max_in_flight: ((diego_database_max_in_flight))
+      id: ((resource-var-diego_database_instance_type))
+    instances: ((resource-var-diego_database_instances))
+    max_in_flight: ((resource-var-diego_database_max_in_flight))
   doppler:
     instance_type:
-      id: ((doppler_instance_type))
-    instances: ((doppler_instances))
-    max_in_flight: ((doppler_max_in_flight))
+      id: ((resource-var-doppler_instance_type))
+    instances: ((resource-var-doppler_instances))
+    max_in_flight: ((resource-var-doppler_max_in_flight))
   ha_proxy:
     instance_type:
-      id: ((ha_proxy_instance_type))
-    instances: ((ha_proxy_instances))
-    max_in_flight: ((ha_proxy_max_in_flight))
+      id: ((resource-var-ha_proxy_instance_type))
+    instances: ((resource-var-ha_proxy_instances))
+    max_in_flight: ((resource-var-ha_proxy_max_in_flight))
   istio_control:
     instance_type:
-      id: ((istio_control_instance_type))
-    instances: ((istio_control_instances))
-    max_in_flight: ((istio_control_max_in_flight))
+      id: ((resource-var-istio_control_instance_type))
+    instances: ((resource-var-istio_control_instances))
+    max_in_flight: ((resource-var-istio_control_max_in_flight))
   istio_router:
     instance_type:
-      id: ((istio_router_instance_type))
-    instances: ((istio_router_instances))
-    max_in_flight: ((istio_router_max_in_flight))
+      id: ((resource-var-istio_router_instance_type))
+    instances: ((resource-var-istio_router_instances))
+    max_in_flight: ((resource-var-istio_router_max_in_flight))
   loggregator_trafficcontroller:
     instance_type:
-      id: ((loggregator_trafficcontroller_instance_type))
-    instances: ((loggregator_trafficcontroller_instances))
-    max_in_flight: ((loggregator_trafficcontroller_max_in_flight))
+      id: ((resource-var-loggregator_trafficcontroller_instance_type))
+    instances: ((resource-var-loggregator_trafficcontroller_instances))
+    max_in_flight: ((resource-var-loggregator_trafficcontroller_max_in_flight))
   mysql:
     instance_type:
-      id: ((mysql_instance_type))
-    instances: ((mysql_instances))
-    max_in_flight: ((mysql_max_in_flight))
+      id: ((resource-var-mysql_instance_type))
+    instances: ((resource-var-mysql_instances))
+    max_in_flight: ((resource-var-mysql_max_in_flight))
     persistent_disk:
-      size_mb: ((mysql_persistent_disk_size))
+      size_mb: ((resource-var-mysql_persistent_disk_size))
   mysql_monitor:
     instance_type:
-      id: ((mysql_monitor_instance_type))
-    instances: ((mysql_monitor_instances))
-    max_in_flight: ((mysql_monitor_max_in_flight))
+      id: ((resource-var-mysql_monitor_instance_type))
+    instances: ((resource-var-mysql_monitor_instances))
+    max_in_flight: ((resource-var-mysql_monitor_max_in_flight))
   mysql_proxy:
     instance_type:
-      id: ((mysql_proxy_instance_type))
-    instances: ((mysql_proxy_instances))
-    max_in_flight: ((mysql_proxy_max_in_flight))
+      id: ((resource-var-mysql_proxy_instance_type))
+    instances: ((resource-var-mysql_proxy_instances))
+    max_in_flight: ((resource-var-mysql_proxy_max_in_flight))
   nats:
     instance_type:
-      id: ((nats_instance_type))
-    instances: ((nats_instances))
-    max_in_flight: ((nats_max_in_flight))
+      id: ((resource-var-nats_instance_type))
+    instances: ((resource-var-nats_instances))
+    max_in_flight: ((resource-var-nats_max_in_flight))
   nfs_server:
     instance_type:
-      id: ((nfs_server_instance_type))
-    instances: ((nfs_server_instances))
-    max_in_flight: ((nfs_server_max_in_flight))
+      id: ((resource-var-nfs_server_instance_type))
+    instances: ((resource-var-nfs_server_instances))
+    max_in_flight: ((resource-var-nfs_server_max_in_flight))
     persistent_disk:
-      size_mb: ((nfs_server_persistent_disk_size))
+      size_mb: ((resource-var-nfs_server_persistent_disk_size))
   route_syncer:
     instance_type:
-      id: ((route_syncer_instance_type))
-    instances: ((route_syncer_instances))
-    max_in_flight: ((route_syncer_max_in_flight))
+      id: ((resource-var-route_syncer_instance_type))
+    instances: ((resource-var-route_syncer_instances))
+    max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
-    additional_vm_extensions: ((router_additional_vm_extensions))
-    elb_names: ((router_elb_names))
+    additional_vm_extensions: ((resource-var-router_additional_vm_extensions))
+    elb_names: ((resource-var-router_elb_names))
     instance_type:
-      id: ((router_instance_type))
-    instances: ((router_instances))
-    max_in_flight: ((router_max_in_flight))
+      id: ((resource-var-router_instance_type))
+    instances: ((resource-var-router_instances))
+    max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
-    additional_vm_extensions: ((tcp_router_additional_vm_extensions))
-    elb_names: ((tcp_router_elb_names))
+    additional_vm_extensions: ((resource-var-tcp_router_additional_vm_extensions))
+    elb_names: ((resource-var-tcp_router_elb_names))
     instance_type:
-      id: ((tcp_router_instance_type))
-    instances: ((tcp_router_instances))
-    max_in_flight: ((tcp_router_max_in_flight))
+      id: ((resource-var-tcp_router_instance_type))
+    instances: ((resource-var-tcp_router_instances))
+    max_in_flight: ((resource-var-tcp_router_max_in_flight))
   uaa:
     instance_type:
-      id: ((uaa_instance_type))
-    instances: ((uaa_instances))
-    max_in_flight: ((uaa_max_in_flight))
+      id: ((resource-var-uaa_instance_type))
+    instances: ((resource-var-uaa_instances))
+    max_in_flight: ((resource-var-uaa_max_in_flight))

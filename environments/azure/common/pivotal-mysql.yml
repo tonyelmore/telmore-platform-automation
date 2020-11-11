@@ -1,0 +1,11 @@
+network_name: pas
+service_network_name: services
+global_recipient_email: aelmore@vmware.com
+deprecated_bindings_string: X
+singleton_availability_zone: zone-1
+
+recreate-all-service-instances_post_deploy_state: false
+register-broker_post_deploy_state: false
+smoke-tests_post_deploy_state: false
+upgrade-all-service-instances_post_deploy_state: false
+validate-before-upgrade-instances_post_deploy_state: false

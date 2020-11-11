@@ -4,9 +4,9 @@ singleton_availability_zone: zone-1
 az2_name: zone-2
 az3_name: zone-3
 
-router_elb_names: ["sbx-web-lb"]
-router_additional_vm_extensions: ["web-lb-security-group"]
-diego_brain_elb_names: ["sbx-diego-ssh-lb"]
-diego_brain_additional_vm_extensions: ["ssh-lb-security-group"]
-tcp_router_elb_names: ["sbx-tcp-lb"]
-tcp_router_additional_vm_extensions: ["tcp-lb-security-group"]
+resource-var-router_elb_names: ["sbx-web-lb"]
+resource-var-router_additional_vm_extensions: ["web-lb-security-group"]
+resource-var-diego_brain_elb_names: ["sbx-diego-ssh-lb"]
+resource-var-diego_brain_additional_vm_extensions: ["ssh-lb-security-group"]
+resource-var-tcp_router_elb_names: ["sbx-tcp-lb"]
+resource-var-tcp_router_additional_vm_extensions: ["tcp-lb-security-group"]
