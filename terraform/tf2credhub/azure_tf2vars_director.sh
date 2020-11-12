@@ -8,10 +8,10 @@
 
 set -eu
 
-tf_output_file="$1"
-[[ -z "$tf_output_file" ]] && { echo "Error: expected the path to the terraform output file"; exit 1; }
+terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
+tf_output_file="terraform-outputs.yml"
 
-vars_file="output/$2"
+vars_file="output/$1"
 [[ -z "$vars_file" ]] && { echo "Error: expected an output path to the director vars file"; exit 1; }
 
 
@@ -48,15 +48,16 @@ cat << EOF > "$vars_file"
 EOF
 
 
-tf2vars 'services_subnet_reserved_ip_ranges'
 tf2vars 'apps_dns_domain'
 tf2vars 'availability_zones'
 tf2vars 'buildpacks_bucket_name'
 tf2vars 'droplets_bucket_name'
-tf2vars 'management_subnet_cidrs'
-tf2vars 'management_subnet_gateways'
-tf2vars 'management_subnet_ids' 
-tf2vars 'management_subnet_reserved_ip_ranges'
+
+tf2vars 'management_subnet_cidr'
+tf2vars 'management_subnet_gateway'
+tf2vars 'management_subnet_id' 
+tf2vars 'management_subnet_reserved_ip_range'
+
 tf2vars 'mysql_security_group_id'
 tf2vars 'mysql_security_group_name'
 tf2vars 'nat_security_group_id'
@@ -69,10 +70,12 @@ tf2vars 'ops_manager_security_group_id'
 tf2vars 'ops_manager_security_group_name'
 tf2vars 'ops_manager_subnet_id'
 tf2vars 'packages_bucket_name'
-tf2vars 'pas_subnet_cidrs'
-tf2vars 'pas_subnet_gateways'
-tf2vars 'pas_subnet_ids'
-tf2vars 'pas_subnet_reserved_ip_ranges'
+
+tf2vars 'pas_subnet_cidr'
+tf2vars 'pas_subnet_gateway'
+tf2vars 'pas_subnet_id'
+tf2vars 'pas_subnet_reserved_ip_range'
+
 tf2vars 'pks_api_dns'
 tf2vars 'pks_api_lb_security_group_id'
 tf2vars 'pks_api_lb_security_group_name'
@@ -80,21 +83,24 @@ tf2vars 'pks_api_target_groups'
 tf2vars 'pks_internal_security_group_id'
 tf2vars 'pks_internal_security_group_name'
 tf2vars 'pks_master_iam_instance_profile_name'
-tf2vars 'pks_subnet_cidrs'
-tf2vars 'pks_subnet_gateways'
-tf2vars 'pks_subnet_ids'
-tf2vars 'pks_subnet_reserved_ip_ranges'
+tf2vars 'pks_subnet_cidr'
+tf2vars 'pks_subnet_gateway'
+tf2vars 'pks_subnet_id'
+tf2vars 'pks_subnet_reserved_ip_range'
 tf2vars 'pks_worker_iam_instance_profile_name'
+
 tf2vars 'platform_vms_security_group_id'
 tf2vars 'platform_vms_security_group_name'
-tf2vars 'public_subnet_cidrs'
-tf2vars 'public_subnet_ids'
+tf2vars 'public_subnet_cidr'
+tf2vars 'public_subnet_id'
 tf2vars 'region'
 tf2vars 'resources_bucket_name'
-tf2vars 'services_subnet_cidrs'
-tf2vars 'services_subnet_gateways'
-tf2vars 'services_subnet_ids'
+
+tf2vars 'services_subnet_cidr'
+tf2vars 'services_subnet_gateway'
+tf2vars 'services_subnet_id'
 tf2vars 'services_subnet_reserved_ip_ranges'
+
 tf2vars 'ssh_dns'
 tf2vars 'ssh_lb_security_group_id'
 tf2vars 'ssh_lb_security_group_name'

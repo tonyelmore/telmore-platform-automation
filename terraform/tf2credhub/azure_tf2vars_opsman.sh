@@ -8,10 +8,10 @@
 
 set -eu
 
-tf_output_file="$1"
-[[ -z "$tf_output_file" ]] && { echo "Error: expected the path to the terraform output file"; exit 1; }
+terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
+tf_output_file="terraform-outputs.yml"
 
-vars_file="output/$2"
+vars_file="output/$1"
 [[ -z "$vars_file" ]] && { echo "Error: expected an output path to the director vars file"; exit 1; }
 
 

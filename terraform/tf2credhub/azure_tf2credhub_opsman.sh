@@ -8,13 +8,13 @@
 #    $ credhub import -f /tmp/prod01-credhub.json
 #
 
-tf_output_file="$1"
-[[ -z "$tf_output_file" ]] && { echo "Error: expected the path to the terraform output file"; exit 1; }
+terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
+tf_output_file="terraform-outputs.yml"
 
-credhub_import_file="output/$2"
+credhub_import_file="output/$1"
 [[ -z "$credhub_import_file" ]] && { echo "Error: expected an output path to the credhub import file"; exit 1; }
 
-secrets_file="output/$3"
+secrets_file="output/$2"
 [[ -z "$secrets_file" ]] && { echo "Error: expected an output path to the secrets file"; exit 1; }
 
 function tf_value {
@@ -69,4 +69,4 @@ tf2credhub 'client_secret'
 tf2credhub 'ops_manager_storage_account_name'
 tf2credhub 'pas_storage_account_access_key'
 tf2credhub 'ops_manager_ssh_private_key'
-
+tf2credhub 'ops_manager_ssh_public_key'
