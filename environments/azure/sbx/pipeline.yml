@@ -826,7 +826,7 @@ jobs:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: [ pivotal-mysql ]
+      passed: [ p-healthwatch ]
     - get: platform-automation-image
       resource: platform-automation
       params:
