@@ -98,7 +98,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -129,7 +129,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -230,7 +230,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -266,7 +266,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -345,7 +345,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -376,7 +376,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -443,7 +443,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -580,7 +580,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -647,7 +647,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -711,7 +711,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -778,7 +778,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -831,7 +831,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -898,7 +898,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
