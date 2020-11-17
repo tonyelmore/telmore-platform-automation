@@ -101,10 +101,10 @@ run:
       fi
       om --env env/"${ENV_FILE}" upload-product \
          --product ${downloaded_files}/*.pivotal
-      product_name="$(om tile-metadata \
+      product_name="$(om product-metadata \
          --product-path ${downloaded_files}/*.pivotal \
          --product-name)"
-      product_version="$(om tile-metadata \
+      product_version="$(om product-metadata \
          --product-path ${downloaded_files}/*.pivotal \
          --product-version)"
       om --env env/"${ENV_FILE}" stage-product \
