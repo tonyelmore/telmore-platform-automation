@@ -26,6 +26,18 @@ product-properties:
     value: ((allow_lower_case_table_names_via_config_param))
   .properties.audit_logging_enabled:
     value: ((audit_logging_enabled))
+  .properties.backups_selector:
+    selected_option: azure
+    value: Azure Backups
+  .properties.backups_selector.azure.account:
+    value: ((backups_selector_azure_account))
+  .properties.backups_selector.azure.container:
+    value: ((backups_selector_azure_container))
+  .properties.backups_selector.azure.cron_schedule:
+    value: ((backups_selector_azure_cron_schedule))
+  .properties.backups_selector.azure.storage_access_key:
+    value:
+      secret: ((backups_selector_azure_storage_access_key))
   .properties.canary_instances:
     value: ((canary_instances))
   .properties.deprecated_bindings_string:

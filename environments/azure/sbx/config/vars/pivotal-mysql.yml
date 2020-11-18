@@ -1,3 +1,7 @@
 plan1_selector_single_node_az_multi_select: ["zone-1"]
 plan2_selector_single_node_az_multi_select: ["zone-1"]
 plan3_selector_single_node_az_multi_select: ["zone-1"]
+
+backups_selector_azure_account: telmoresbxmy3votesmysql
+backups_selector_azure_container: "mysql-backups"
+backups_selector_azure_cron_schedule: "0 */8 * * *"
