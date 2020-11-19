@@ -1,7 +1,7 @@
 singleton_availability_zone: zone-1
 az2_name: zone-2
 az3_name: zone-3
-network_name: pks5
+network_name: pks
 service_network_name: services
 pks_api_hostname: api.pks.sbx.my3votes.com
 
