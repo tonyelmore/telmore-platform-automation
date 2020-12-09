@@ -458,7 +458,7 @@ jobs:
       files: configuration
 
   - task: run-smoke_tests
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -472,7 +472,7 @@ jobs:
       INSTANCE: clock_global/first
 
   - task: run-push-usage-service
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -486,7 +486,7 @@ jobs:
       INSTANCE: clock_global/first
 
   - task: run-push-apps-manager
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -500,7 +500,7 @@ jobs:
       INSTANCE: clock_global/first
 
   - task: run-deploy-autoscaler
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -514,7 +514,7 @@ jobs:
       INSTANCE: clock_global/first
 
   - task: run-test-autoscaling
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -634,7 +634,7 @@ jobs:
       INSTANCE: dedicated-mysql-broker/first
 
   - task: smoke-tests
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -648,7 +648,7 @@ jobs:
       INSTANCE: dedicated-mysql-broker/first
 
   - task: upgrade-all-service-instances
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
@@ -755,7 +755,7 @@ jobs:
       files: configuration
 
   - task: smoke-tests
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
