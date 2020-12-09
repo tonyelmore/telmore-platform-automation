@@ -2,8 +2,8 @@ singleton_availability_zone: zone-1
 az2_name: zone-2
 az3_name: zone-3
 network_name: pks
-service_network_name: services
-pks_api_hostname: api.pks.sbx.my3votes.com
+service_network_name: pks
+pks_api_hostname: pks.sbx.my3votes.com
 
 plan1_selector_active_master_az_placement: ["zone-1"]
 plan1_selector_active_worker_az_placement: ["zone-1","zone-2","zone-3"]

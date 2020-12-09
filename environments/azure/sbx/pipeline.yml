@@ -620,17 +620,19 @@ jobs:
       files: configuration
 
   - task: register-broker
-    attempts: 5
+    attempts: 2
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      PRODUCT_NAME: pivotal-mysql
+      # CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
       ERRAND_NAME: register-broker
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: dedicated-mysql-broker/first
+      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_private_key))
 
   - task: smoke-tests
     attempts: 5
