@@ -631,8 +631,8 @@ jobs:
       # CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
       ERRAND_NAME: register-broker
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
       INSTANCE: dedicated-mysql-broker/first
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_private_key))
 
   - task: smoke-tests
     attempts: 5
@@ -645,6 +645,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
       ERRAND_NAME: smoke-tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
       INSTANCE: dedicated-mysql-broker/first
 
   - task: upgrade-all-service-instances
@@ -658,6 +659,7 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
       ERRAND_NAME: upgrade-all-service-instances
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
       INSTANCE: dedicated-mysql-broker/first
 
 
