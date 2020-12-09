@@ -96,7 +96,7 @@ run:
       # ${vars_files_args[@] needs to be globbed to split properly (SC2068)
       # INSTALLATION_FILE needs to be globbed (SC2086)
       # shellcheck disable=SC2068,SC2086
-      p-automator upgrade-opsman \
+      om vm-lifecycle upgrade-opsman \
         --config config/"${OPSMAN_CONFIG_FILE}" \
         --env-file env/"${ENV_FILE}" \
         --image-file "${IMAGE_FILE}"  \
