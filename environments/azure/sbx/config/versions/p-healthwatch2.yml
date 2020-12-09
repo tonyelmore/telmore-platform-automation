@@ -1,8 +1,8 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
-pivnet-file-glob: "*-azure-*"
-pivnet-product-slug: "stemcells-ubuntu-xenial"
-product-version: "456.126"
+pivnet-file-glob: "healthwatch-2.*.pivotal"
+pivnet-product-slug: "p-healthwatch"
+product-version: "2.0.5-build.117"
 
 # Use these vars when pulling from azure blobstore
 # azure-storage-account: telmoreprodandstemcell

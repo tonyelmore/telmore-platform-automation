@@ -1,4 +1,0 @@
-healthwatch-forwarder_health_check_az: zone-1
-network_name: pas
-service_network_name: services
-singleton_availability_zone: zone-1
