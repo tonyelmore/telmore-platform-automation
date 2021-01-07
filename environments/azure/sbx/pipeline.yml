@@ -365,13 +365,62 @@ jobs:
     input_mapping:
       files: configuration
 
+- name: os-conf
+  plan:
+  - aggregate:
+    - get: configuration
+      trigger: true
+      passed: [ validate-tile-configuration ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: download
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-bosh-io-release.yml
+    input_mapping:
+      config: configuration
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/os-conf.yml
+      
+  - task: apply-runtime-config
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-runtime-config.yml
+    input_mapping:
+      config: configuration
+      vars: configuration
+      secrets: interpolated-files
+      env: interpolated-files
+      files: downloaded-release
+    params:
+      NAME: os-conf
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/os-conf.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/versions/os-conf.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/os-conf.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
 - name: pas
   serial: true
   plan:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: [ validate-tile-configuration ]
+      passed: [ os-conf ]
     - get: platform-automation-image
       resource: platform-automation
       params:
