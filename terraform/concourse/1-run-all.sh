@@ -2,14 +2,15 @@
 
 # set -x
 
-TOOLKIT_IMAGE_VERSION="4.3.4"
-export IAAS="azure"
+TOOLKIT_IMAGE_VERSION="5.0.13"
+export IAAS="gcp"
 export PLATFORM="darwin"
 
 echo "*********** Getting terraform output..."
-terraform output -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config > terraform-outputs-${IAAS}.yml
+# with Terraform v 0.14.3+ use "--raw" to ensure output is not JSON encoded
+terraform output --raw -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config_opsmanager > terraform-outputs-${IAAS}.yml
 
-export CONCOURSE_URL="$(terraform output -state=../paving-${IAAS}-concourse/terraform.tfstate concourse_url)"
+export CONCOURSE_URL="$(terraform output --raw -state=../paving-${IAAS}-concourse/terraform.tfstate concourse_url)"
 
 : ${OM_USERNAME?"Need to set OM_USERNAME ... Please run '. ./0-set-env.sh'"}
 : ${OM_PASSWORD?"Need to set OM_PASSWORD ... Please run '. ./0-set-env.sh'"}
@@ -31,7 +32,7 @@ echo "*********** Creating opsman"
 touch state-${IAAS}.yml
 cp state-${IAAS}.yml state.yml
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
-  p-automator create-vm \
+  om vm-lifecycle create-vm \
     --config config-files/${IAAS}/opsman-config.yml \
     --image-file downloaded-resources/opsman-image/${IAAS}/ops-manager-${IAAS}*.yml \
     --vars-file terraform-outputs-${IAAS}.yml
@@ -85,6 +86,7 @@ credhub set \
    -w "${ADMIN_PASSWORD}"
 
 echo "*********** Deploying concourse"
+# I used to have "--vars-env CONCOURSE" ... but but doc no longer has it
 bosh -n -d concourse deploy downloaded-resources/concourse-bosh-deployment/cluster/concourse.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/privileged-http.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/privileged-https.yml \
@@ -100,7 +102,7 @@ bosh -n -d concourse deploy downloaded-resources/concourse-bosh-deployment/clust
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
   -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
   -o config-files/${IAAS}/operations.yml \
-  -l <(om interpolate --config config-files/${IAAS}/vars.yml --vars-env CONCOURSE --vars-file terraform-outputs-${IAAS}.yml) \
+  -l <(om interpolate --config config-files/${IAAS}/vars.yml --vars-file terraform-outputs-${IAAS}.yml) \
   -l downloaded-resources/concourse-bosh-deployment/versions.yml
 
 export CONCOURSE_CREDHUB_SECRET="$(credhub get -n /p-bosh/concourse/credhub_admin_secret -q)"
