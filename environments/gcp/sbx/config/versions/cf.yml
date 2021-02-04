@@ -1,0 +1,10 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "cf*.pivotal"
+pivnet-product-slug: "elastic-runtime"
+product-version: "2.10.8"
+
+# Use these vars when pulling from azure blobstore
+# azure-storage-account: telmoreprodandstemcell
+# azure-storage-key: ((azure-storage-key))
+# blobstore-bucket: productstorage

@@ -1,0 +1,10 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "healthwatch-2.*.pivotal"
+pivnet-product-slug: "p-healthwatch"
+product-version: "2.0.5-build.117"
+
+# Use these vars when pulling from azure blobstore
+# azure-storage-account: telmoreprodandstemcell
+# azure-storage-key: ((azure-storage-key))
+# blobstore-bucket: productstorage

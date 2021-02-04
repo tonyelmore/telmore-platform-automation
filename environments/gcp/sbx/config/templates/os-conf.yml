@@ -1,0 +1,21 @@
+releases:
+- name: os-conf
+  version: ((version))
+
+addons:
+  - name: os-conf
+    include:
+      stemcell:
+      - os: ubuntu-trusty
+      - os: ubuntu-xenial
+    exclude: 
+      instance_type:
+      - worker
+
+    jobs:
+    - name: pre-start-script
+      release: os-conf
+      properties:
+        script: |-
+          #!/bin/bash
+          echo "Hostname from secrets - from credhub - ((os_conf_var))" > /root/os-conf-script.log
