@@ -1,7 +1,6 @@
 ---
 team: main
 foundation: sbx
-iaas: azure
-lock_pool_name: azure-sbx
-concourse_user: admin
-concourse_credhub_url: https://ci.concourse.my3votes.com:8844
+iaas: gcp
+lock_pool_name: gcp-sbx
+concourse_credhub_url: https://ci.control.covertcoding.com:8844

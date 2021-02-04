@@ -1,5 +1,5 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
-pivnet-file-glob: "*azure*.yml"
+pivnet-file-glob: "*gcp*.yml"
 pivnet-product-slug: "ops-manager"
 product-version: "2.10.2"

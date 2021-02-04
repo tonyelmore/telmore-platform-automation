@@ -5,16 +5,10 @@ resource_types:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
 
-- name: azure-blobstore
+- name: gcs-resource
   type: docker-image
   source:
-    repository: pcfabr/azure-blobstore-resource
-
-- name: concourse-pipeline
-  type: docker-image
-  source:
-    repository: concourse/concourse-pipeline-resource
-    tag: 1.1.0
+    repository: frodenas/gcs-resource
 
 resources:
 - name: platform-automation
@@ -24,12 +18,11 @@ resources:
     product_slug: platform-automation
 
 - name: installation
-  type: azure-blobstore
+  type: gcs-resource
   source:
-    container: telmore-azure-opsman-exports
-    storage_account_name: ((ops_manager_storage_account_name))
-    storage_account_key: ((ops_manager_storage_account_access_key))
-    versioned_file: installation.zip
+    bucket: sa-aelmore-installation-zips
+    json_key: ((gcp-service-account-key-json))
+    regexp: ((foundation))/installation-(.*).zip
 
 - name: state
   type: git

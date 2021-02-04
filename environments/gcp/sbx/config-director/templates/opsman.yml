@@ -1,19 +1,22 @@
 ---
 opsman-configuration:
-  azure:
-    tenant_id: ((tenant_id))
-    subscription_id: ((subscription_id))
-    client_id: ((client_id))
-    client_secret: ((client_secret))
-    location: ((location))
-    resource_group: ((resource_group_name))
-    storage_account: ((ops_manager_storage_account_name))
-    ssh_public_key: ((ops_manager_ssh_public_key))
-    subnet_id: ((management_subnet_id))
+  gcp:
+    gcp_service_account: ((gcp-service-account-key-json))
+    project: ((project))
+    region: ((region))
+    zone: ((zone))
+    vpc_subnet: ((management_subnet_name))
     public_ip: ((ops_manager_public_ip))
-    private_ip: ((ops_manager_private_ip))
-    cloud_name: ((iaas_configuration_environment_azurecloud))
-    network_security_group: ((ops_manager_security_group_name))
-    storage_account: ((ops_manager_storage_account_name))
-    storage_sku: "Premium_LRS"
-    vm_name: "((resource_group_name))-ops-manager"
+    ssh_public_key: ((ops_manager_ssh_public_key))
+    tags: ((ops_manager_tags))
+    vm_name: ((environment_name))-ops-manager-vm
+    custom_cpu: 4
+    custom_memory: 16
+    boot_disk_size: 100
+
+  # Optional Ops Manager UI Settings for upgrade-opsman
+  # ssl-certificate: ...
+  # pivotal-network-settings: ...
+  # banner-settings: ...
+  # syslog-settings: ...
+  # rbac-settings: ...
