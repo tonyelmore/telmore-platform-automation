@@ -4,6 +4,7 @@ properties-configuration:
     project: ((gcp_project))
     associated_service_account: ((gcp_service_account_name))
     default_deployment_tag: pcf-sbx
+    auth_json: ((gcp-service-account-key-json))
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: ((blobstore_type))
