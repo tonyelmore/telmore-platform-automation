@@ -79,7 +79,7 @@ run:
 
     # ${vars_files_args[@] needs to be globbed to split properly
     # shellcheck disable=SC2068
-    p-automator create-vm \
+    om vm-lifecycle create-vm \
     --config config/"${OPSMAN_CONFIG_FILE}" \
     --image-file "${IMAGE_FILE}"  \
     --state-file "$generated_state_path" \
