@@ -21,7 +21,7 @@ resources:
   type: gcs-resource
   source:
     bucket: sa-aelmore-installation-zips
-    json_key: ((gcp-service-account-key-json))
+    json_key: ((gcp-service-account-key-string))
     regexp: ((foundation))/installation-(.*).zip
 
 - name: state
