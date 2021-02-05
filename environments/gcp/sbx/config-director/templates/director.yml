@@ -90,16 +90,16 @@ resource-configuration:
     instance_type:
       id: ((director_instance_type))
 vmtypes-configuration: {}
-vmextensions-configuration:
-- name: web-lb-security-group
-  cloud_properties:
-    security_group: ((platform_vms_security_group_name))
-    load_balancer: ((web_lb_name))
-- name: ssh-lb-security-group
-  cloud_properties:
-    security_group: ((platform_vms_security_group_name))
-    load_balancer: ((ssh_lb_name))
-- name: tcp-lb-security-group
-  cloud_properties:
-    security_group: ((platform_vms_security_group_name))
-    load_balancer: ((tcp_lb_name))
+# vmextensions-configuration:
+# - name: web-lb-security-group
+#   cloud_properties:
+#     security_group: ((platform_vms_security_group_name))
+#     load_balancer: ((web_lb_name))
+# - name: ssh-lb-security-group
+#   cloud_properties:
+#     security_group: ((platform_vms_security_group_name))
+#     load_balancer: ((ssh_lb_name))
+# - name: tcp-lb-security-group
+#   cloud_properties:
+#     security_group: ((platform_vms_security_group_name))
+#     load_balancer: ((tcp_lb_name))
