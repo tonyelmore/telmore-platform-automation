@@ -17,17 +17,17 @@ availability_mode: availability_zones
 
 management_subnet_cidr: 10.0.0.0/26
 management_subnet_gateway: 10.0.0.1
-management_subnet_id: projects/sa-aelmore/regions/us-west1/subnetworks/sbx-management-subnet
+management_subnet_id: sbx-network/sbx-management-subnet/us-west1
 management_subnet_range: 10.0.0.1-10.0.0.9
 
 pas_subnet_cidr: 10.0.4.0/24
 pas_subnet_gateway: 10.0.4.1
-pas_subnet_id: projects/sa-aelmore/regions/us-west1/subnetworks/sbx-pas-subnet
+pas_subnet_id: sbx-network/sbx-pas-subnet/us-west1
 pas_subnet_range: 10.0.4.1-10.0.4.9
 
 services_subnet_cidr: 10.0.8.0/24
 services_subnet_gateway: 10.0.8.1
-services_subnet_id: projects/sa-aelmore/regions/us-west1/subnetworks/sbx-services-subnet
+services_subnet_id: sbx-network/sbx-services-subnet/us-west1
 services_subnet_range: 10.0.8.1-10.0.8.9
 
 # resource_group_name: sbx 
