@@ -39,6 +39,10 @@ properties-configuration:
     generate_vm_passwords: ((generate_vm_passwords))
   syslog_configuration:
     enabled: ((syslog_enabled))
+az-configuration:
+- name: ((availability_zones.0))
+- name: ((availability_zones.1))
+- name: ((availability_zones.2))
 network-assignment:
   network:
     name: ((management_network))
