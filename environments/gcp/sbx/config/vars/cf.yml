@@ -1,5 +1,5 @@
-cloud_controller_apps_domain: apps.sbx.my3votes.com
-cloud_controller_system_domain: sys.sbx.my3votes.com
+cloud_controller_apps_domain: apps.sbx.covertcoding.com
+cloud_controller_system_domain: sys.sbx.covertcoding.com
 singleton_availability_zone: zone-1
 az2_name: zone-2
 az3_name: zone-3
