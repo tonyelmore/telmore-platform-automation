@@ -384,8 +384,6 @@ resource-config:
     instances: ((resource-var-credhub_instances))
     max_in_flight: ((resource-var-credhub_max_in_flight))
   diego_brain:
-    additional_vm_extensions: ((resource-var-diego_brain_additional_vm_extensions))
-    elb_names: ((resource-var-diego_brain_elb_names))
     instance_type:
       id: ((resource-var-diego_brain_instance_type))
     instances: ((resource-var-diego_brain_instances))
@@ -460,15 +458,11 @@ resource-config:
     instances: ((resource-var-route_syncer_instances))
     max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
-    additional_vm_extensions: ((resource-var-router_additional_vm_extensions))
-    elb_names: ((resource-var-router_elb_names))
     instance_type:
       id: ((resource-var-router_instance_type))
     instances: ((resource-var-router_instances))
     max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
-    additional_vm_extensions: ((resource-var-tcp_router_additional_vm_extensions))
-    elb_names: ((resource-var-tcp_router_elb_names))
     instance_type:
       id: ((resource-var-tcp_router_instance_type))
     instances: ((resource-var-tcp_router_instances))
