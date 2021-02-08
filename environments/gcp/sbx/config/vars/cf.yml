@@ -1,8 +1,8 @@
 cloud_controller_apps_domain: apps.sbx.covertcoding.com
 cloud_controller_system_domain: sys.sbx.covertcoding.com
-singleton_availability_zone: zone-1
-az2_name: zone-2
-az3_name: zone-3
+singleton_availability_zone: us-west1-a
+az2_name: us-west1-b
+az3_name: us-west1-c
 
 resource-var-router_elb_names: ["sbx-web-lb"]
 resource-var-router_additional_vm_extensions: ["web-lb-security-group"]
