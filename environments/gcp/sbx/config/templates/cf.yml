@@ -458,6 +458,7 @@ resource-config:
     instances: ((resource-var-route_syncer_instances))
     max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
+    elb_names: ((resource-var-router_elb_names))
     instance_type:
       id: ((resource-var-router_instance_type))
     instances: ((resource-var-router_instances))
