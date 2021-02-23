@@ -4,9 +4,14 @@ singleton_availability_zone: us-west1-a
 az2_name: us-west1-b
 az3_name: us-west1-c
 
-resource-var-router_elb_names: ["tcp:sbx-websocket-lb", "https:sbx-https-lb"]
+resource-var-router_elb_names: ["tcp:sbx-websocket-lb", "http:sbx-http-lb"]
 # resource-var-router_additional_vm_extensions: ["https-lb-security-group"]
 resource-var-diego_brain_elb_names: ["tcp:sbx-ssh-lb"]
 # resource-var-diego_brain_additional_vm_extensions: ["ssh-lb-security-group"]
 # resource-var-tcp_router_elb_names: ["sbx-tcp-lb"]
 # resource-var-tcp_router_additional_vm_extensions: ["tcp-lb-security-group"]
+
+resource-var-tcp_router_instances: 0
+resource-var-route_syncer_instances: 0
+resource-var-istio_control_instances: 0
+resource-var-istio_router_instances: 0
