@@ -1,0 +1,73 @@
+# this is a test pipeline that uses the terraform resource
+# I don't particularly like having terraform in the pipeline
+# but have this test from a customer engagement
+# The problem was that moving from concourse 4 to v6 requires the env_name
+# to be put on the terraform resource ... without the env_name, the pipeline
+# was stuck in a state saying it could not find the latest version of the resource
+
+resource_types:
+- name: terraform
+  type: docker-image
+  source:
+    repository: ljfranklin/terraform-resource
+    tag: 0.11.14
+
+- name: gcs-resource
+  type: docker-image
+  source:
+    repository: frodenas/gcs-resource
+
+resources:
+- name: terraform
+type: terraform
+source:
+    env_name: sandbox
+    backend_type: gcs
+    backend_config:
+    bucket: pcf-terraform-state
+    prefix: foundation
+    #region: ((terraform.gcs_region))
+    credentials: ((gcs_creds_json))
+    encryption_key: ((terraform.gcs_encryption_key))
+
+- name: configuration
+type: git
+source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    
+jobs:
+
+# - name: terraform-plan
+#   plan:
+#     - get: configuration
+#     - get: terraform
+#     - put: terraform
+#       params:
+#         terraform_source: configuration/terraform/test-tf-resource
+#         env_name: ((terraform.vars.env_name))
+#         plan_only: true
+#         vars: ((terraform.vars))
+
+- name: terraform-test
+  plan:
+  - get: configuration
+  - put: terraform
+    params:
+      env_name: e2e
+      plan_only: true
+      terraform_source: configuration/terraform/test-tf-resource
+  - task: show-outputs
+    config:
+      platform: linux
+      inputs:
+        - name: terraform
+      run:
+        path: /bin/sh
+        args:
+          - -c
+          - |
+              echo "name: $(cat terraform/name)"
+              echo "metadata: $(cat terraform/metadata)"

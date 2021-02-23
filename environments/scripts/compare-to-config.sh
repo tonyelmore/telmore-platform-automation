@@ -1,12 +1,13 @@
 #!/bin/bash -e
-if [ ! $# -eq 3 ]; then
-  echo "Must supply iaas and environment and product name as arguments"
+if [ ! $# -eq 4 ]; then
+  echo "Must supply iaas and environment and product name and old config file as arguments"
   exit 1
 fi
 
 iaas=$1
 environment_name=$2
 product=$3
+old_config=$4
 echo "Validating configuration for product $product"
 
 deploy_type="tile"
@@ -38,12 +39,6 @@ if [ -f "../${iaas}/${environment_name}/config/secrets/${product}.yml" ]; then
   vars_files_args+=("--vars-file ../${iaas}/${environment_name}/config/secrets/${product}.yml")
 fi
 
-if [ "${deploy_type}" == "tile" ]; then
-  bosh int --var-errs-unused ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
-fi
+bosh int ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > new-config.yml
 
-bosh int --var-errs ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
-
-bosh int ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} 
-
-echo ${vars_files_args[@]}
+bosh int ${old_config} > old-config.yml

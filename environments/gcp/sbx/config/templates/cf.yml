@@ -384,6 +384,7 @@ resource-config:
     instances: ((resource-var-credhub_instances))
     max_in_flight: ((resource-var-credhub_max_in_flight))
   diego_brain:
+    elb_names: ((resource-var-diego_brain_elb_names))
     instance_type:
       id: ((resource-var-diego_brain_instance_type))
     instances: ((resource-var-diego_brain_instances))
