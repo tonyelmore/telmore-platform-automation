@@ -510,7 +510,7 @@ jobs:
       PRODUCT_NAME: cf
       ERRAND_NAME: smoke_tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-usage-service
@@ -524,7 +524,7 @@ jobs:
       PRODUCT_NAME: cf
       ERRAND_NAME: push-usage-service
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-apps-manager
@@ -538,7 +538,7 @@ jobs:
       PRODUCT_NAME: cf
       ERRAND_NAME: push-apps-manager
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-autoscaler
@@ -552,7 +552,7 @@ jobs:
       PRODUCT_NAME: cf
       ERRAND_NAME: deploy-autoscaler
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-test-autoscaling
@@ -566,7 +566,7 @@ jobs:
       PRODUCT_NAME: cf
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
 - name: p-healthwatch2
@@ -672,7 +672,7 @@ jobs:
       PRODUCT_NAME: p-healthwatch2
       ERRAND_NAME: smoke-test
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
 
   - task: update-admin-password
     attempts: 2
@@ -685,7 +685,7 @@ jobs:
       PRODUCT_NAME: p-healthwatch2
       ERRAND_NAME: update-admin-password
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
 
 - name: unlock-tile
   serial: true
