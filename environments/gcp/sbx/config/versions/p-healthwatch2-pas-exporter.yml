@@ -1,6 +1,6 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
-pivnet-file-glob: "healthwatch-2.*.pivotal"
+pivnet-file-glob: "healthwatch-pas-exporter*.pivotal"
 pivnet-product-slug: "p-healthwatch"
 product-version: "2.0.5"
 

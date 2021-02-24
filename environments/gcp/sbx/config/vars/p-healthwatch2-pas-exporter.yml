@@ -1,0 +1,4 @@
+bosh-health-exporter_health_check_az: us-west1-a
+network_name: pas
+service_network_name: services
+singleton_availability_zone: us-west1-a

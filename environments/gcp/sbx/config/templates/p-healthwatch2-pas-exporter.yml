@@ -1,0 +1,86 @@
+errand-config:
+  bosh-cleanup-wait:
+    pre-delete-state: ((bosh-cleanup-wait_pre_delete_state))
+  smoke-test:
+    post-deploy-state: ((smoke-test_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-healthwatch2-pas-exporter
+product-properties:
+  .bosh-health-exporter.health_check_az:
+    value: ((bosh-health-exporter_health_check_az))
+resource-config:
+  bosh-deployments-exporter:
+    instance_type:
+      id: ((resource-var-bosh-deployments-exporter_instance_type))
+    instances: ((resource-var-bosh-deployments-exporter_instances))
+    max_in_flight: ((resource-var-bosh-deployments-exporter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-bosh-deployments-exporter_persistent_disk_size))
+  bosh-health-exporter:
+    instance_type:
+      id: ((resource-var-bosh-health-exporter_instance_type))
+    instances: ((resource-var-bosh-health-exporter_instances))
+    max_in_flight: ((resource-var-bosh-health-exporter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-bosh-health-exporter_persistent_disk_size))
+  cert-expiration-exporter:
+    instance_type:
+      id: ((resource-var-cert-expiration-exporter_instance_type))
+    instances: ((resource-var-cert-expiration-exporter_instances))
+    max_in_flight: ((resource-var-cert-expiration-exporter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-cert-expiration-exporter_persistent_disk_size))
+  pas-exporter-counter:
+    instance_type:
+      id: ((resource-var-pas-exporter-counter_instance_type))
+    instances: ((resource-var-pas-exporter-counter_instances))
+    max_in_flight: ((resource-var-pas-exporter-counter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-counter_persistent_disk_size))
+  pas-exporter-gauge:
+    instance_type:
+      id: ((resource-var-pas-exporter-gauge_instance_type))
+    instances: ((resource-var-pas-exporter-gauge_instances))
+    max_in_flight: ((resource-var-pas-exporter-gauge_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-gauge_persistent_disk_size))
+  pas-exporter-timer:
+    instance_type:
+      id: ((resource-var-pas-exporter-timer_instance_type))
+    instances: ((resource-var-pas-exporter-timer_instances))
+    max_in_flight: ((resource-var-pas-exporter-timer_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-timer_persistent_disk_size))
+  pas-sli-exporter:
+    instance_type:
+      id: ((resource-var-pas-sli-exporter_instance_type))
+    instances: ((resource-var-pas-sli-exporter_instances))
+    max_in_flight: ((resource-var-pas-sli-exporter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-sli-exporter_persistent_disk_size))
+  svm-forwarder:
+    instance_type:
+      id: ((resource-var-svm-forwarder_instance_type))
+    instances: ((resource-var-svm-forwarder_instances))
+    max_in_flight: ((resource-var-svm-forwarder_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-svm-forwarder_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

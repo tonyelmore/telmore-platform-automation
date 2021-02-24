@@ -43,7 +43,3 @@ if [ "${deploy_type}" == "tile" ]; then
 fi
 
 bosh int --var-errs ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
-
-bosh int ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} 
-
-echo ${vars_files_args[@]}
