@@ -1,6 +1,7 @@
-grafana_enable_indipro_integration: true
 grafana_enable_login_form: true
+grafana_enable_mysql: false
 grafana_enable_rabbitmq: false
+opsman_skip_ssl_validation: false
 syslog_address: null
 syslog_custom_rsyslog_configuration: ""
 syslog_enabled: false
