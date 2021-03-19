@@ -81,7 +81,7 @@ do
 done < "$ops_files"
 bosh int ${wrkdir}/product.yml ${ops_files_args[@]} > ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${replicator_name}.yml
 
-generated_product_name=$(bosh int ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${replicator_name}.yml --path /product-name)
+# generated_product_name=$(bosh int ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${replicator_name}.yml --path /product-name)
 
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/defaults
 rm -rf ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${replicator_name}.yml
