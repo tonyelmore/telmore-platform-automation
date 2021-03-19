@@ -28,6 +28,7 @@ slug=$(bosh interpolate ${versionfile} --path /pivnet-product-slug)
 
 tmpdir=tile-configs/${product}-config
 mkdir -p ${tmpdir}
+
 om config-template --output-directory=${tmpdir} --pivnet-api-token ${PIVNET_TOKEN} --pivnet-product-slug  ${slug} --product-version ${version} --pivnet-file-glob ${glob}
 wrkdir=$(find ${tmpdir}/${product} -name "${version}*")
 if [ ! -f ${wrkdir}/product.yml ]; then
@@ -51,12 +52,18 @@ bosh int ${wrkdir}/product.yml ${ops_files_args[@]} > ../${iaas}/${INITIAL_FOUND
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/defaults
 rm -rf ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
 touch ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+
 if [ -f ${wrkdir}/default-vars.yml ]; then
   cat ${wrkdir}/default-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
 fi
+
 if [ -f ${wrkdir}/errand-vars.yml ]; then
-  cat ${wrkdir}/errand-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+  vars=$(cat ${wrkdir}/errand-vars.yml | tr -d '[:space:]')
+  if [[ "${vars}" != "" && "${vars}" != "{}" ]]; then
+    cat ${wrkdir}/errand-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+  fi
 fi
+
 if [ -f ${wrkdir}/resource-vars.yml ]; then
   cat ${wrkdir}/resource-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
 fi

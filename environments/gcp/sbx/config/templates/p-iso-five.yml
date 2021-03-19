@@ -1,0 +1,113 @@
+errand-config:
+  smoke_tests_isolation:
+    post-deploy-state: ((smoke_tests_isolation_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-isolation-segment-p-iso-five
+product-properties:
+  .isolated_router_p_iso_five.disable_insecure_cookies:
+    value: ((isolated_router_p_iso_five_disable_insecure_cookies))
+  .isolated_router_p_iso_five.drain_timeout:
+    value: ((isolated_router_p_iso_five_drain_timeout))
+  .isolated_router_p_iso_five.drain_wait:
+    value: ((isolated_router_p_iso_five_drain_wait))
+  .isolated_router_p_iso_five.enable_write_access_logs:
+    value: ((isolated_router_p_iso_five_enable_write_access_logs))
+  .isolated_router_p_iso_five.enable_zipkin:
+    value: ((isolated_router_p_iso_five_enable_zipkin))
+  .isolated_router_p_iso_five.lb_healthy_threshold:
+    value: ((isolated_router_p_iso_five_lb_healthy_threshold))
+  .isolated_router_p_iso_five.request_timeout_in_seconds:
+    value: ((isolated_router_p_iso_five_request_timeout_in_seconds))
+  .properties.app_graceful_shutdown_period_in_seconds:
+    value: ((app_graceful_shutdown_period_in_seconds))
+  .properties.app_log_rate_limiting:
+    value: disable
+  .properties.compute_isolation:
+    value: disabled
+  .properties.enable_garden_containerd_mode:
+    value: ((enable_garden_containerd_mode))
+  .properties.enable_silk_policy_enforcement:
+    value: ((enable_silk_policy_enforcement))
+  .properties.enable_smb_volume_driver:
+    value: ((enable_smb_volume_driver))
+  .properties.garden_disk_cleanup:
+    value: reserved
+  .properties.garden_disk_cleanup.reserved.reserved_space_for_other_jobs_in_mb:
+    value: ((garden_disk_cleanup_reserved_reserved_space_for_other_jobs_in_mb))
+  .properties.gorouter_ssl_ciphers:
+    value: ((gorouter_ssl_ciphers))
+  .properties.haproxy_client_cert_validation:
+    value: none
+  .properties.haproxy_forward_tls:
+    value: enable
+  .properties.haproxy_forward_tls.enable.backend_ca:
+    value: ((haproxy_forward_tls_enable_backend_ca))
+  .properties.haproxy_hsts_support:
+    value: disable
+  .properties.haproxy_max_buffer_size:
+    value: ((haproxy_max_buffer_size))
+  .properties.haproxy_ssl_ciphers:
+    value: ((haproxy_ssl_ciphers))
+  .properties.networking_poe_ssl_certs:
+    value:
+    - certificate:
+        cert_pem: ((networking_poe_ssl_certs_0_certificate))
+        private_key_pem: ((networking_poe_ssl_certs_0_privatekey))
+      name: ((networking_poe_ssl_certs_0_name))
+  .properties.nfs_volume_driver:
+    value: enable
+  .properties.route_integrity:
+    value: tls_verify
+  .properties.route_services_internal_lookup:
+    value: ((route_services_internal_lookup))
+  .properties.router_backend_max_conn:
+    value: ((router_backend_max_conn))
+  .properties.router_balancing_algorithm:
+    value: round-robin
+  .properties.router_client_cert_validation:
+    value: request
+  .properties.router_enable_proxy:
+    value: ((router_enable_proxy))
+  .properties.router_keepalive_connections:
+    value: enable
+  .properties.router_sticky_session_cookie_names:
+    value:
+    - name: JSESSIONID
+  .properties.routing_disable_http:
+    value: ((routing_disable_http))
+  .properties.routing_log_client_ips:
+    value: log_client_ips
+  .properties.routing_minimum_tls_version:
+    value: tls_v1_2
+  .properties.routing_table_sharding_mode:
+    value: no_isolation_segment
+  .properties.routing_tls_termination:
+    value: load_balancer
+  .properties.skip_cert_verify:
+    value: ((skip_cert_verify))
+  .properties.smoke_tests_isolation:
+    value: on_demand
+  .properties.system_logging:
+    value: disabled
+resource-config:
+  isolated_diego_cell_p_iso_five:
+    instance_type:
+      id: ((resource-var-isolated_diego_cell_p_iso_five_instance_type))
+    instances: ((resource-var-isolated_diego_cell_p_iso_five_instances))
+    max_in_flight: ((resource-var-isolated_diego_cell_p_iso_five_max_in_flight))
+  isolated_ha_proxy_p_iso_five:
+    instance_type:
+      id: ((resource-var-isolated_ha_proxy_p_iso_five_instance_type))
+    instances: ((resource-var-isolated_ha_proxy_p_iso_five_instances))
+    max_in_flight: ((resource-var-isolated_ha_proxy_p_iso_five_max_in_flight))
+  isolated_router_p_iso_five:
+    instance_type:
+      id: ((resource-var-isolated_router_p_iso_five_instance_type))
+    instances: ((resource-var-isolated_router_p_iso_five_instances))
+    max_in_flight: ((resource-var-isolated_router_p_iso_five_max_in_flight))

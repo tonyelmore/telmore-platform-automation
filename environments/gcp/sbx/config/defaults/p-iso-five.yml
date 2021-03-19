@@ -1,0 +1,10 @@
+smoke_tests_isolation_post_deploy_state: default
+resource-var-isolated_diego_cell_p_iso_five_instance_type: automatic
+resource-var-isolated_diego_cell_p_iso_five_instances: automatic
+resource-var-isolated_diego_cell_p_iso_five_max_in_flight: default
+resource-var-isolated_ha_proxy_p_iso_five_instance_type: automatic
+resource-var-isolated_ha_proxy_p_iso_five_instances: automatic
+resource-var-isolated_ha_proxy_p_iso_five_max_in_flight: default
+resource-var-isolated_router_p_iso_five_instance_type: automatic
+resource-var-isolated_router_p_iso_five_instances: automatic
+resource-var-isolated_router_p_iso_five_max_in_flight: default
