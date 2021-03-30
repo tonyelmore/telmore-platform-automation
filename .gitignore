@@ -16,5 +16,7 @@ terraform/paving-azure-concourse/
 terraform/paving-azure-sbx/
 terraform/paving-gcp-concourse/
 terraform/paving-gcp-sbx/
+terraform/paving-nsxt-concourse/
+terraform/paving-nsxt-sbx/
 target*.sh
 credhub-input.yml

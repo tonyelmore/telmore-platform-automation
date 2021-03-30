@@ -1,0 +1,51 @@
+---
+az-configuration:
+  - name: az1
+    clusters:
+      - cluster: ((vcenter_cluster))
+        resource_pool: ((vcenter_resource_pool))
+properties-configuration:
+  director_configuration:
+    ntp_servers_string: ((ops_manager_ntp))
+    retry_bosh_deploys: true
+  iaas_configuration:
+    vcenter_host: ((vcenter_host))
+    vcenter_username: ((vcenter_username))
+    vcenter_password: ((vcenter_password))
+    datacenter: ((vcenter_datacenter))
+    disk_type: thin
+    ephemeral_datastores_string: ((vcenter_datastore))
+    persistent_datastores_string: ((vcenter_datastore))
+    nsx_networking_enabled: true
+    nsx_mode: nsx-t
+    nsx_address: ((nsxt_host))
+    nsx_username: ((nsxt_username))
+    nsx_password: ((nsxt_password))
+    nsx_ca_certificate: ((nsxt_ca_cert))
+    ssl_verification_enabled: ((disable_ssl_verification))
+network-assignment:
+  network:
+    name: concourse
+  singleton_availability_zone:
+    name: az1
+networks-configuration:
+  icmp_checks_enabled: false
+  networks:
+    - name: concourse
+      subnets:
+        - availability_zone_names:
+            - az1
+          cidr: ((concourse_subnet_cidr))
+          dns: ((ops_manager_dns_servers))
+          gateway: ((concourse_subnet_gateway))
+          reserved_ip_ranges: ((concourse_subnet_reserved_ip_ranges))
+          iaas_identifier: ((concourse_subnet_name))
+vmextensions-configuration:
+  - name: concourse-lb
+    cloud_properties:
+      nsxt:
+        ns_groups:
+        - ((environment_name))_concourse_ns_group
+  - name: increased-disk
+    cloud_properties:
+      disk: 512000

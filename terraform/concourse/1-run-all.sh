@@ -3,7 +3,7 @@
 # set -x
 
 TOOLKIT_IMAGE_VERSION="5.0.13"
-export IAAS="gcp"
+export IAAS="nsxt"
 export PLATFORM="darwin"
 
 echo "*********** Getting terraform output..."
@@ -31,10 +31,15 @@ echo "*********** Creating opsman"
 # copy iaas specific state file 
 touch state-${IAAS}.yml
 cp state-${IAAS}.yml state.yml
+
+# find the correct image file
+IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.{yml,ova,raw} 2>/dev/null | head -n1)"
+echo $IMAGE_FILE
+
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
   om vm-lifecycle create-vm \
     --config config-files/${IAAS}/opsman-config.yml \
-    --image-file downloaded-resources/opsman-image/${IAAS}/ops-manager-${IAAS}*.yml \
+    --image-file "${IMAGE_FILE}" \
     --vars-file terraform-outputs-${IAAS}.yml
 cp state.yml state-${IAAS}.yml
 
