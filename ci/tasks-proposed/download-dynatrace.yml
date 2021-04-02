@@ -1,0 +1,32 @@
+---
+platform: linux
+
+params:
+  VARS_FILE: 
+  SECRET_FILE: 
+inputs: 
+- name: vars
+- name: secrets
+outputs:
+- name: dynatrace-releases
+
+run: 
+  path: bash
+  args: 
+  - "-c"
+  - |
+    set -eux
+    bypass_install=$(om interpolate --config vars/${VARS_FILE} --path /bypass_install)
+    if [ ${bypass_install} = true ]; then
+      exit 0
+    fi
+
+    dynatrace_server_url=$(om interpolate --config vars/${VARS_FILE} --path /dynatrace_server_url)
+    dynatrace_apitoken=$(om interpolate --config secrets/${SECRET_FILE} --path /dynatrace_apitoken)
+    dynatrace-envid=$(om interpolate --config vars/${VARS_FILE} --path /dynatrace-envid)
+    dynatrace-addon-version=$(om interpolate --config vars/${VARS_FILE} --path /dynatrace-addon-version)
+    dynatrace-addon-windows-version=$(om interpolate --config vars/${VARS_FILE} --path /dynatrace-addon-windows-version)
+
+    wget --no-check-certificate -O dynatrace-releases/dynatrace-release.tgz --header="Authorization: Api-Token ${dynatrace_apitoken}" ((dynatrace_server_url))/e/((dynatrace-envid))/api/v1/deployment/boshrelease/agent/unix/version/((dynatrace-addon-version))?skipMetadata=true
+    wget --no-check-certificate -O dynatrace-releases/dynatrace-release-windows.tgz --header="Authorization: Api-Token ${dynatrace_apitoken}" ((dynatrace_server_url))/e/((dynatrace-envid))/api/v1/deployment/boshrelease/agent/windows/version/((dynatrace-addon-windows-version))?skipMetadata=true
+
