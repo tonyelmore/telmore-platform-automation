@@ -5,6 +5,10 @@ product-properties:
     value:
     - cidr: ((container_ip_blocks_0_cidr))
       name: ((container_ip_blocks_0_name))
+  .properties.default_running_asg_use_ip_set:
+    value: ((default_running_asg_use_ip_set))
+  .properties.enable_inventory:
+    value: ((enable_inventory))
   .properties.enable_snat:
     value: ((enable_snat))
   .properties.exit_on_disconnection:
@@ -16,8 +20,10 @@ product-properties:
       name: ((external_ip_pools_0_name))
   .properties.foundation_name:
     value: ((foundation_name))
-  .properties.log_dropped_traffic:
-    value: ((log_dropped_traffic))
+  .properties.log_firewall_rules:
+    value: disable
+  .properties.master_timeout:
+    value: ((master_timeout))
   .properties.ncp_debug_log:
     value: ((ncp_debug_log))
   .properties.nsx_api_ca_cert:
@@ -36,7 +42,11 @@ product-properties:
     value: ((nsx_node_agent_debug_log))
   .properties.overlay_tz:
     value: ((overlay_tz))
+  .properties.snat_rule_logging:
+    value: none
   .properties.subnet_prefix:
     value: ((subnet_prefix))
   .properties.tier0_router:
     value: ((tier0_router))
+  .properties.wait_for_security_policy_sync:
+    value: ((wait_for_security_policy_sync))

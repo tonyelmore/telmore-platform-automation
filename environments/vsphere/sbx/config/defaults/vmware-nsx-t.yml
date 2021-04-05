@@ -1,5 +1,8 @@
+default_running_asg_use_ip_set: false
+enable_inventory: true
 enable_snat: true
-log_dropped_traffic: false
+master_timeout: 18
 ncp_debug_log: false
 nsx_node_agent_debug_log: false
 subnet_prefix: 24
+wait_for_security_policy_sync: false
