@@ -45,7 +45,7 @@ jobs:
 - name: lock-tiles
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - put: lock
       params: {acquire: true}
     - get: configuration
@@ -53,7 +53,7 @@ jobs:
 
 - name: validate-tile-configuration
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: ["lock-tiles"]
@@ -61,7 +61,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -84,7 +84,7 @@ jobs:
 - name: pas
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ validate-tile-configuration ]
@@ -92,7 +92,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -193,7 +193,7 @@ jobs:
 
 - name: pas-errands
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ pas ]
@@ -201,7 +201,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
