@@ -80,7 +80,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -92,7 +92,7 @@ jobs:
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &director_credhub_interpolate_params
       CREDHUB_SERVER: https://concourse.haas-424.pez.vmware.com:8844
-      CREDHUB_CA_CERT: ((concourse_credhub_ca))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
       PREFIX: '/concourse/((team))'
@@ -111,7 +111,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -212,7 +212,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
@@ -248,7 +248,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["platform-automation-image*"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
