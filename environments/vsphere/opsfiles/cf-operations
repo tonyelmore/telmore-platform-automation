@@ -1,5 +1,3 @@
 features/haproxy_forward_tls-disable.yml
-optional/add-credhub_hsm_provider_client_certificate.yml
 features/tcp_routing-enable.yml
 features/container_networking_interface_plugin-external.yml
-optional/add-routing_custom_ca_certificates.yml

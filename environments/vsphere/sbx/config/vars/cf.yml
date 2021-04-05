@@ -5,9 +5,9 @@ tcp_routing_enable_reservable_ports: 10000-10005
 
 tcp_routing_enable_request_timeout_in_seconds: 10
 
-diego_brain_instances: 1
-ha_proxy_instances: 0
-router_instances: 2
-diego_cell_instances: 6
+resource-var-diego_brain_instances: 1
+resource-var-ha_proxy_instances: 0
+resource-var-router_instances: 2
+resource-var-diego_cell_instances: 3
 
 ha_proxy_skip_cert_verify: true

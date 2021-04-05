@@ -1,5 +1,11 @@
 #!/bin/bash -e
-if [ ! $# -eq 3 ]; then
+
+bypass_unused=false
+
+if [ $# -eq 4 ]; then
+  echo "got 4 params $#"
+  bypass_unused=$4
+elif [ ! $# -eq 3 ]; then
   echo "Must supply iaas and environment and product name as arguments"
   exit 1
 fi
@@ -7,6 +13,7 @@ fi
 iaas=$1
 environment_name=$2
 product=$3
+
 echo "Validating configuration for product $product"
 
 deploy_type="tile"
@@ -39,7 +46,13 @@ if [ -f "../${iaas}/${environment_name}/config/secrets/${product}.yml" ]; then
 fi
 
 if [ "${deploy_type}" == "tile" ]; then
-  bosh int --var-errs-unused ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
+  if [ "${bypass_unused}" == true ]; then
+    echo "Bypassing check for unused variables ... because there can be defaults that are not actually used"
+  else
+    echo "Checking for unused vars"
+    bosh int --var-errs-unused ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
+  fi
 fi
 
+echo "Checking for missing vars"
 bosh int --var-errs ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
