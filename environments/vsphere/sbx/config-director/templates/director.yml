@@ -66,7 +66,7 @@ networks-configuration:
       cidr: ((infra_network_cidr))
       reserved_ip_ranges: ((infra_network_reserved_ip_range))
       gateway: ((infra_network_gateway))
-      dns: ((infra_network_dns))
+      dns: ((dns))
       availability_zone_names: &1
       - ((az1_name))
   - name: ((deployment_network_name))
@@ -75,7 +75,7 @@ networks-configuration:
       cidr: ((deployment_network_cidr))
       reserved_ip_ranges: ((deployment_network_reserved_ip_range))
       gateway: ((deployment_network_gateway))
-      dns: ((deployment_network_dns))
+      dns: ((dns))
       availability_zone_names: *1
   - name: ((service_network_name))
     subnets:
@@ -83,7 +83,7 @@ networks-configuration:
       cidr: ((service_network_cidr))
       reserved_ip_ranges: ((service_network_reserved_ip_range))
       gateway: ((service_network_gateway))
-      dns: ((service_network_dns))
+      dns: ((dns))
       availability_zone_names: *1
 network-assignment:
   network:
