@@ -223,9 +223,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: smoke_tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-usage-service
@@ -236,9 +237,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: push-usage-service
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-push-apps-manager
@@ -249,9 +251,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: push-apps-manager
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-notifications
@@ -262,9 +265,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: deploy-notifications
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-notifications-ui
@@ -275,9 +279,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-deploy-autoscaler
@@ -288,9 +293,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: deploy-autoscaler
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-nfsbrokerpush
@@ -301,9 +307,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: nfsbrokerpush
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
   - task: run-test-autoscaling
@@ -314,9 +321,10 @@ jobs:
       config: configuration
       env: interpolated-files
     params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      PRODUCT_NAME: cf
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
       INSTANCE: clock_global/first
 
 
