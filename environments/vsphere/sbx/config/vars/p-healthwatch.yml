@@ -1,4 +1,4 @@
 ---
 singleton_availability_zone: pas-az1
 healthwatch-forwarder_health_check_az: pas-az1
-opsman_enable_url: https://opsmgr-01.haas-244.pez.pivotal.io
+opsman_enable_url: https://opsmgr-01.haas-424.pez.pivotal.io
