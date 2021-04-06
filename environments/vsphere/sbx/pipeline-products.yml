@@ -218,7 +218,7 @@ jobs:
   - task: run-smoke_tests
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -231,7 +231,7 @@ jobs:
   - task: run-push-usage-service
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -244,7 +244,7 @@ jobs:
   - task: run-push-apps-manager
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -257,7 +257,7 @@ jobs:
   - task: run-deploy-notifications
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -270,7 +270,7 @@ jobs:
   - task: run-deploy-notifications-ui
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -283,7 +283,7 @@ jobs:
   - task: run-deploy-autoscaler
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -296,7 +296,7 @@ jobs:
   - task: run-nfsbrokerpush
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
@@ -309,7 +309,7 @@ jobs:
   - task: run-test-autoscaling
     attempts: 5
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/run-errand.yml
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:
       config: configuration
       env: interpolated-files
