@@ -5,5 +5,5 @@ nsx_api_managers: nsxmgr-01.haas-244.pez.pivotal.io
 external_ip_pools_0_allocation_ranges: null
 external_ip_pools_0_cidr: null
 external_ip_pools_0_name: external-ip-pool
-foundation_name: PAS-
+foundation_name: PAS-SBX
 overlay_tz: overlay-tz
