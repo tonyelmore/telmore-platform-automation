@@ -6,3 +6,7 @@ plan3_selector_single_node_az_multi_select: ["pas-az1"]
 
 global_recipient_email: test@me.com
 deprecated_bindings_string: X
+
+backups_selector_gcs_bucket_name: telmore-vsphere-mysql-backups
+backups_selector_gcs_cron_schedule: "0 */8 15 * *"
+backups_selector_gcs_project_id: sa-aelmore
