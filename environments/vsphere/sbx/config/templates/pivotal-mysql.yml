@@ -1,6 +1,8 @@
 errand-config:
   delete-all-service-instances-and-deregister-broker:
     pre-delete-state: ((delete-all-service-instances-and-deregister-broker_pre_delete_state))
+  recreate-all-service-instances:
+    post-deploy-state: ((recreate-all-service-instances_post_deploy_state))
   register-broker:
     post-deploy-state: ((register-broker_post_deploy_state))
   smoke-tests:
@@ -24,6 +26,8 @@ product-properties:
     value: ((allow_lower_case_table_names_via_config_param))
   .properties.audit_logging_enabled:
     value: ((audit_logging_enabled))
+  .properties.binlog_space_limit_enabled:
+    value: ((binlog_space_limit_enabled))
   .properties.canary_instances:
     value: ((canary_instances))
   .properties.deprecated_bindings_string:
@@ -44,6 +48,8 @@ product-properties:
     value: ((local_infile))
   .properties.mysql_metrics_frequency:
     value: ((mysql_metrics_frequency))
+  .properties.off_platform_access_selector:
+    value: disabled
   .properties.plan1_selector:
     value: single_node
   .properties.plan1_selector.single_node.access_dropdown:
@@ -96,8 +102,6 @@ product-properties:
     value: ((request_timeout))
   .properties.simultaneous_upgrades:
     value: ((simultaneous_upgrades))
-  .properties.syslog_migration_selector:
-    value: disabled
   .properties.userstat:
     value: ((userstat))
   .properties.wait_timeout:
@@ -105,6 +109,17 @@ product-properties:
 resource-config:
   dedicated-mysql-broker:
     instance_type:
-      id: ((dedicated-mysql-broker_instance_type))
-    instances: ((dedicated-mysql-broker_instances))
-    max_in_flight: ((dedicated-mysql-broker_max_in_flight))
+      id: ((resource-var-dedicated-mysql-broker_instance_type))
+    instances: ((resource-var-dedicated-mysql-broker_instances))
+    max_in_flight: ((resource-var-dedicated-mysql-broker_max_in_flight))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

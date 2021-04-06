@@ -4,3 +4,4 @@ service_network_name: PAS-Services
 
 push-apps_post_deploy_state: off
 smoke-tests_post_deploy_state: off
+validate-expected-metrics_post_deploy_state: off
