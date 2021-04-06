@@ -257,33 +257,33 @@ jobs:
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       INSTANCE: clock_global/first
 
-  - task: run-deploy-notifications
-    attempts: 5
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/run-bosh-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      PRODUCT_NAME: cf
-      ERRAND_NAME: deploy-notifications
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+  # - task: run-deploy-notifications
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: platform-automation-tasks/tasks/run-bosh-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     PRODUCT_NAME: cf
+  #     ERRAND_NAME: deploy-notifications
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
+  #     INSTANCE: clock_global/first
 
-  - task: run-deploy-notifications-ui
-    attempts: 5
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/run-bosh-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      PRODUCT_NAME: cf
-      ERRAND_NAME: deploy-notifications-ui
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+  # - task: run-deploy-notifications-ui
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: platform-automation-tasks/tasks/run-bosh-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     PRODUCT_NAME: cf
+  #     ERRAND_NAME: deploy-notifications-ui
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
+  #     INSTANCE: clock_global/first
 
   - task: run-deploy-autoscaler
     attempts: 5
@@ -299,19 +299,19 @@ jobs:
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       INSTANCE: clock_global/first
 
-  - task: run-nfsbrokerpush
-    attempts: 5
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/run-bosh-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      PRODUCT_NAME: cf
-      ERRAND_NAME: nfsbrokerpush
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+  # - task: run-nfsbrokerpush
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: platform-automation-tasks/tasks/run-bosh-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     PRODUCT_NAME: cf
+  #     ERRAND_NAME: nfsbrokerpush
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
+  #     INSTANCE: clock_global/first
 
   - task: run-test-autoscaling
     attempts: 5

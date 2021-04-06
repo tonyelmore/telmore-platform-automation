@@ -12,3 +12,4 @@ deploy-notifications-ui_post_deploy_state: false
 deploy-autoscaler_post_deploy_state: false
 nfsbrokerpush_post_deploy_state: false
 test-autoscaling_post_deploy_state: false
+smbbrokerpush_post_deploy_state: false
