@@ -330,7 +330,7 @@ jobs:
 - name: pivotal-mysql
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ pas ]
@@ -397,7 +397,7 @@ jobs:
 
 - name: pivotal-mysql-errands
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ pivotal-mysql ]
@@ -464,7 +464,7 @@ jobs:
 - name: p-healthwatch
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ pivotal-mysql ]
@@ -531,7 +531,7 @@ jobs:
 
 - name: p-healthwatch-errands
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ p-healthwatch ]
