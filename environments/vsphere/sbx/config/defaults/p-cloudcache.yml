@@ -52,6 +52,9 @@ delete-all-service-instances-and-deregister-broker_pre_delete_state: default
 register-broker_post_deploy_state: default
 smoke-tests_post_deploy_state: default
 upgrade-all-service-instances_post_deploy_state: default
-cloudcache-broker_instance_type: automatic
-cloudcache-broker_max_in_flight: default
-cloudcache-broker_persistent_disk_size: automatic
+resource-var-cloudcache-broker_instance_type: automatic
+resource-var-cloudcache-broker_max_in_flight: default
+resource-var-cloudcache-broker_persistent_disk_size: automatic
+resource-var-sni-tcp-router_instance_type: automatic
+resource-var-sni-tcp-router_instances: automatic
+resource-var-sni-tcp-router_max_in_flight: default

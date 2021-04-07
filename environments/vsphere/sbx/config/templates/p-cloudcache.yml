@@ -38,6 +38,10 @@ product-properties:
     value: ((dev_plan_enable_service_plan_enable_service_instance_azs))
   .properties.dev_plan_enable_service_plan.enable.service_instance_quota:
     value: ((dev_plan_enable_service_plan_enable_service_instance_quota))
+  .properties.dev_plan_enable_service_plan_2:
+    value: disable
+  .properties.dev_plan_enable_service_plan_3:
+    value: disable
   .properties.enable_secure_binding:
     value: ((enable_secure_binding))
   .properties.number_simultaneous_upgrades:
@@ -72,6 +76,8 @@ product-properties:
   .properties.plan5_enable_service_plan:
     selected_option: disable
     value: disable
+  .properties.settings_services_gateway:
+    value: "No"
   .properties.settings_shareable_instances:
     value: "No"
   .properties.small_footprint_enable_service_plan:
@@ -88,12 +94,21 @@ product-properties:
     value: ((small_footprint_enable_service_plan_enable_service_instance_azs))
   .properties.small_footprint_enable_service_plan.enable.service_instance_quota:
     value: ((small_footprint_enable_service_plan_enable_service_instance_quota))
+  .properties.small_footprint_enable_service_plan_2:
+    value: disable
+  .properties.small_footprint_enable_service_plan_3:
+    value: disable
   .properties.syslog:
     value: disable
 resource-config:
   cloudcache-broker:
     instance_type:
-      id: ((cloudcache-broker_instance_type))
-    max_in_flight: ((cloudcache-broker_max_in_flight))
+      id: ((resource-var-cloudcache-broker_instance_type))
+    max_in_flight: ((resource-var-cloudcache-broker_max_in_flight))
     persistent_disk:
-      size_mb: ((cloudcache-broker_persistent_disk_size))
+      size_mb: ((resource-var-cloudcache-broker_persistent_disk_size))
+  sni-tcp-router:
+    instance_type:
+      id: ((resource-var-sni-tcp-router_instance_type))
+    instances: ((resource-var-sni-tcp-router_instances))
+    max_in_flight: ((resource-var-sni-tcp-router_max_in_flight))

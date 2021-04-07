@@ -8,23 +8,37 @@ network-properties:
     name: ((network_name))
   other_availability_zones:
   - name: ((singleton_availability_zone))
-  - name: ((az2_name))
-  - name: ((az3_name))
   singleton_availability_zone:
     name: ((singleton_availability_zone))
 product-name: p_spring-cloud-services
 product-properties:
   .properties.config_server_access:
     value: ((config_server_access))
+  .properties.config_server_credhub_enabled:
+    value: ((config_server_credhub_enabled))
   .properties.java_buildpack:
     value: ((java_buildpack))
+  .properties.service_key_access:
+    value: ((service_key_access))
+  .properties.service_registry_access:
+    value: ((service_registry_access))
   .properties.status_change_timeout_minutes:
     value: ((status_change_timeout_minutes))
 resource-config:
   spring-cloud-services:
     instance_type:
-      id: ((spring-cloud-services_instance_type))
-    instances: ((spring-cloud-services_instances))
-    max_in_flight: ((spring-cloud-services_max_in_flight))
+      id: ((resource-var-spring-cloud-services_instance_type))
+    max_in_flight: ((resource-var-spring-cloud-services_max_in_flight))
     persistent_disk:
-      size_mb: ((spring-cloud-services_persistent_disk_size))
+      size_mb: ((resource-var-spring-cloud-services_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

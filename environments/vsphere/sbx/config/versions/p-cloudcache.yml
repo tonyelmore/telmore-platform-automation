@@ -1,5 +1,5 @@
 ---
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*.pivotal"
-pivnet-product-slug: "p-cloudcache"
-product-version: "1.9.1"
+pivnet-product-slug: "tanzu-gemfire-for-vms"
+product-version: "1.13.0"
