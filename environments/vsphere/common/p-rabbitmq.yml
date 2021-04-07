@@ -13,8 +13,9 @@ on_demand_broker_plan_1_rabbitmq_az_placement:
 
 service_network_name: PAS-Services
 
-register-broker_post_deploy_state: false
-on-demand-broker-smoke-tests_post_deploy_state: false
-smoke-tests_post_deploy_state: false
-upgrade-all-service-instances_post_deploy_state: false
-broker-registrar_post_deploy_state: false
+register-broker_post_deploy_state: false  # on-demand-broker/first
+on-demand-broker-smoke-tests_post_deploy_state: false  # on-demand-broker/first
+smoke-tests_post_deploy_state: false  # no instance
+upgrade-all-service-instances_post_deploy_state: false  # on-demand-broker/first
+broker-registrar_post_deploy_state: false  # no instance
+recreate-all-service-instances_post_deploy_state: false  # on-demand-broker/first

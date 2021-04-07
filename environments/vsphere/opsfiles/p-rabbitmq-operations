@@ -1,4 +1,3 @@
-features/syslog_selector-disabled.yml
 features/global_settings_shareable_instances-enabled.yml
 features/multitenant_support-enabled.yml
 features/multitenant_support-enabled-server_plugins_rabbitmq_management.yml

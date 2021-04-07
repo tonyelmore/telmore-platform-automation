@@ -2,4 +2,4 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*.pivotal"
 pivnet-product-slug: "p-rabbitmq"
-product-version: "1.17.3"
+product-version: "1.21.2"

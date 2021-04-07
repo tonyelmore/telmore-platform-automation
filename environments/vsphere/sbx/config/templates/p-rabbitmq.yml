@@ -36,6 +36,8 @@ product-properties:
     value: ((on-demand-broker_max_in_flight))
   .properties.enable_tls_selector:
     value: disabled
+  .properties.global_settings_oauth:
+    value: disabled
   .properties.global_settings_secure_bindings:
     value: "No"
   .properties.global_settings_shareable_instances:
@@ -61,6 +63,7 @@ product-properties:
   .properties.multitenant_support.enabled.server_plugins:
     value:
     - rabbitmq_management
+    - rabbitmq_prometheus
     - rabbitmq_management
     - rabbitmq_stomp
     - rabbitmq_web_stomp
@@ -71,10 +74,12 @@ product-properties:
     value: ((multitenant_support_enabled_server_ssl_verification_depth))
   .properties.multitenant_support.enabled.server_ssl_versions:
     value:
-    - tlsv1.1
+    - tlsv1.3
     - tlsv1.2
   .properties.on_demand_broker_plan_1_cf_service_access:
     value: ((on_demand_broker_plan_1_cf_service_access))
+  .properties.on_demand_broker_plan_1_check_queue_sync:
+    value: ((on_demand_broker_plan_1_check_queue_sync))
   .properties.on_demand_broker_plan_1_description:
     value: ((on_demand_broker_plan_1_description))
   .properties.on_demand_broker_plan_1_disk_limit_acknowledgement:
@@ -94,6 +99,8 @@ product-properties:
     value: ((on_demand_broker_plan_1_rabbitmq_cluster_partition_handling_strategy))
   .properties.on_demand_broker_plan_1_rabbitmq_number_of_nodes:
     value: ((on_demand_broker_plan_1_rabbitmq_number_of_nodes))
+  .properties.on_demand_broker_plan_1_service_gateway_enabled:
+    value: ((on_demand_broker_plan_1_service_gateway_enabled))
   .properties.on_demand_broker_plan_2_selector:
     value: disabled
   .properties.on_demand_broker_plan_3_selector:
@@ -102,31 +109,43 @@ product-properties:
     value: disabled
   .properties.on_demand_broker_plan_5_selector:
     value: disabled
-  .properties.syslog_selector:
-    selected_option: disabled
-    value: disabled
+  .properties.on_demand_tls_versions:
+    value:
+    - tlsv1.3
+    - tlsv1.2
 resource-config:
   on-demand-broker:
     instance_type:
-      id: ((on-demand-broker_instance_type))
-    instances: ((on-demand-broker_instances))
-    max_in_flight: ((on-demand-broker_max_in_flight))
+      id: ((resource-var-on-demand-broker_instance_type))
+    instances: ((resource-var-on-demand-broker_instances))
+    max_in_flight: ((resource-var-on-demand-broker_max_in_flight))
     persistent_disk:
-      size_mb: ((on-demand-broker_persistent_disk_size))
+      size_mb: ((resource-var-on-demand-broker_persistent_disk_size))
   rabbitmq-broker:
     instance_type:
-      id: ((rabbitmq-broker_instance_type))
-    instances: ((rabbitmq-broker_instances))
-    max_in_flight: ((rabbitmq-broker_max_in_flight))
+      id: ((resource-var-rabbitmq-broker_instance_type))
+    instances: ((resource-var-rabbitmq-broker_instances))
+    max_in_flight: ((resource-var-rabbitmq-broker_max_in_flight))
   rabbitmq-haproxy:
     instance_type:
-      id: ((rabbitmq-haproxy_instance_type))
-    instances: ((rabbitmq-haproxy_instances))
-    max_in_flight: ((rabbitmq-haproxy_max_in_flight))
+      id: ((resource-var-rabbitmq-haproxy_instance_type))
+    instances: ((resource-var-rabbitmq-haproxy_instances))
+    max_in_flight: ((resource-var-rabbitmq-haproxy_max_in_flight))
   rabbitmq-server:
     instance_type:
-      id: ((rabbitmq-server_instance_type))
-    instances: ((rabbitmq-server_instances))
-    max_in_flight: ((rabbitmq-server_max_in_flight))
+      id: ((resource-var-rabbitmq-server_instance_type))
+    instances: ((resource-var-rabbitmq-server_instances))
+    max_in_flight: ((resource-var-rabbitmq-server_max_in_flight))
     persistent_disk:
-      size_mb: ((rabbitmq-server_persistent_disk_size))
+      size_mb: ((resource-var-rabbitmq-server_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))
