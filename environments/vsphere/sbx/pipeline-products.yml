@@ -866,7 +866,7 @@ jobs:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: [ p-rabbit ]
+      passed: [ p-rabbitmq ]
     - get: platform-automation-image
       resource: platform-automation
       params:
