@@ -11,13 +11,15 @@ network-properties:
   singleton_availability_zone:
     name: ((singleton_availability_zone))
 product-name: Pivotal_Single_Sign-On_Service
-product-properties: {}
+product-properties:
+  .properties.buildpack:
+    value: ((buildpack))
 resource-config:
   deploy-service-broker:
     instance_type:
-      id: ((deploy-service-broker_instance_type))
-    max_in_flight: ((deploy-service-broker_max_in_flight))
+      id: ((resource-var-deploy-service-broker_instance_type))
+    max_in_flight: ((resource-var-deploy-service-broker_max_in_flight))
   destroy-broker:
     instance_type:
-      id: ((destroy-broker_instance_type))
-    max_in_flight: ((destroy-broker_max_in_flight))
+      id: ((resource-var-destroy-broker_instance_type))
+    max_in_flight: ((resource-var-destroy-broker_max_in_flight))
