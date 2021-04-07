@@ -1105,7 +1105,7 @@ jobs:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: [ pivotal_single_sign-on_service ]
+      passed: [ p-cloudcache ]
     - get: platform-automation-image
       resource: platform-automation
       params:
