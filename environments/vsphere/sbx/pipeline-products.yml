@@ -496,7 +496,7 @@ jobs:
       secrets: interpolated-files
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch.yml
-      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions p-healthwatch-stemcell.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch-stemcell.yml
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch.yml
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
