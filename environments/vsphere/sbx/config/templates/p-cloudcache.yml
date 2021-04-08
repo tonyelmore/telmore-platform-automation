@@ -44,6 +44,9 @@ product-properties:
     value: disable
   .properties.enable_secure_binding:
     value: ((enable_secure_binding))
+  .properties.errand_plan:
+    selected_option: devplan
+    value: devplan
   .properties.number_simultaneous_upgrades:
     value: ((number_simultaneous_upgrades))
   .properties.number_upgrade_canary_instances:
