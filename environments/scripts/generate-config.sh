@@ -47,20 +47,50 @@ do
 done < "$ops_files"
 
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/templates
-bosh int ${wrkdir}/product.yml ${ops_files_args[@]} > ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml
+template_file="../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml"
+bosh int ${wrkdir}/product.yml ${ops_files_args[@]} > "${template_file}"
 
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/defaults
-rm -rf ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
-touch ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+defaults_file="../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml"
+rm -rf "${defaults_file}"
+touch "${defaults_file}"
 
+# All this logic because there are some default values that are not in the template
+# So, this skips all of those
 if [ -f ${wrkdir}/default-vars.yml ]; then
-  cat ${wrkdir}/default-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+  skipnextline=false
+  while read -r line
+  do
+    myvar=${line%%:*}
+
+    if [ ${skipnextline} = true ]; then
+      echo "  $line" >> "${defaults_file}"
+      skipnextline=false
+      continue
+    fi
+
+    if [ "${myvar}" == "nfs_server_blobstore_internal_access_rules" ]; then
+      echo "$line" >> "${defaults_file}"
+      skipnextline=true
+      continue
+    fi
+
+    if grep -q "(($myvar))" "$template_file"
+    then
+      echo "$line" >> "${defaults_file}"
+    else
+      echo "$myvar not found in template - not adding to defaults file"
+    fi
+  done < "${wrkdir}/default-vars.yml"
+
+#  cat ${wrkdir}/default-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
 fi
 
-if [ -f ${wrkdir}/errand-vars.yml ]; then
-  vars=$(cat ${wrkdir}/errand-vars.yml | tr -d '[:space:]')
+errands_input_file="${wrkdir}/errand-vars.yml"
+if [ -f "${errands_input_file}" ]; then
+  vars=$(cat "${errands_input_file}" | tr -d '[:space:]')
   if [[ "${vars}" != "" && "${vars}" != "{}" ]]; then
-    cat ${wrkdir}/errand-vars.yml >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
+    cat "${errands_input_file}" >> ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
   fi
 fi
 
