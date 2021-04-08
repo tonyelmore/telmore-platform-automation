@@ -241,6 +241,8 @@ product-properties:
   .properties.router_sticky_session_cookie_names:
     value:
     - name: JSESSIONID
+  .properties.routing_custom_ca_certificates:
+    value: ((routing_custom_ca_certificates))
   .properties.routing_disable_http:
     value: ((routing_disable_http))
   .properties.routing_log_client_ips:

@@ -3,4 +3,4 @@ features/tcp_routing-enable.yml
 features/container_networking_interface_plugin-external.yml
 features/nfs_volume_driver-disable.yml
 resource/router_additional_vm_extensions.yml
-    
+optional/add-routing_custom_ca_certificates.yml
