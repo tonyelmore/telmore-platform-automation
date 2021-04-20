@@ -47,7 +47,7 @@ do
 done < "$ops_files"
 
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/templates
-bosh int ${wrkdir}/product.yml "${ops_files_args[@]}" > ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml
+bosh int ${wrkdir}/product.yml ${ops_files_args[@]} > ../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml
 
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/defaults
 rm -rf ../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml
