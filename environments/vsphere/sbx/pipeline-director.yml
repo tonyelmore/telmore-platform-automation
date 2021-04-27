@@ -52,6 +52,19 @@ resources:
     pool: locks/((lock_pool_name))
     retry_delay: 1m
 
+credhub-interpolate: &credhub_interpolate_stub
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/credhub-interpolate.yml
+  params:
+    CREDHUB_SERVER: https://concourse.haas-424.pez.vmware.com:8844
+    CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+    CREDHUB_CLIENT: ((concourse_credhub_client_username))
+    CREDHUB_SECRET: ((concourse_credhub_client_secret))
+    PREFIX: '/concourse/((team))'
+    INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+  input_mapping:
+    files: director-configuration
+
 jobs:
 - name: force-unlock
   serial: true
@@ -88,17 +101,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: &director_credhub_interpolate_params
-      CREDHUB_SERVER: https://concourse.haas-424.pez.vmware.com:8844
-      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
-      CREDHUB_CLIENT: ((concourse_credhub_client_username))
-      CREDHUB_SECRET: ((concourse_credhub_client_secret))
-      PREFIX: '/concourse/((team))'
-      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
-    input_mapping:
-      files: director-configuration
+    <<: *credhub_interpolate_stub
 
 - name: install-opsman
   plan:
@@ -119,11 +122,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *credhub_interpolate_stub
 
   - task: download-create-opsman
     image: platform-automation-image
@@ -220,11 +219,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *credhub_interpolate_stub
 
   - task: export-installation
     image: platform-automation-image
@@ -258,11 +253,7 @@ jobs:
       passed: [ export-installation ]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *credhub_interpolate_stub
 
   - task: download-upgrade-opsman
     image: platform-automation-image
