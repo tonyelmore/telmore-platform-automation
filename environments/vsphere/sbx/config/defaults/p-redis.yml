@@ -41,9 +41,9 @@ recreate-all-service-instances_post_deploy_state: default
 register-broker_post_deploy_state: default
 smoke-tests_post_deploy_state: default
 upgrade-all-service-instances_post_deploy_state: default
-cf-redis-broker_instance_type: automatic
-cf-redis-broker_max_in_flight: default
-cf-redis-broker_persistent_disk_size: automatic
-redis-on-demand-broker_instance_type: automatic
-redis-on-demand-broker_instances: automatic
-redis-on-demand-broker_max_in_flight: default
+resource-var-cf-redis-broker_instance_type: automatic
+resource-var-cf-redis-broker_max_in_flight: default
+resource-var-cf-redis-broker_persistent_disk_size: automatic
+resource-var-redis-on-demand-broker_instance_type: automatic
+resource-var-redis-on-demand-broker_instances: automatic
+resource-var-redis-on-demand-broker_max_in_flight: default

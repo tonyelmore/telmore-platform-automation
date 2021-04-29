@@ -16,7 +16,6 @@ properties-configuration:
     nsx_address: ((nsx_address))
     nsx_ca_certificate: ((nsx_ca_certificate))
     nsx_mode: ((nsx_mode))
-    nsx_networking_enabled: ((nsx_networking_enabled))
     nsx_username: ((nsx_username))
   director_configuration:
     allow_legacy_agents: true
@@ -57,6 +56,10 @@ az-configuration:
     clusters:
     - cluster: ((az1_cluster))
       resource_pool: ((az1_resource_pool))
+  - name: ((az2_name))
+    clusters:
+    - cluster: ((az2_cluster))
+      resource_pool: ((az2_resource_pool))
 networks-configuration:
   icmp_checks_enabled: ((icmp_checks_enabled))
   networks:

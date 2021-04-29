@@ -91,12 +91,12 @@ product-properties:
 resource-config:
   cf-redis-broker:
     instance_type:
-      id: ((cf-redis-broker_instance_type))
-    max_in_flight: ((cf-redis-broker_max_in_flight))
+      id: ((resource-var-cf-redis-broker_instance_type))
+    max_in_flight: ((resource-var-cf-redis-broker_max_in_flight))
     persistent_disk:
-      size_mb: ((cf-redis-broker_persistent_disk_size))
+      size_mb: ((resource-var-cf-redis-broker_persistent_disk_size))
   redis-on-demand-broker:
     instance_type:
-      id: ((redis-on-demand-broker_instance_type))
-    instances: ((redis-on-demand-broker_instances))
-    max_in_flight: ((redis-on-demand-broker_max_in_flight))
+      id: ((resource-var-redis-on-demand-broker_instance_type))
+    instances: ((resource-var-redis-on-demand-broker_instances))
+    max_in_flight: ((resource-var-redis-on-demand-broker_max_in_flight))
