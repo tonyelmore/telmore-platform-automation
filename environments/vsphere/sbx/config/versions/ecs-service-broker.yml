@@ -1,0 +1,5 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*.pivotal"
+pivnet-product-slug: "ecs-service-broker"
+product-version: "2.1.1"

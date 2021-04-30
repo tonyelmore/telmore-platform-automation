@@ -1,0 +1,30 @@
+network_name: PAS-Deployment
+singleton_availability_zone: pas-az1 
+
+broker_management_endpoint: https://google.com
+broker_namespace: ecs-namespace
+broker_password: ecs-password
+broker_replication_group: ecs-replication-group
+broker_username: ecs-username
+
+catalog_plan_collection0_0_bucket_tags: key=test0
+catalog_plan_collection0_0_bullet_4: 
+catalog_plan_collection0_0_bullet_5: 
+catalog_plan_collection0_0_default_retention: 
+catalog_plan_collection0_0_free: true
+catalog_plan_collection0_0_namespace: 
+catalog_plan_collection0_0_quota_limit: 5
+catalog_plan_collection0_0_quota_warn: 4
+catalog_plan_collection0_0_replication_group: 
+catalog_plan_collection0_0_repository_plan: 
+
+catalog_plan_collection1_0_bucket_tags: key=test1
+catalog_plan_collection1_0_bullet_4: 
+catalog_plan_collection1_0_bullet_5: 
+catalog_plan_collection1_0_default_retention: 
+catalog_plan_collection1_0_free: true
+catalog_plan_collection1_0_namespace: 
+catalog_plan_collection1_0_quota_limit: 5
+catalog_plan_collection1_0_quota_warn: 4
+catalog_plan_collection1_0_replication_group: 
+catalog_plan_collection1_0_repository_plan:
