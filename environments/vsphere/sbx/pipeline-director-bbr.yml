@@ -1,0 +1,141 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+- name: gcs-resource
+  type: docker-image
+  source:
+    repository: frodenas/gcs-resource
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: director-backup
+  type: gcs-resource
+  source:
+    bucket: sa-aelmore-installation-zips
+    json_key: ((gcp-service-account-key-string))
+    regexp: vsphere/((foundation))/director_(.*).tgz
+
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config-director"
+
+- name: lock
+  type: pool
+  source:
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    branch: master
+    username: ((github_username))
+    password: ((github_token))
+    pool: locks/((lock_pool_name))
+    retry_delay: 1m
+
+credhub-interpolate: &credhub_interpolate_stub
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/credhub-interpolate.yml
+  params:
+    CREDHUB_SERVER: https://concourse.haas-424.pez.vmware.com:8844
+    CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+    CREDHUB_CLIENT: ((concourse_credhub_client_username))
+    CREDHUB_SECRET: ((concourse_credhub_client_secret))
+    PREFIX: '/concourse/((team))'
+    INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+  input_mapping:
+    files: director-configuration
+
+jobs:
+- name: force-unlock
+  serial: true
+  plan:
+  - get: lock
+  - put: lock
+    params:
+      release: lock
+
+- name: lock-director
+  serial: true
+  plan:
+  - in_parallel:
+    - put: lock
+      params: {acquire: true}
+    - get: director-configuration
+      trigger: true
+
+- name: validate-director-configuration
+  plan:
+  - in_parallel:
+    - get: director-configuration
+      trigger: true
+      passed: ["lock-director"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate_stub
+
+- name: backup-director
+  plan:
+  - in_parallel:
+    - get: director-configuration
+      trigger: true
+      passed: ["validate-director-configuration"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate_stub
+
+  - task: backup-director
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/backup-director.yml
+    input_mapping:
+      env: interpolated-files
+    params:
+      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
+      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
+      
+  - put: director-backup
+    params:
+      file: backup/director_*.tgz
+
+- name: unlock-director
+  serial: true
+  plan:
+  - get: director-configuration
+    trigger: true
+    passed:
+    - "backup-director"
+  - get: lock
+  - put: lock
+    params:
+      release: lock

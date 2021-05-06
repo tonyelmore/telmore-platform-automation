@@ -24,13 +24,6 @@ resources:
     json_key: ((gcp-service-account-key-string))
     regexp: vsphere/((foundation))/installation-(.*).zip
 
-- name: director-backup
-  type: gcs-resource
-  source:
-    bucket: sa-aelmore-installation-zips
-    json_key: ((gcp-service-account-key-string))
-    regexp: vsphere/((foundation))/director_(.*).tgz
-
 - name: state
   type: git
   source:
@@ -110,45 +103,12 @@ jobs:
   - task: credhub-interpolate
     <<: *credhub_interpolate_stub
 
-- name: backup-director
-  plan:
-  - in_parallel:
-    - get: director-configuration
-      trigger: true
-      passed: ["validate-director-configuration"]
-    - get: platform-automation-image
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["platform-automation-image*"]
-    - get: platform-automation-tasks
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["*tasks*"]
-
-  - task: credhub-interpolate
-    <<: *credhub_interpolate_stub
-
-  - task: backup-director
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/backup-director.yml
-    input_mapping:
-      env: interpolated-files
-    params:
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
-      
-  - put: director-backup
-    params:
-      file: backup/director_*.tgz
-
 - name: install-opsman
   plan:
   - in_parallel:
     - get: director-configuration
       trigger: true
-      passed: ["backup-director"]
+      passed: ["validate-director-configuration"]
     - get: state
     - get: platform-automation-image
       resource: platform-automation
