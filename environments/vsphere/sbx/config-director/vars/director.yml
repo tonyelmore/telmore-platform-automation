@@ -12,6 +12,16 @@ az1_name: pas-az1
 az1_cluster: Cluster
 az1_resource_pool: pas-az1
 
+az2_name: pas-az2
+az2_cluster: Cluster
+az2_resource_pool: pas-az2
+
+az3_name: pas-az3
+az3_cluster: Cluster
+az3_resource_pool: pas-az3
+
+singleton_availability_zone: pas-az2
+
 # networks-configuration:
 icmp_checks_enabled: false
 infra_network_vsphere_name: PAS-Infrastructure

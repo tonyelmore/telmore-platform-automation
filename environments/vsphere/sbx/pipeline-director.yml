@@ -29,7 +29,7 @@ resources:
   source:
     bucket: sa-aelmore-installation-zips
     json_key: ((gcp-service-account-key-string))
-    regexp: vsphere/((foundation))/director_(.*).zip
+    regexp: vsphere/((foundation))/director_(.*).tgz
 
 - name: state
   type: git
@@ -133,13 +133,15 @@ jobs:
   - task: backup-director
     image: platform-automation-image
     file: platform-automation-tasks/tasks/backup-director.yml
+    input_mapping:
+      env: interpolated-files
     params:
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       ENV_FILE: environments/((iaas))/((foundation))/config-director/secrets/env.yml
       
   - put: director-backup
     params:
-      file: backup/director_*.zip
+      file: backup/director_*.tgz
 
 - name: install-opsman
   plan:
