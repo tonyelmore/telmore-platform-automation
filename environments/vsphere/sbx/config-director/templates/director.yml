@@ -17,6 +17,7 @@ properties-configuration:
     nsx_ca_certificate: ((nsx_ca_certificate))
     nsx_mode: ((nsx_mode))
     nsx_username: ((nsx_username))
+    nsx_password: ((nsx_auth_simple_nsx_api_password))
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: ((blobstore_type))
