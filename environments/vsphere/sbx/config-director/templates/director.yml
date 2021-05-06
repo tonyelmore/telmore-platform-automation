@@ -76,6 +76,8 @@ networks-configuration:
       dns: ((dns))
       availability_zone_names: &1
       - ((az1_name))
+      - ((az2_name))
+      - ((az3_name))
   - name: ((deployment_network_name))
     subnets:
     - iaas_identifier: ((deployment_network_vsphere_name))
