@@ -61,10 +61,10 @@ az-configuration:
     clusters:
     - cluster: ((az2_cluster))
       resource_pool: ((az2_resource_pool))
-  - name: ((az2_name))
+  - name: ((az3_name))
     clusters:
-    - cluster: ((az2_cluster))
-      resource_pool: ((az2_resource_pool))
+    - cluster: ((az3_cluster))
+      resource_pool: ((az3_resource_pool))
 networks-configuration:
   icmp_checks_enabled: ((icmp_checks_enabled))
   networks:
