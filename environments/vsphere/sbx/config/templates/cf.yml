@@ -288,12 +288,7 @@ product-properties:
   .properties.system_metrics_scraper_scrape_interval:
     value: ((system_metrics_scraper_scrape_interval))
   .properties.tcp_routing:
-    selected_option: enable
-    value: enable
-  .properties.tcp_routing.enable.request_timeout_in_seconds:
-    value: ((tcp_routing_enable_request_timeout_in_seconds))
-  .properties.tcp_routing.enable.reservable_ports:
-    value: ((tcp_routing_enable_reservable_ports))
+    value: disable
   .properties.uaa:
     value: internal
   .properties.uaa.internal.password_expires_after_months:
@@ -461,7 +456,6 @@ resource-config:
     instances: ((resource-var-router_instances))
     max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
-    additional_vm_extensions: ((resource-var-tcp_router_additional_vm_extensions))
     instance_type:
       id: ((resource-var-tcp_router_instance_type))
     instances: ((resource-var-tcp_router_instances))
