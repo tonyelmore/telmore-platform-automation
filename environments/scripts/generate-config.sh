@@ -15,7 +15,7 @@ if [ ! -f ${configfile} ]; then
   echo "Must create ${configfile} and specify initial-foundation" 
   exit 1
 fi
-INITIAL_FOUNDATION=$(bosh interpolate ${configfile} --path /initial-foundation)
+INITIAL_FOUNDATION=$(bosh interpolate ${configfile} --path=/initial-foundation)
 
 # ---- Get version, glob, slug from version file
 echo "Generating configuration for product $product"
@@ -24,9 +24,9 @@ if [ ! -f ${versionfile} ]; then
   echo "Must create ${versionfile}"
   exit 1
 fi
-version=$(bosh interpolate ${versionfile} --path /product-version)
-glob=$(bosh interpolate ${versionfile} --path /pivnet-file-glob)
-slug=$(bosh interpolate ${versionfile} --path /pivnet-product-slug)
+version=$(bosh interpolate ${versionfile} --path=/product-version)
+glob=$(bosh interpolate ${versionfile} --path=/pivnet-file-glob)
+slug=$(bosh interpolate ${versionfile} --path=/pivnet-product-slug)
 
 # ---- Execute om config-template 
 tmpdir=tile-configs/${product}-config
