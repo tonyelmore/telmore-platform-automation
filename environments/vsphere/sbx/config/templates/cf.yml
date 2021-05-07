@@ -461,6 +461,7 @@ resource-config:
     instances: ((resource-var-router_instances))
     max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
+    additional_vm_extensions: ((resource-var-tcp_router_additional_vm_extensions))
     instance_type:
       id: ((resource-var-tcp_router_instance_type))
     instances: ((resource-var-tcp_router_instances))

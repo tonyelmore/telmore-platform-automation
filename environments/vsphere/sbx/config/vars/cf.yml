@@ -1,8 +1,8 @@
 cloud_controller_apps_domain: cfapps.haas-424.pez.vmware.com
 cloud_controller_system_domain: run.haas-424.pez.vmware.com
 singleton_availability_zone: pas-az1
-az2_name: pas-az1
-az3_name: pas-az2
+az2_name: pas-az2
+az3_name: pas-az3
 tcp_routing_enable_reservable_ports: 10000-10005
 enable_smb_volume_driver: false
 
@@ -12,6 +12,7 @@ resource-var-diego_brain_instances: 1
 resource-var-ha_proxy_instances: 0
 resource-var-router_instances: 2
 resource-var-router_additional_vm_extensions: http_https_lb
+resource-var-tcp_router_additional_vm_extensions: pas_tcp_vm_extension
 resource-var-diego_cell_instances: 3
 
 ha_proxy_skip_cert_verify: true

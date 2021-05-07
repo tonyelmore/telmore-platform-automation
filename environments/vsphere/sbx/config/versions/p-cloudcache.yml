@@ -2,4 +2,4 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*.pivotal"
 pivnet-product-slug: "tanzu-gemfire-for-vms"
-product-version: "1.13.0"
+product-version: "1.13.1"
