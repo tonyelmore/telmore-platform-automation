@@ -6,6 +6,7 @@ persistent_datastores_string: LUN01
 bosh_vm_folder: pcf_vms
 bosh_template_folder: pcf_templates
 bosh_disk_path: pcf_disk
+include_opsman_root_ca: true
 
 # AZ Config:
 az1_name: pas-az1
