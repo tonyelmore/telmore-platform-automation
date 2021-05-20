@@ -16,7 +16,7 @@ resources:
     branch: master
     username: ((github_username))
     password: ((github_token))
-    pool: locks/((lock_pool_name))
+    pool: locks/test
     retry_delay: 1m
 
 jobs:
@@ -35,6 +35,7 @@ jobs:
     - put: lock
       params: {acquire: true}
     - get: director-configuration
+      trigger: true
 
 - name: unlock-director
   serial: true

@@ -1,5 +1,5 @@
 resources:
-- name: director-configuration
+- name: configuration
   type: git
   source:
     branch: master
@@ -16,7 +16,7 @@ resources:
     branch: master
     username: ((github_username))
     password: ((github_token))
-    pool: locks/((lock_pool_name))
+    pool: locks/test
     retry_delay: 1m
 
 jobs:
@@ -28,21 +28,22 @@ jobs:
     params:
       release: lock
 
-- name: lock-director
+- name: lock-product
   serial: true
   plan:
   - in_parallel:
     - put: lock
       params: {acquire: true}
-    - get: director-configuration
+    - get: configuration
+      trigger: true
 
-- name: unlock-director
+- name: unlock-product
   serial: true
   plan:
-  - get: director-configuration
+  - get: configuration
     trigger: true
     passed:
-    - "lock-director"
+    - "lock-product"
   - get: lock
   - put: lock
     params:
