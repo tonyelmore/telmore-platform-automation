@@ -1,0 +1,49 @@
+resources:
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/test-config"
+
+- name: lock
+  type: pool
+  source:
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    branch: master
+    username: ((github_username))
+    password: ((github_token))
+    pool: locks/((lock_pool_name))
+    retry_delay: 1m
+
+jobs:
+- name: force-unlock
+  serial: true
+  plan:
+  - get: lock
+  - put: lock
+    params:
+      release: lock
+
+- name: lock-director
+  serial: true
+  plan:
+  - in_parallel:
+    - put: lock
+      params: {acquire: true}
+    - get: director-configuration
+
+- name: unlock-director
+  serial: true
+  plan:
+  - get: director-configuration
+    trigger: true
+    passed:
+    - "lock-director"
+  - get: lock
+  - put: lock
+    params:
+      release: lock
