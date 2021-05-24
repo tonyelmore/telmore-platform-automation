@@ -1,0 +1,15 @@
+---
+platform: linux
+
+params:
+  SOME_STRING: "this is some default string"
+
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -eux
+
+    echo "String from param is: ${SOME_STRING}"
