@@ -1,0 +1,23 @@
+---
+platform: linux
+
+params:
+  FAIL_FLAG: false
+  SOME_STRING: "this is some default string"
+
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -eux
+
+    echo "String from param is: ${SOME_STRING}"
+    if [ $FAIL_FLAG ]; then
+      echo "Making the task fail"
+      exit 1
+    fi
+
+    echo "Task succeeded"
+    exit 0

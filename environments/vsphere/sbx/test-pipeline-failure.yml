@@ -1,0 +1,40 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+
+jobs:
+- name: test-failure-job
+  plan:
+  - in_parallel:
+    - get: director-configuration
+      trigger: true
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+
+  - task: do-not-fail
+    image: platform-automation-image
+    file: director-configuration/ci/tasks-proposed/test-failure.yml
+    params:
+      FAIL_FLAG: false
+      SOME_STRING: "this is some overloaded string"
