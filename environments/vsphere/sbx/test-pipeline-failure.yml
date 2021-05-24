@@ -26,6 +26,23 @@ resources:
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
 
+notify_on_failure: &notify_on_failure
+  # This is showing how to run a task on failure ... most likely it would be a "put" to email or slack
+  task: task-failure
+  image: platform-automation-image
+  file: director-configuration/ci/tasks-proposed/test-failure.yml
+  params:
+    # These params are only available during a get or put step
+    SOME_STRING: "Build failed: ${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}"
+
+notify_on_success: &notify_on_success
+  task: task-success
+  config:
+    << : *task-config
+    run:
+      path: echo
+      args: ["This task succeeded!"]
+
 jobs:
 - name: test-failure-job
   plan:
@@ -38,47 +55,24 @@ jobs:
         unpack: true
         globs: ["platform-automation-image*"]
 
-  - task: do-not-fail
+  - task: successful-task
     image: platform-automation-image
     file: director-configuration/ci/tasks-proposed/test-failure.yml
     params:
       FAIL_FLAG: false
       SOME_STRING: "this is some overloaded string"
-    on_success:
-      task: task-success
-      config:
-        << : *task-config
-        run:
-          path: echo
-          args: ["This task succeeded!"]
+    on_success: *notify_on_success
 
-  - task: fail-this-task
+  - task: failing-task
     image: platform-automation-image
     file: director-configuration/ci/tasks-proposed/test-failure.yml
     params:
       FAIL_FLAG: true
       SOME_STRING: "this is some overloaded string for failure"
-    on_failure:
-      task: task-failure
-        image: platform-automation-image
-        file: director-configuration/ci/tasks-proposed/test-failure.yml
-        params:
-          SOME_STRING: "Build failed: ${ATC_EXTERNAL_URL}/teams/${BUILD_TEAM_NAME}/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}"
+    on_failure: *notify_on_failure
 
-  - task: failing-task
-    config:
-      << : *task-config
-      run:
-        path: sh
-        args: ["-lc", "exit 1"]
-    on_failure:
-      task: task-failure
-      config:
-        << : *task-config
-        run:
-          path: echo
-          args: ["This task failed!"]
 
+# Job level hooks
   on_success:
     task: job-success
     config:
