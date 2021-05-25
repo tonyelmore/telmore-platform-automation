@@ -62,6 +62,7 @@ credhub-interpolate: &credhub_interpolate_stub
     CREDHUB_SECRET: ((concourse_credhub_client_secret))
     PREFIX: '/concourse/((team))'
     INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+    SKIP_MISSING: false
   input_mapping:
     files: director-configuration
 
