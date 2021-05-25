@@ -78,6 +78,7 @@ jobs:
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
       PREFIX: '/concourse/((team))'
       INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
+      SKIP_MISSING: false
     input_mapping:
       files: configuration
 
