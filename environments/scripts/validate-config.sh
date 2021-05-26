@@ -40,8 +40,8 @@ if [ -f "../${iaas}/${environment_name}/config/secrets/${product}.yml" ]; then
   vars_files_args+=("--vars-file ../${iaas}/${environment_name}/config/secrets/${product}.yml")
 fi
 
-# if [ "${deploy_type}" == "tile" ]; then
-#   bosh int --var-errs-unused ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
-# fi
+if [ "${deploy_type}" == "tile" ]; then
+  bosh int --var-errs-unused ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null
+fi
 
 bosh int --var-errs ../${iaas}/${environment_name}/config/templates/${product}.yml ${vars_files_args[@]} > /dev/null

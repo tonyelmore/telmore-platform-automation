@@ -1,8 +1,6 @@
 ---
 network_name: PAS-Deployment
 singleton_availability_zone: pas-az1
-az2_name: pas-az2
-az3_name: pas-az3
 
 #errands
 register-broker_post_deploy_state: off
