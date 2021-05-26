@@ -7,3 +7,6 @@ You can see the list of all config with `git config --list`.  There may be dupli
 
 
 You can also set the default behavior in VSCode to do a rebase instead of a merge when doing a pull.
+
+
+The test-pipeline-failure shows how to use the on-failure and on-success hooks
