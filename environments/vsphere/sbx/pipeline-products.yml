@@ -20,8 +20,8 @@ resources:
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
     paths:
-    - "environments/((iaas))/((foundation))/pipeline-products.yml"
     - "environments/((iaas))/((foundation))/config"
+#    - "environments/((iaas))/((foundation))/pipeline-products.yml"
 
 - name: lock
   type: pool
@@ -860,111 +860,6 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       INSTANCE: on-demand-broker/first
-
-- name: pivotal_single_sign-on_service
-  serial: true
-  plan:
-  - in_parallel:
-    - get: configuration
-      trigger: true
-      passed: [ p-rabbitmq ]
-    - get: platform-automation-image
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["platform-automation-image*"]
-    - get: platform-automation-tasks
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["*tasks*"]
-
-  - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
-
-  - task: download-stage-tile-stemcell
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
-    input_mapping:
-      config: configuration
-      download-config: configuration
-      env: interpolated-files
-      secrets: interpolated-files
-    params:
-      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal_single_sign-on_service.yml
-      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions pivotal_single_sign-on_service-stemcell.yml
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal_single_sign-on_service.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
-
-  - task: configure
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/configure-product.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-      vars: configuration
-      secrets: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal_single_sign-on_service.yml
-      VARS_FILES: |
-        vars/environments/((iaas))/((foundation))/config/defaults/pivotal_single_sign-on_service.yml
-        vars/environments/((iaas))/common/pivotal_single_sign-on_service.yml
-        vars/environments/((iaas))/((foundation))/config/vars/pivotal_single_sign-on_service.yml
-        secrets/environments/((iaas))/((foundation))/config/secrets/pivotal_single_sign-on_service.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-
-  - task: apply-product-changes
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/apply-product-changes.yml
-    attempts: 10
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal_single_sign-on_service.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-
-- name: pivotal_single_sign-on_service-errands
-  plan:
-  - in_parallel:
-    - get: configuration
-      trigger: true
-      passed: [ pivotal_single_sign-on_service ]
-    - get: platform-automation-image
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["platform-automation-image*"]
-    - get: platform-automation-tasks
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["*tasks*"]
-
-  - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
-
-  - task: deploy-service-broker
-    attempts: 5
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/run-bosh-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      PRODUCT_NAME: Pivotal_Single_Sign-On_Service
-      ERRAND_NAME: deploy-service-broker
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       
 - name: p-cloudcache
   serial: true
@@ -972,7 +867,7 @@ jobs:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: [ pivotal_single_sign-on_service ]
+      passed: [ p-rabbitmq ]
     - get: platform-automation-image
       resource: platform-automation
       params:
@@ -1217,7 +1112,6 @@ jobs:
     - "p-healthwatch-errands"
     - "credhub-service-broker-errands"
     - "p-rabbitmq-errands"
-    - "pivotal_single_sign-on_service-errands"
     - "p-cloudcache-errands"
     - "p_spring-cloud-services-errands"
   - get: lock
