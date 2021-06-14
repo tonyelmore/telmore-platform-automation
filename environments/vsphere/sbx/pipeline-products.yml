@@ -223,7 +223,7 @@ jobs:
       ERRAND_NAME: smoke_tests
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+      INSTANCE: control/first
 
   - task: run-push-usage-service
     attempts: 5
@@ -237,7 +237,7 @@ jobs:
       ERRAND_NAME: push-usage-service
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+      INSTANCE: control/first
 
   - task: run-push-apps-manager
     attempts: 5
@@ -251,7 +251,7 @@ jobs:
       ERRAND_NAME: push-apps-manager
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+      INSTANCE: control/first
 
   # - task: run-deploy-notifications
   #   attempts: 5
@@ -265,7 +265,7 @@ jobs:
   #     ERRAND_NAME: deploy-notifications
   #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
   #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-  #     INSTANCE: clock_global/first
+  #     INSTANCE: control/first
 
   # - task: run-deploy-notifications-ui
   #   attempts: 5
@@ -279,7 +279,7 @@ jobs:
   #     ERRAND_NAME: deploy-notifications-ui
   #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
   #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-  #     INSTANCE: clock_global/first
+  #     INSTANCE: control/first
 
   - task: run-deploy-autoscaler
     attempts: 5
@@ -293,7 +293,7 @@ jobs:
       ERRAND_NAME: deploy-autoscaler
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+      INSTANCE: control/first
 
   # - task: run-nfsbrokerpush
   #   attempts: 5
@@ -307,7 +307,7 @@ jobs:
   #     ERRAND_NAME: nfsbrokerpush
   #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
   #     OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-  #     INSTANCE: clock_global/first
+  #     INSTANCE: control/first
 
   - task: run-test-autoscaling
     attempts: 5
@@ -321,7 +321,7 @@ jobs:
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
-      INSTANCE: clock_global/first
+      INSTANCE: control/first
 
 - name: pivotal-mysql
   serial: true
