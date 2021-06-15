@@ -1017,7 +1017,7 @@ jobs:
       PRODUCT_NAME: p-healthwatch2
       ERRAND_NAME: smoke-test
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
 
   - task: update-admin-password
     attempts: 2
@@ -1030,7 +1030,8 @@ jobs:
       PRODUCT_NAME: p-healthwatch2
       ERRAND_NAME: update-admin-password
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
+      INSTANCE: grafana/first
 
 - name: p-healthwatch2-pas-exporter
   serial: true
@@ -1127,7 +1128,7 @@ jobs:
       PRODUCT_NAME: p-healthwatch2-pas-exporter
       ERRAND_NAME: smoke-test
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+      OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
 
 - name: unlock-tile
   serial: true
