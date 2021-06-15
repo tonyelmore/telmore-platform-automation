@@ -44,7 +44,6 @@ enable_v1_firehose: true
 enable_v2_firehose: true
 garden_disk_cleanup_reserved_reserved_space_for_other_jobs_in_mb: 15360
 gorouter_ssl_ciphers: ECDHE-RSA-AES128-GCM-SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-ha_proxy_skip_cert_verify: false
 haproxy_max_buffer_size: 16384
 haproxy_ssl_ciphers: DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384
 locket_database_max_open_connections: 200
@@ -148,18 +147,9 @@ resource-var-database_persistent_disk_size: automatic
 resource-var-ha_proxy_instance_type: automatic
 resource-var-ha_proxy_instances: automatic
 resource-var-ha_proxy_max_in_flight: default
-resource-var-istio_control_instance_type: automatic
-resource-var-istio_control_instances: automatic
-resource-var-istio_control_max_in_flight: default
-resource-var-istio_router_instance_type: automatic
-resource-var-istio_router_instances: automatic
-resource-var-istio_router_max_in_flight: default
 resource-var-mysql_monitor_instance_type: automatic
 resource-var-mysql_monitor_instances: automatic
 resource-var-mysql_monitor_max_in_flight: default
-resource-var-route_syncer_instance_type: automatic
-resource-var-route_syncer_instances: automatic
-resource-var-route_syncer_max_in_flight: default
 resource-var-router_instance_type: automatic
 resource-var-router_instances: automatic
 resource-var-router_max_in_flight: default

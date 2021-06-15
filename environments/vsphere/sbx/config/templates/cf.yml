@@ -60,8 +60,6 @@ product-properties:
     value: ((cloud_controller_system_domain))
   .diego_brain.starting_container_count_maximum:
     value: ((diego_brain_starting_container_count_maximum))
-  .ha_proxy.skip_cert_verify:
-    value: ((ha_proxy_skip_cert_verify))
   .mysql.cli_history:
     value: ((mysql_cli_history))
   .mysql.max_connections:
@@ -210,7 +208,7 @@ product-properties:
     value: ((push_apps_manager_invitations_buildpack))
   .properties.push_apps_manager_nav_links:
     value:
-    - href: https://docs.pivotal.io/pivotalcf/2-10/pas/intro.html
+    - href: https://docs.pivotal.io/pivotalcf/2-11/pas/intro.html
       name: Docs
     - href: /tools
       name: Tools
@@ -382,26 +380,11 @@ resource-config:
       id: ((resource-var-ha_proxy_instance_type))
     instances: ((resource-var-ha_proxy_instances))
     max_in_flight: ((resource-var-ha_proxy_max_in_flight))
-  istio_control:
-    instance_type:
-      id: ((resource-var-istio_control_instance_type))
-    instances: ((resource-var-istio_control_instances))
-    max_in_flight: ((resource-var-istio_control_max_in_flight))
-  istio_router:
-    instance_type:
-      id: ((resource-var-istio_router_instance_type))
-    instances: ((resource-var-istio_router_instances))
-    max_in_flight: ((resource-var-istio_router_max_in_flight))
   mysql_monitor:
     instance_type:
       id: ((resource-var-mysql_monitor_instance_type))
     instances: ((resource-var-mysql_monitor_instances))
     max_in_flight: ((resource-var-mysql_monitor_max_in_flight))
-  route_syncer:
-    instance_type:
-      id: ((resource-var-route_syncer_instance_type))
-    instances: ((resource-var-route_syncer_instances))
-    max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
     additional_vm_extensions: ((resource-var-router_additional_vm_extensions))
     instance_type:
