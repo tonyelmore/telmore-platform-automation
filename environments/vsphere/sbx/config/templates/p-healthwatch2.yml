@@ -1,0 +1,80 @@
+errand-config:
+  smoke-test:
+    post-deploy-state: ((smoke-test_post_deploy_state))
+  update-admin-password:
+    post-deploy-state: ((update-admin-password_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-healthwatch2
+product-properties:
+  .grafana.enable_login_form:
+    value: ((grafana_enable_login_form))
+  .grafana.enable_mysql:
+    value: ((grafana_enable_mysql))
+  .grafana.enable_rabbitmq:
+    value: ((grafana_enable_rabbitmq))
+  .properties.dashboard_discovery:
+    value: dynamic
+  .properties.grafana_authentication:
+    value: basic
+  .properties.grafana_proxy:
+    value: disabled
+  .properties.opsman_skip_ssl_validation:
+    value: ((opsman_skip_ssl_validation))
+  .properties.pks_cluster_discovery:
+    value: disabled
+  .properties.smtp:
+    value: disabled
+  .tsdb.canary_exporter_port:
+    value: ((tsdb_canary_exporter_port))
+  .tsdb.disk_chunk_size:
+    value: ((tsdb_disk_chunk_size))
+  .tsdb.memory_chunk_size:
+    value: ((tsdb_memory_chunk_size))
+  .tsdb.scrape_interval:
+    value: ((tsdb_scrape_interval))
+resource-config:
+  grafana:
+    instance_type:
+      id: ((resource-var-grafana_instance_type))
+    instances: ((resource-var-grafana_instances))
+    max_in_flight: ((resource-var-grafana_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-grafana_persistent_disk_size))
+  pxc:
+    instance_type:
+      id: ((resource-var-pxc_instance_type))
+    instances: ((resource-var-pxc_instances))
+    max_in_flight: ((resource-var-pxc_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pxc_persistent_disk_size))
+  pxc-proxy:
+    instance_type:
+      id: ((resource-var-pxc-proxy_instance_type))
+    instances: ((resource-var-pxc-proxy_instances))
+    max_in_flight: ((resource-var-pxc-proxy_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pxc-proxy_persistent_disk_size))
+  tsdb:
+    instance_type:
+      id: ((resource-var-tsdb_instance_type))
+    instances: ((resource-var-tsdb_instances))
+    max_in_flight: ((resource-var-tsdb_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-tsdb_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

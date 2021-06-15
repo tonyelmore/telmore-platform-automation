@@ -922,6 +922,213 @@ jobs:
       OPSMAN_SSH_PRIVATE_KEY: ((opsman_ssh_key.private_key))
       INSTANCE: spring-cloud-services/first
 
+- name: p-healthwatch2
+  serial: true
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ p_spring-cloud-services ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate
+
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch2.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch2-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/p-healthwatch2.yml
+        vars/environments/((iaas))/common/p-healthwatch2.yml
+        vars/environments/((iaas))/((foundation))/config/vars/p-healthwatch2.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/p-healthwatch2.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+- name: p-healthwatch2-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ p-healthwatch2 ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate
+
+  - task: smoke-test
+    attempts: 2
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      PRODUCT_NAME: p-healthwatch2
+      ERRAND_NAME: smoke-test
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+
+  - task: update-admin-password
+    attempts: 2
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      PRODUCT_NAME: p-healthwatch2
+      ERRAND_NAME: update-admin-password
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+
+- name: p-healthwatch2-pas-exporter
+  serial: true
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ p-healthwatch2 ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate
+
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch2-pas-exporter.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-healthwatch2-pas-exporter-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2-pas-exporter.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2-pas-exporter.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/p-healthwatch2-pas-exporter.yml
+        vars/environments/((iaas))/common/p-healthwatch2-pas-exporter.yml
+        vars/environments/((iaas))/((foundation))/config/vars/p-healthwatch2-pas-exporter.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/p-healthwatch2-pas-exporter.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-healthwatch2-pas-exporter.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+- name: p-healthwatch2-pas-exporter-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ p-healthwatch2-pas-exporter ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    <<: *credhub_interpolate
+
+  - task: smoke-test
+    attempts: 2
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      PRODUCT_NAME: p-healthwatch2-pas-exporter
+      ERRAND_NAME: smoke-test
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      OPSMAN_SSH_PRIVATE_KEY: ((ops_manager_ssh_key.private_key))
+
 - name: unlock-tile
   serial: true
   plan:
@@ -934,6 +1141,8 @@ jobs:
     - "p-rabbitmq-errands"
     - "p-cloudcache-errands"
     - "p_spring-cloud-services-errands"
+    - "p-healthwatch2-errands"
+    - "p-healthwatch2-pas-exporter-errands"
   - get: lock
   - put: lock
     params:
