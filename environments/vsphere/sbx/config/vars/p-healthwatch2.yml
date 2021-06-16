@@ -1,2 +1,5 @@
 network_name: PAS-Deployment
 singleton_availability_zone:  pas-az1
+
+grafana_root_url: grafana.haas-424.pez.vmware.com
+grafana_static_ips: 192.68.2.34

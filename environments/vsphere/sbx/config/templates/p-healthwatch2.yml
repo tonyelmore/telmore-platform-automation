@@ -18,6 +18,10 @@ product-properties:
     value: ((grafana_enable_mysql))
   .grafana.enable_rabbitmq:
     value: ((grafana_enable_rabbitmq))
+  .grafana.root_url:
+    value: ((grafana_root_url))
+  .grafana.static_ips:
+    value: ((grafana_static_ips))
   .properties.dashboard_discovery:
     value: dynamic
   .properties.grafana_authentication:
