@@ -23,3 +23,7 @@ opsman-configuration:
     vm_name: ((opsman_vm_name))
     memory: 8                                # default: 8 GB
     cpu: 2                                   # default: 1
+
+    banner-settings:
+      ui_banner_contents: "UI Banner Contents - HAAS-424 Sandbox"
+      ssh_banner_contents: "SSH Banner Contents - HAAS-424 Sandbox"
