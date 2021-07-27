@@ -1,0 +1,69 @@
+How to add custom metrics to HW2 prometheus / grafana
+
+The source code must emit the custom metric and can do this in two different ways:
+1) Direct metrics
+    * Specify the metric as a variable initialized with the micrometer package
+    private final AtomicInteger testGauge;
+    testGauge = meterRegistry.gauge("custom_gauge", new AtomicInteger(0));
+
+2) Logs
+    * Define log entry in json format that can be picked up by prometheus
+        private static final String outputStringFormat = "{" +
+            "   \"type\": \"gauge\"," +
+            "   \"name\": \"custom_log_gauge\"," +
+            "   \"value\": %d," +
+            "   \"tags\": {" +
+            "     \"mytag\": \"my tag value\"" +
+            "   }" +
+            "}";
+
+You must register the metrics using the cf plugin "metric-registrar"
+    * cf install-plugin -r CF-Community "metric-registrar"
+
+1) For metrics endpoint
+    * cf register-metrics-endpoint custom-metric-spring-boot-app /actuator/prometheus --insecure
+    * cf registered-metrics-endpoints
+
+2) For log scraping
+    * cf register-log-format custom-metric-spring-boot-app json
+    * cf registered-log-endpoints
+
+You can see what is in loggregator via the log-cache plugin
+* cf install-plugin -r CF-Community "log-cache"
+* cf tail --envelope-class=metrics custom-metric-spring-boot-app
+* cf tail --name-filter="custom" -n 4 custom-metric-spring-boot-app
+
+
+
+
+
+cd custom-metric-spring-boot-app
+cf push
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/health
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/info
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/prometheus
+./gradlew clean assemble
+cf push
+cf logs custom-metric-spring-boot-app --recent
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/prometheus | grep custom
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator | jq .
+cf install-plugin -r CF-Community "metric-registrar"
+cf register-metrics-endpoint custom-metric-spring-boot-app /actuator/prometheus --insecure
+
+cf install-plugin -r CF-Community "log-cache"
+cf tail --envelope-class=metrics custom-metric-spring-boot-app
+cf registered-metrics-endpoints
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/metrics
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/prometheus | grep custom
+curl -k custom-metric.cfapps.haas-424.pez.vmware.com/actuator/prometheus | grep -v "#"
+cf tail -c any -t counter -n 75 custom-metric-spring-boot-app
+cf tail --name-filter="custom" -n 75 custom-metric-spring-boot-app
+cf tail --name-filter="custom" custom-metric-spring-boot-app
+
+cf register-log-format custom-metric-spring-boot-app json
+cf tail --name-filter="custom" -n 4 custom-metric-spring-boot-app
+cf registered-log-endpoints
+
+om curl -p /api/v0/staged/pending_changes
+om curl -p /api/v0/staged/pending_changes | jq .
+om pending-changes

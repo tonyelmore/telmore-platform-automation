@@ -1,0 +1,26 @@
+---
+name: zipkin
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+
+releases: []
+
+update:
+  canaries: 2
+  max_in_flight: 1
+  canary_watch_time: 5000-60000
+  update_watch_time: 5000-60000
+
+instance_groups:
+- name: basevm
+  azs: [pas-az1]
+  instances: 1
+  jobs: []
+  vm_type: large.disk
+  stemcell: default
+  persistent_disk: 10240
+  networks:
+  - name: PAS-Deployment
