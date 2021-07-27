@@ -1118,7 +1118,7 @@ jobs:
     <<: *credhub_interpolate
 
   - task: smoke-test
-    attempts: 2
+    attempts: ((attempts))
     image: platform-automation-image
     file: platform-automation-tasks/tasks/run-bosh-errand.yml
     input_mapping:

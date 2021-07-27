@@ -4,3 +4,4 @@ foundation: sbx
 iaas: vsphere
 lock_pool_name: vsphere-sbx
 concourse_user: admin
+attempts: 5
