@@ -729,7 +729,7 @@ jobs:
       secrets: interpolated-files
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-cloudcache.yml
-      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions p-cloudcache-stemcell.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-cloudcache-stemcell.yml
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-cloudcache.yml
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
