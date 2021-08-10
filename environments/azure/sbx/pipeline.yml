@@ -74,7 +74,7 @@ director_credhub_interpolate: &director_credhub_interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params:
-      CREDHUB_SERVER: (concourse_credhub_url))
+      CREDHUB_SERVER: ((concourse_credhub_url))
       CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
@@ -88,7 +88,7 @@ credhub_interpolate: &credhub_interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params:
-      CREDHUB_SERVER: (concourse_credhub_url))
+      CREDHUB_SERVER: ((concourse_credhub_url))
       CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
