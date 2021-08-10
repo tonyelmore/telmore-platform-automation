@@ -70,6 +70,34 @@ resources:
     pool: locks/((lock_pool_name))
     retry_delay: 1m
 
+director_credhub_interpolate: &director_credhub_interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_SERVER: (concourse_credhub_url))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+      SKIP_MISSING: false
+    input_mapping:
+      files: director-configuration
+
+credhub_interpolate: &credhub_interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_SERVER: (concourse_credhub_url))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
+      SKIP_MISSING: false
+    input_mapping:
+      files: configuration
+
 jobs:
 - name: force-unlock
   serial: true
@@ -106,17 +134,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: &director_credhub_interpolate_params
-      CREDHUB_SERVER: ((concourse_credhub_url))
-      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
-      CREDHUB_CLIENT: ((concourse_credhub_client_username))
-      CREDHUB_SECRET: ((concourse_credhub_client_secret))
-      PREFIX: '/concourse/((team))'
-      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
-    input_mapping:
-      files: director-configuration
+    <<: *director_credhub_interpolate
 
 - name: install-opsman
   plan:
@@ -137,11 +155,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *director_credhub_interpolate
 
   - task: download-create-opsman
     image: platform-automation-image
@@ -238,11 +252,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *director_credhub_interpolate
 
   - task: export-installation
     image: platform-automation-image
@@ -276,11 +286,7 @@ jobs:
       passed: [ export-installation ]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *director_credhub_interpolate_params
-    input_mapping:
-      files: director-configuration
+    <<: *director_credhub_interpolate
 
   - task: download-upgrade-opsman
     image: platform-automation-image
@@ -353,17 +359,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: &credhub_interpolate_params
-      CREDHUB_SERVER: ((concourse_credhub_url))
-      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
-      CREDHUB_CLIENT: ((concourse_credhub_client_username))
-      CREDHUB_SECRET: ((concourse_credhub_client_secret))
-      PREFIX: '/concourse/((team))'
-      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
 - name: os-conf
   plan:
@@ -383,11 +379,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: download
     image: platform-automation-image
@@ -433,11 +425,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
@@ -500,11 +488,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: run-smoke_tests
     attempts: 2
@@ -595,11 +579,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
@@ -662,11 +642,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: register-broker
     attempts: 2
@@ -730,11 +706,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
@@ -797,11 +769,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: smoke-tests
     attempts: 2
@@ -835,11 +803,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
@@ -902,11 +866,7 @@ jobs:
         globs: ["*tasks*"]
 
   - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+    <<: *credhub_interpolate
 
   - task: smoke-test
     attempts: 2
