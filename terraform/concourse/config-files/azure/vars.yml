@@ -3,9 +3,9 @@ deployment_name: concourse
 # This can be any VM type from the cloud config: bosh cloud-config
 web_vm_type: Standard_DS2_v2
 # This is the external concourse URL exported from the terraform output
-external_host: ((URL))
+external_host: ci.concourse.my3votes.com
 # This is the external concourse URL exported from the terraform output
-external_url: https://((URL))
+external_url: https://ci.concourse.my3votes.com
 # This can be any VM type from the cloud config: bosh cloud-config
 db_vm_type: Standard_DS2_v2
 # This can be any disk type from the cloud config: bosh cloud-config

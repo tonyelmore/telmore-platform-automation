@@ -2,13 +2,14 @@
 
 # set -x
 
-TOOLKIT_IMAGE_VERSION="5.0.13"
-export IAAS="nsxt"
+export IAAS="azure"
 export PLATFORM="darwin"
+TOOLKIT_IMAGE_VERSION="5.0.17"
+CONCOURSE_VERSION="6.7.6"
 
 echo "*********** Getting terraform output..."
 # with Terraform v 0.14.3+ use "--raw" to ensure output is not JSON encoded
-terraform output --raw -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config_opsmanager > terraform-outputs-${IAAS}.yml
+terraform output --raw -state=../paving-${IAAS}-concourse/terraform.tfstate stable_config > terraform-outputs-${IAAS}.yml
 
 export CONCOURSE_URL="$(terraform output --raw -state=../paving-${IAAS}-concourse/terraform.tfstate concourse_url)"
 
@@ -33,7 +34,9 @@ touch state-${IAAS}.yml
 cp state-${IAAS}.yml state.yml
 
 # find the correct image file
-IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.{yml,ova,raw} 2>/dev/null | head -n1)"
+# Hack to look for only yml file ... old regex isn't working anymore
+# IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.{yml,ova,raw} 2>/dev/null | head -n1)"
+IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.yml 2>/dev/null | head -n1)"
 echo $IMAGE_FILE
 
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \
@@ -74,12 +77,12 @@ eval "$(om --env config-files/env.yml bosh-env --ssh-private-key=/tmp/private_ke
 bosh curl /info
 
 echo "*********** Uploading releases"
-bosh upload-release downloaded-resources/releases/concourse-bosh-release*.tgz
-bosh upload-release downloaded-resources/releases/bpm-release*.tgz
-bosh upload-release downloaded-resources/releases/postgres-release*.tgz
-bosh upload-release downloaded-resources/releases/uaa-release*.tgz
-bosh upload-release downloaded-resources/releases/credhub-release*.tgz
-bosh upload-release downloaded-resources/releases/backup-and-restore-sdk-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/bpm-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/postgres-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/uaa-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/credhub-release*.tgz
+bosh upload-release downloaded-resources/releases/${CONCOURSE_VERSION}/backup-and-restore-sdk-release*.tgz
 
 echo "*********** Uploading stemcell"
 bosh upload-stemcell downloaded-resources/stemcells/${IAAS}/*.tgz
@@ -92,23 +95,23 @@ credhub set \
 
 echo "*********** Deploying concourse"
 # I used to have "--vars-env CONCOURSE" ... but but doc no longer has it
-bosh -n -d concourse deploy downloaded-resources/concourse-bosh-deployment/cluster/concourse.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/privileged-http.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/privileged-https.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/basic-auth.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/tls-vars.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/tls.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/uaa.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/credhub-colocated.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/offline-releases.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/backup-atc-colocated-web.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
-  -o downloaded-resources/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
+bosh -n -d concourse deploy downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/concourse.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/privileged-http.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/privileged-https.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/basic-auth.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/tls-vars.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/tls.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/uaa.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/credhub-colocated.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/offline-releases.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/backup-atc-colocated-web.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
+  -o downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
   -o config-files/${IAAS}/operations.yml \
   -l <(om interpolate --config config-files/${IAAS}/vars.yml --vars-file terraform-outputs-${IAAS}.yml) \
-  -l downloaded-resources/concourse-bosh-deployment/versions.yml
+  -l downloaded-resources/releases/${CONCOURSE_VERSION}/concourse-bosh-deployment/versions.yml
 
 export CONCOURSE_CREDHUB_SECRET="$(credhub get -n /p-bosh/concourse/credhub_admin_secret -q)"
 export CONCOURSE_CA_CERT="$(credhub get -n /p-bosh/concourse/atc_tls -k ca)"
@@ -121,6 +124,7 @@ credhub login \
   --client-name=credhub_admin \
   --client-secret="${CONCOURSE_CREDHUB_SECRET}" \
   --ca-cert "${CONCOURSE_CA_CERT}"
+
 
 # set +x
 
