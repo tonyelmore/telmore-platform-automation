@@ -8,12 +8,12 @@
 
 set -eu
 
-terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
+terraform output -raw -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
 tf_output_file="terraform-outputs.yml"
 
 vars_file="output/$1"
 [[ -z "$vars_file" ]] && { echo "Error: expected an output path to the director vars file"; exit 1; }
-
+echo "Director vars file: " ${vars_file}
 
 function tf_value {
   local o
@@ -42,7 +42,6 @@ function tf2vars {
 
 environment_name=$(tf_value 'environment_name')
 echo "Found environment: $environment_name"
-echo $vars_file
 
 cat << EOF > "$vars_file"
 EOF

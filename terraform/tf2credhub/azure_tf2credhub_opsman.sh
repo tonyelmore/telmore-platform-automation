@@ -8,7 +8,7 @@
 #    $ credhub import -f /tmp/prod01-credhub.json
 #
 
-terraform output -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
+terraform output -raw -state=../paving-azure-sbx/terraform.tfstate stable_config > terraform-outputs.yml
 tf_output_file="terraform-outputs.yml"
 
 credhub_import_file="output/$1"
@@ -16,6 +16,9 @@ credhub_import_file="output/$1"
 
 secrets_file="output/$2"
 [[ -z "$secrets_file" ]] && { echo "Error: expected an output path to the secrets file"; exit 1; }
+
+echo "Credhub import file: " ${credhub_import_file}
+echo "Opsman secrets file: " ${secrets_file}
 
 function tf_value {
   local o

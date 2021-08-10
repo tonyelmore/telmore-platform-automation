@@ -2,7 +2,7 @@ location: eastus
 resource_group_name: sbx
 ops_manager_storage_account_name: n65vjlo0lmd4cccye54s
 management_subnet_id: /subscriptions/e0f8b33f-9d6c-4202-a598-dfa17d92c468/resourceGroups/sbx/providers/Microsoft.Network/virtualNetworks/sbx-platform/subnets/sbx-management-subnet
-ops_manager_public_ip: 40.121.83.208
+ops_manager_public_ip: 13.68.226.128
 ops_manager_private_ip: 10.0.8.5
 iaas_configuration_environment_azurecloud: AzureCloud
 ops_manager_security_group_name: sbx-ops-manager-network-sg
