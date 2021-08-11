@@ -1,6 +1,7 @@
-grafana_enable_indipro_integration: true
 grafana_enable_login_form: true
+grafana_enable_mysql: false
 grafana_enable_rabbitmq: false
+opsman_skip_ssl_validation: false
 syslog_address: null
 syslog_custom_rsyslog_configuration: ""
 syslog_enabled: false
@@ -30,5 +31,6 @@ resource-var-pxc_instances: automatic
 resource-var-pxc_max_in_flight: default
 resource-var-pxc_persistent_disk_size: automatic
 resource-var-tsdb_instance_type: automatic
+resource-var-tsdb_instances: automatic
 resource-var-tsdb_max_in_flight: default
 resource-var-tsdb_persistent_disk_size: automatic

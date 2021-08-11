@@ -7,10 +7,6 @@ errand-config:
     post-deploy-state: ((smoke-tests_post_deploy_state))
   upgrade-all-service-instances:
     post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
-  wavefront-alert-creation:
-    post-deploy-state: ((wavefront-alert-creation_post_deploy_state))
-  wavefront-alert-deletion:
-    pre-delete-state: ((wavefront-alert-deletion_pre_delete_state))
 network-properties:
   network:
     name: ((network_name))
@@ -60,11 +56,11 @@ product-properties:
   .properties.metric_sink_resources_deploy:
     value: ((metric_sink_resources_deploy))
   .properties.network_selector:
-    value: flannel
-  .properties.network_selector.flannel.pod_network_cidr:
-    value: ((network_selector_flannel_pod_network_cidr))
-  .properties.network_selector.flannel.service_cluster_cidr:
-    value: ((network_selector_flannel_service_cluster_cidr))
+    value: antrea
+  .properties.network_selector.antrea.pod_network_cidr:
+    value: ((network_selector_antrea_pod_network_cidr))
+  .properties.network_selector.antrea.service_cluster_cidr:
+    value: ((network_selector_antrea_service_cluster_cidr))
   .properties.node_exporter_deploy:
     value: ((node_exporter_deploy))
   .properties.oidc_selector:
@@ -144,6 +140,8 @@ product-properties:
     value: ((uaa_pks_cluster_client_access_token_lifetime))
   .properties.uaa_pks_cluster_client_refresh_token_lifetime:
     value: ((uaa_pks_cluster_client_refresh_token_lifetime))
+  .properties.vsphere_csi:
+    value: disabled
   .properties.wavefront:
     value: disabled
   .properties.worker_max_in_flight:
@@ -153,12 +151,14 @@ resource-config:
     elb_names: ((resource-var-pivotal-container-service_elb_names))
     instance_type:
       id: ((resource-var-pivotal-container-service_instance_type))
+    instances: ((resource-var-pivotal-container-service_instances))
     max_in_flight: ((resource-var-pivotal-container-service_max_in_flight))
     persistent_disk:
       size_mb: ((resource-var-pivotal-container-service_persistent_disk_size))
   pks-db:
     instance_type:
       id: ((resource-var-pks-db_instance_type))
+    instances: ((resource-var-pks-db_instances))
     max_in_flight: ((resource-var-pks-db_max_in_flight))
     persistent_disk:
       size_mb: ((resource-var-pks-db_persistent_disk_size))

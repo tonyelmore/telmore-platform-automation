@@ -12,10 +12,10 @@ network-properties:
     name: ((singleton_availability_zone))
 product-name: p-healthwatch2
 product-properties:
-  .grafana.enable_indipro_integration:
-    value: ((grafana_enable_indipro_integration))
   .grafana.enable_login_form:
     value: ((grafana_enable_login_form))
+  .grafana.enable_mysql:
+    value: ((grafana_enable_mysql))
   .grafana.enable_rabbitmq:
     value: ((grafana_enable_rabbitmq))
   .properties.dashboard_discovery:
@@ -24,6 +24,8 @@ product-properties:
     value: basic
   .properties.grafana_proxy:
     value: disabled
+  .properties.opsman_skip_ssl_validation:
+    value: ((opsman_skip_ssl_validation))
   .properties.pks_cluster_discovery:
     value: disabled
   .properties.smtp:
@@ -61,6 +63,7 @@ resource-config:
   tsdb:
     instance_type:
       id: ((resource-var-tsdb_instance_type))
+    instances: ((resource-var-tsdb_instances))
     max_in_flight: ((resource-var-tsdb_max_in_flight))
     persistent_disk:
       size_mb: ((resource-var-tsdb_persistent_disk_size))

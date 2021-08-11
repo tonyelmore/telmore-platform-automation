@@ -1,5 +1,6 @@
 allow_lower_case_table_names_via_config_param: false
 audit_logging_enabled: false
+binlog_space_limit_enabled: false
 canary_instances: 0
 enable_lower_case_table_names: false
 enable_read_only_admin: false

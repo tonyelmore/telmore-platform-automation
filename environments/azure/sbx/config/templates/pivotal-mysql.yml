@@ -38,6 +38,8 @@ product-properties:
   .properties.backups_selector.azure.storage_access_key:
     value:
       secret: ((backups_selector_azure_storage_access_key))
+  .properties.binlog_space_limit_enabled:
+    value: ((binlog_space_limit_enabled))
   .properties.canary_instances:
     value: ((canary_instances))
   .properties.deprecated_bindings_string:
@@ -58,6 +60,8 @@ product-properties:
     value: ((local_infile))
   .properties.mysql_metrics_frequency:
     value: ((mysql_metrics_frequency))
+  .properties.off_platform_access_selector:
+    value: disabled
   .properties.plan1_selector:
     value: single_node
   .properties.plan1_selector.single_node.access_dropdown:

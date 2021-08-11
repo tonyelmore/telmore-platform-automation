@@ -62,8 +62,6 @@ product-properties:
     value: ((cloud_controller_system_domain))
   .diego_brain.starting_container_count_maximum:
     value: ((diego_brain_starting_container_count_maximum))
-  .ha_proxy.skip_cert_verify:
-    value: ((ha_proxy_skip_cert_verify))
   .mysql.cli_history:
     value: ((mysql_cli_history))
   .mysql.max_connections:
@@ -147,6 +145,8 @@ product-properties:
         secret: ((credhub_internal_provider_keys_0_key))
       name: ((credhub_internal_provider_keys_0_name))
       primary: ((credhub_internal_provider_keys_0_primary))
+  .properties.default_loggregator_drain_metadata:
+    value: ((default_loggregator_drain_metadata))
   .properties.diego_database_max_open_connections:
     value: ((diego_database_max_open_connections))
   .properties.disable_logs_in_firehose:
@@ -222,7 +222,7 @@ product-properties:
     value: ((push_apps_manager_invitations_buildpack))
   .properties.push_apps_manager_nav_links:
     value:
-    - href: https://docs.pivotal.io/pivotalcf/2-10/pas/intro.html
+    - href: https://docs.pivotal.io/pivotalcf/2-11/pas/intro.html
       name: Docs
     - href: /tools
       name: Tools
@@ -410,16 +410,6 @@ resource-config:
       id: ((resource-var-ha_proxy_instance_type))
     instances: ((resource-var-ha_proxy_instances))
     max_in_flight: ((resource-var-ha_proxy_max_in_flight))
-  istio_control:
-    instance_type:
-      id: ((resource-var-istio_control_instance_type))
-    instances: ((resource-var-istio_control_instances))
-    max_in_flight: ((resource-var-istio_control_max_in_flight))
-  istio_router:
-    instance_type:
-      id: ((resource-var-istio_router_instance_type))
-    instances: ((resource-var-istio_router_instances))
-    max_in_flight: ((resource-var-istio_router_max_in_flight))
   loggregator_trafficcontroller:
     instance_type:
       id: ((resource-var-loggregator_trafficcontroller_instance_type))
@@ -454,11 +444,6 @@ resource-config:
     max_in_flight: ((resource-var-nfs_server_max_in_flight))
     persistent_disk:
       size_mb: ((resource-var-nfs_server_persistent_disk_size))
-  route_syncer:
-    instance_type:
-      id: ((resource-var-route_syncer_instance_type))
-    instances: ((resource-var-route_syncer_instances))
-    max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
     additional_vm_extensions: ((resource-var-router_additional_vm_extensions))
     elb_names: ((resource-var-router_elb_names))

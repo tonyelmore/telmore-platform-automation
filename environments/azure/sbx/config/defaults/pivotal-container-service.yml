@@ -1,7 +1,7 @@
 log_sink_resources_deploy: true
 metric_sink_resources_deploy: true
-network_selector_flannel_pod_network_cidr: 10.200.0.0/16
-network_selector_flannel_service_cluster_cidr: 10.100.200.0/24
+network_selector_antrea_pod_network_cidr: 10.200.0.0/16
+network_selector_antrea_service_cluster_cidr: 10.100.200.0/24
 node_exporter_deploy: false
 plan1_selector_active_allow_privileged_containers: false
 plan1_selector_active_description: 'Example: This plan will configure a lightweight
@@ -28,11 +28,11 @@ delete-all-clusters_pre_delete_state: default
 pks-nsx-t-precheck_post_deploy_state: default
 smoke-tests_post_deploy_state: default
 upgrade-all-service-instances_post_deploy_state: default
-wavefront-alert-creation_post_deploy_state: default
-wavefront-alert-deletion_pre_delete_state: default
 resource-var-pivotal-container-service_instance_type: automatic
+resource-var-pivotal-container-service_instances: automatic
 resource-var-pivotal-container-service_max_in_flight: default
 resource-var-pivotal-container-service_persistent_disk_size: automatic
 resource-var-pks-db_instance_type: automatic
+resource-var-pks-db_instances: automatic
 resource-var-pks-db_max_in_flight: default
 resource-var-pks-db_persistent_disk_size: automatic
