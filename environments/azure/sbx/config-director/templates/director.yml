@@ -32,7 +32,7 @@ properties-configuration:
   security_configuration:
     include_opsmanager_root_ca_in_trusted_certificates: ((include_opsmanager_root_ca_in_trusted_certificates))
     # what is this next one???  I think it was supposed to be related to the one above?
-    opsmanager_root_ca_trusted_certs: ((opsmanager_root_ca_trusted_certs))
+    # opsmanager_root_ca_trusted_certs: ((opsmanager_root_ca_trusted_certs))
     trusted_certificates: ((trusted_certificates))
     generate_vm_passwords: ((generate_vm_passwords))
   syslog_configuration:

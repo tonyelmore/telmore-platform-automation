@@ -10,7 +10,7 @@ dns: 168.63.129.16
 # deployment_network_dns: 10.10.0.2
 # service_network_dns: 10.10.0.2
 opsmanager_root_ca_trusted_certs: true
-include_opsmanager_root_ca_in_trusted_certificates: true
+include_opsmanager_root_ca_in_trusted_certificates: false
 
 storage_sku: "Premium_LRS"
 cloud_storage_type: managed_disks
