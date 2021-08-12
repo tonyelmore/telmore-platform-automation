@@ -17,7 +17,7 @@
 #   -a "*.login.sys.sbx.my3votes.com" \
 #   --self-sign
 
-
+# Whatever the pks cert should be
 # credhub generate -n concourse/main/pks-tls-cert -t certificate \
 #   -c "*.pks.my3votes.com" \
 #   -a "*.pks.my3votes.com" \
@@ -37,9 +37,7 @@ om -k generate-certificate \
   -d "*.apps.sbx.my3votes.com" \
   -d "*.login.sys.sbx.my3votes.com" \
   -d "*.uaa.sys.sbx.my3votes.com" \
-  -d "*.pks.my3votes.com" \
-  -d "*.pks.sys.sbx.my3votes.com" \
-  -d "*.pks.sbx.my3votes.com" > temp
+  -d "pks.sbx.my3votes.com" > temp
 
 cat temp | jq -r .certificate > temp.cert
 cat temp | jq -r .key > temp.key
