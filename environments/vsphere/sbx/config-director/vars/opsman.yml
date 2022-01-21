@@ -9,3 +9,6 @@ vsphere_datacenter: Datacenter
 vsphere_datastore: LUN01
 vsphere_folder: pcf_opsman_vms
 vsphere_resource_pool: /Datacenter/host/Cluster/Resources/pas-az1
+
+ui_banner_contents: "UI Banner Contents - HAAS-424 Sandbox"
+ssh_banner_contents: "SSH Banner Contents - HAAS-424 Sandbox"

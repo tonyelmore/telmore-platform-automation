@@ -72,7 +72,7 @@ resources:
 # - name: fly
 #   type: concourse-pipeline
 #   source:
-#     target: https://plane.haas-424.pez.vmware.com/
+#     target: https://plane.haas-515.pez.vmware.com/
 #     insecure: "true"
 #     teams:
 #     - name: ((team))
@@ -118,7 +118,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &director_credhub_interpolate_params
-      CREDHUB_SERVER: https://credhub.haas-424.pez.vmware.com:8844
+      CREDHUB_SERVER: https://credhub.haas-515.pez.vmware.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
@@ -368,7 +368,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &credhub_interpolate_params
-      CREDHUB_SERVER: https://credhub.haas-424.pez.vmware.com:8844
+      CREDHUB_SERVER: https://credhub.haas-515.pez.vmware.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))

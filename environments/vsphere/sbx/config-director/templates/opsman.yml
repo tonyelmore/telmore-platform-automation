@@ -25,5 +25,5 @@ opsman-configuration:
     cpu: 2                                   # default: 1
 
 banner-settings:
-  ui_banner_contents: "UI Banner Contents - HAAS-424 Sandbox"
-  ssh_banner_contents: "SSH Banner Contents - HAAS-424 Sandbox"
+  ui_banner_contents: ((ui_banner_contents))
+  ssh_banner_contents: ((ssh_banner_contents))

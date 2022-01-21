@@ -37,7 +37,7 @@ credhub_interpolate: &credhub_interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params:
-      CREDHUB_SERVER: https://concourse.haas-424.pez.vmware.com:8844
+      CREDHUB_SERVER: https://concourse.haas-515.pez.vmware.com:8844
       CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
       CREDHUB_CLIENT: ((concourse_credhub_client_username))
       CREDHUB_SECRET: ((concourse_credhub_client_secret))
