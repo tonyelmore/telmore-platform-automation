@@ -23,6 +23,9 @@ properties-configuration:
     nsx_password: ((nsxt_password))
     nsx_ca_certificate: ((nsxt_ca_cert))
     ssl_verification_enabled: ((disable_ssl_verification))
+    bosh_disk_path: concourse_pcf_disk
+    bosh_template_folder: concourse_pcf_templates
+    bosh_vm_folder: concourse_pcf_vms
 network-assignment:
   network:
     name: concourse

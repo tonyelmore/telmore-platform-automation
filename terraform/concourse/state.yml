@@ -1,2 +1,2 @@
-iaas: azure
-vm_id: concourse-ops-manager
+iaas: vsphere
+vm_id: /Datacenter/vm/concourse_vms/ops-manager-vm

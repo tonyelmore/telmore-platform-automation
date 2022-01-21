@@ -8,6 +8,8 @@ jobs:
         type: registry-image
         source:
           repository: ubuntu
+          username: ((github-user.username))
+          password: ((github-user.password))
       run:
         path: bash
         args: [-c, 'echo test value: $test_value']

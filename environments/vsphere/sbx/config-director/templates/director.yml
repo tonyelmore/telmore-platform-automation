@@ -8,9 +8,6 @@ properties-configuration:
     persistent_datastores_string: ((persistent_datastores_string))
     vcenter_username: ((vcenter_username))
     vcenter_password: ((vcenter_password))
-    bosh_vm_folder: ((bosh_vm_folder))
-    bosh_template_folder: ((bosh_template_folder))
-    bosh_disk_path: ((bosh_disk_path))
     ssl_verification_enabled: ((ssl_verification_enabled))
     nsx_networking_enabled: ((nsx_networking_enabled))
     nsx_address: ((nsx_address))
@@ -18,6 +15,9 @@ properties-configuration:
     nsx_mode: ((nsx_mode))
     nsx_username: ((nsx_username))
     nsx_password: ((nsx_password))
+    bosh_disk_path: ((bosh_folder_prefix))_pcf_disk
+    bosh_template_folder: ((bosh_folder_prefix))_pcf_templates
+    bosh_vm_folder: ((bosh_folder_prefix))_pcf_vms
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: ((blobstore_type))

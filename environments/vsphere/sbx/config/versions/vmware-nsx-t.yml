@@ -2,4 +2,4 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*.pivotal"
 pivnet-product-slug: "vmware-nsx-t"
-product-version: "3.1.1"
+product-version: "3.2.0.2"
