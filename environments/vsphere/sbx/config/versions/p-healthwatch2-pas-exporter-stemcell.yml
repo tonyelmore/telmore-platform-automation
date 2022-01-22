@@ -2,4 +2,4 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*-vsphere-*"
 pivnet-product-slug: "stemcells-ubuntu-xenial"
-product-version: "621.130"
+product-version: "621.198"

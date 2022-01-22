@@ -1,3 +1,4 @@
+allow_certs_without_san: false
 app_graceful_shutdown_period_in_seconds: 10
 autoscale_api_disable_connection_pooling: false
 autoscale_api_instance_count: 1
@@ -8,6 +9,7 @@ autoscale_metric_bucket_count: 120
 autoscale_scaling_interval_in_seconds: 35
 ccdb_connection_validation_timeout: 3600
 ccdb_read_timeout: 3600
+ccng_monit_http_healthcheck_timeout_per_retry: 6
 cf_networking_database_connection_timeout: 120
 cf_networking_enable_space_developer_self_service: false
 cloud_controller_allow_app_ssh_access: true
@@ -33,6 +35,7 @@ container_networking_interface_plugin_silk_iptables_denied_logs_per_sec: 1
 container_networking_interface_plugin_silk_network_mtu: 1454
 container_networking_interface_plugin_silk_vtep_port: 4789
 credhub_internal_provider_keys_0_primary: false
+default_loggregator_drain_metadata: true
 diego_brain_starting_container_count_maximum: 200
 diego_database_max_open_connections: 100
 disable_logs_in_firehose: false
@@ -80,6 +83,7 @@ router_backend_max_conn: 500
 router_disable_insecure_cookies: false
 router_drain_timeout: 900
 router_drain_wait: 20
+router_enable_http2: true
 router_enable_isolated_routing: false
 router_enable_proxy: false
 router_enable_write_access_logs: true
@@ -96,9 +100,9 @@ smtp_auth_mechanism: plain
 smtp_enable_starttls_auto: false
 syslog_drop_debug: true
 syslog_use_tcp_for_file_forwarding_local_transport: false
-system_blobstore_ccdroplet_max_staged_droplets_stored: 2
-system_blobstore_ccpackage_max_valid_packages_stored: 2
-system_metrics_scraper_scrape_interval: 1m
+system_blobstore_ccdroplet_max_staged_droplets_stored: 5
+system_blobstore_ccpackage_max_valid_packages_stored: 5
+system_metrics_scraper_scrape_interval: 15s
 uaa_apps_manager_access_token_lifetime: 3600
 uaa_cf_cli_access_token_lifetime: 7200
 uaa_cf_cli_refresh_token_lifetime: 1209600

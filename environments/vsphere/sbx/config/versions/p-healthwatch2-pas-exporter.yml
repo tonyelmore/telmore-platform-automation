@@ -2,7 +2,7 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "healthwatch-pas-exporter*.pivotal"
 pivnet-product-slug: "p-healthwatch"
-product-version: "2.1.1"
+product-version: "2.1.8"
 
 # Use these vars when pulling from azure blobstore
 # azure-storage-account: telmoreprodandstemcell
