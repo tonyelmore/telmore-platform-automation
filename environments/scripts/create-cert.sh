@@ -33,11 +33,11 @@
 
 # Using OM
 om -k generate-certificate \
-  -d "*.sys.sbx.my3votes.com" \
-  -d "*.apps.sbx.my3votes.com" \
-  -d "*.login.sys.sbx.my3votes.com" \
-  -d "*.uaa.sys.sbx.my3votes.com" \
-  -d "pks.sbx.my3votes.com" > temp
+  -d "*.sys.sbx.haas-515.pez.vmware.com" \
+  -d "*.apps.sbx.haas-515.pez.vmware.com" \
+  -d "*.login.sys.sbx.haas-515.pez.vmware.com" \
+  -d "*.uaa.sys.sbx.haas-515.pez.vmware.com" \
+  -d "pks.sbx.haas-515.pez.vmware.com" > temp
 
 cat temp | jq -r .certificate > temp.cert
 cat temp | jq -r .key > temp.key
