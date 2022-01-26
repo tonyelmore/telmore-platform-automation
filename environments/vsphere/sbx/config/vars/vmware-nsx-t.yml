@@ -1,7 +1,7 @@
 container_ip_blocks_0_cidr: null
 container_ip_blocks_0_name: PAS-Org-IPs
 tier0_router: T0-Router
-nsx_api_managers: nsxmgr-01.haas-515.pez.vmware.com
+nsx_api_managers: nsxmgr-01.haas-412.pez.vmware.com
 external_ip_pools_0_allocation_ranges: null
 external_ip_pools_0_cidr: null
 external_ip_pools_0_name: external-ip-pool

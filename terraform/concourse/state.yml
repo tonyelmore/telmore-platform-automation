@@ -1,2 +1,2 @@
 iaas: vsphere
-vm_id: /Datacenter/vm/concourse_vms/ops-manager-vm
+vm_id: /Datacenter/vm/concourse_opsman_vms/ops-manager-vm

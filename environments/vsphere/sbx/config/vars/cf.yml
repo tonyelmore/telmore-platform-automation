@@ -1,5 +1,5 @@
-cloud_controller_apps_domain: cfapps.haas-515.pez.vmware.com
-cloud_controller_system_domain: run.haas-515.pez.vmware.com
+cloud_controller_apps_domain: cfapps.haas-412.pez.vmware.com
+cloud_controller_system_domain: run.haas-412.pez.vmware.com
 singleton_availability_zone: pas-az1
 enable_smb_volume_driver: false
 
@@ -7,5 +7,5 @@ enable_smb_volume_driver: false
 # resource-var-diego_brain_instances: 1
 resource-var-ha_proxy_instances: 0
 resource-var-router_instances: 2
-resource-var-router_additional_vm_extensions: ["http_https_lb"]
+resource-var-router_additional_vm_extensions: ["pas_gorouter_lb"]
 # resource-var-diego_cell_instances: 3

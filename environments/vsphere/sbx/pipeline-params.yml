@@ -5,3 +5,4 @@ iaas: vsphere
 lock_pool_name: vsphere-sbx
 concourse_user: admin
 attempts: 5
+concourse_credhub_server: https://concourse.haas-412.pez.vmware.com:8844

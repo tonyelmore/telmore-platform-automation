@@ -55,9 +55,20 @@ properties-configuration:
     enabled: ((syslog_enabled))
 az-configuration:
   - name: ((az1_name))
+    iaas_configuration_name: ((iaas_configuration_name))
     clusters:
     - cluster: ((az1_cluster))
       resource_pool: ((az1_resource_pool))
+  - name: ((az2_name))
+    iaas_configuration_name: ((iaas_configuration_name))
+    clusters:
+    - cluster: ((az2_cluster))
+      resource_pool: ((az2_resource_pool))
+  - name: ((az3_name))
+    iaas_configuration_name: ((iaas_configuration_name))
+    clusters:
+    - cluster: ((az3_cluster))
+      resource_pool: ((az3_resource_pool))
 networks-configuration:
   icmp_checks_enabled: ((icmp_checks_enabled))
   networks:
@@ -70,6 +81,8 @@ networks-configuration:
       dns: ((dns))
       availability_zone_names: &1
       - ((az1_name))
+      - ((az2_name))
+      - ((az3_name))
   - name: ((deployment_network_name))
     subnets:
     - iaas_identifier: ((deployment_network_vsphere_name))
@@ -116,7 +129,7 @@ vmextensions-configuration:
       lb:
         server_pools:
         - name: pas-tcp-pool
-- name: http_https_lb
+- name: pas_gorouter_lb
   cloud_properties:
     nsxt:
       lb:

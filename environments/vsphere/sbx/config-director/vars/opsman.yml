@@ -1,14 +1,14 @@
 ---
 gateway: 192.168.1.1
-network_name: sbx-PAS-Infrastructure
+network_name: PAS-Infrastructure
 opsman_netmask: 255.255.255.0
 opsman_vm_name: sbx-opsmgr
-opsman_host: opsmgr.haas-515.pez.vmware.com
+opsman_host: opsmgr-01.haas-412.pez.vmware.com
 opsman_private_ip: 192.168.1.10
 vsphere_datacenter: Datacenter
 vsphere_datastore: LUN01
 vsphere_folder: pcf_opsman_vms
 vsphere_resource_pool: /Datacenter/host/Cluster/Resources/pas-az1
 
-ui_banner_contents: "UI Banner Contents - HAAS-424 Sandbox"
-ssh_banner_contents: "SSH Banner Contents - HAAS-424 Sandbox"
+ui_banner_contents: "UI Banner Contents - HAAS-412 Sandbox"
+ssh_banner_contents: "SSH Banner Contents - HAAS-412 Sandbox"
