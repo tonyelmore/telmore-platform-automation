@@ -16,8 +16,8 @@ resources:
   source:
     api_token: ((pivnet_token))
     product_slug: platform-automation
-    password: ((github_token))
-    username: ((github_username))
+    username: ((docker-user.username))
+    password: ((docker-user.password))
 
 - name: installation
   type: gcs-resource
@@ -30,17 +30,17 @@ resources:
   type: git
   source:
     branch: master
-    password: ((github_token))
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
+    password: ((github_token))
 
 - name: director-configuration
   type: git
   source:
     branch: master
-    password: ((github_token))
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
+    password: ((github_token))
     paths:
     - "environments/((iaas))/((foundation))/config-director"
 
