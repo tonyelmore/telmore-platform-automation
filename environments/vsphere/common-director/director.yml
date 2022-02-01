@@ -5,7 +5,7 @@ service_network_name: PAS-Services
 
 ssl_verification_enabled: false
 nsx_networking_enabled: true
-nsx_address: nsxmgr-01.haas-412.pez.vmware.com
+nsx_address: nsxmgr-01.haas-442.pez.vmware.com
 nsx_username: admin
 nsx_mode: nsx-t
 nsx_networking_enabled: true
