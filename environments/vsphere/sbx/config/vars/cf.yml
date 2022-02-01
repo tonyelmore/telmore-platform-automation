@@ -1,5 +1,5 @@
-cloud_controller_apps_domain: cfapps.haas-412.pez.vmware.com
-cloud_controller_system_domain: run.haas-412.pez.vmware.com
+cloud_controller_apps_domain: cfapps.haas-442.pez.vmware.com
+cloud_controller_system_domain: run.haas-442.pez.vmware.com
 singleton_availability_zone: pas-az1
 enable_smb_volume_driver: false
 

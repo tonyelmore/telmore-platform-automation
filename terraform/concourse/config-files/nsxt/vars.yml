@@ -3,9 +3,9 @@ deployment_name: concourse
 # This can be any VM type from the cloud config: bosh cloud-config
 web_vm_type: large
 # This is the external concourse URL exported from the terraform output
-external_host: concourse.haas-412.pez.vmware.com
+external_host: concourse.haas-442.pez.vmware.com
 # This is the external concourse URL exported from the terraform output
-external_url: https://concourse.haas-412.pez.vmware.com
+external_url: https://concourse.haas-442.pez.vmware.com
 # This can be any VM type from the cloud config: bosh cloud-config
 db_vm_type: large
 # This can be any disk type from the cloud config: bosh cloud-config
