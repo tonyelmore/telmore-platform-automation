@@ -3,7 +3,7 @@ gateway: 192.168.1.1
 network_name: PAS-Infrastructure
 opsman_netmask: 255.255.255.0
 opsman_vm_name: sbx-opsmgr
-opsman_host: opsmgr-01.haas-442.pez.vmware.com
+opsman_host: opsman.haas-442.pez.vmware.com
 opsman_private_ip: 192.168.1.10
 vsphere_datacenter: Datacenter
 vsphere_datastore: LUN01
