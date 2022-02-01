@@ -23,17 +23,17 @@ singleton_availability_zone: pas-az1
 
 # networks-configuration:
 icmp_checks_enabled: false
-infra_network_vsphere_name: PAS-Infrastructure
+infra_network_vsphere_name: sbx-PAS-Infrastructure
 infra_network_cidr: 192.168.1.0/24
 infra_network_reserved_ip_range: 192.168.1.1-192.168.1.10
 infra_network_gateway: 192.168.1.1
 
-deployment_network_vsphere_name: PAS-Deployment
+deployment_network_vsphere_name: sbx-PAS-Deployment
 deployment_network_cidr: 192.168.2.0/24
 deployment_network_reserved_ip_range: 192.168.2.1-192.168.2.10
 deployment_network_gateway: 192.168.2.1
 
-service_network_vsphere_name: PAS-Services
+service_network_vsphere_name: sbx-PAS-Services
 service_network_cidr: 192.168.3.0/24
 service_network_gateway: 192.168.3.1
 service_network_reserved_ip_range: 192.168.3.1-192.168.3.10
