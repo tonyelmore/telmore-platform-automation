@@ -135,7 +135,5 @@ vmextensions-configuration:
     nsxt:
       lb:
         server_pools:
-        - name: PAS-GoRouter443ServerPool
-          port: 443
-        - name: PAS-GoRouter80ServerPool
+        - name: sbx-pas-web-pool
           port: 80
