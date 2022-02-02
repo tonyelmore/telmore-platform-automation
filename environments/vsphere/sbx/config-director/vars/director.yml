@@ -5,6 +5,7 @@ datacenter: Datacenter
 ephemeral_datastores_string: LUN01
 persistent_datastores_string: LUN01
 include_opsman_root_ca: true
+nsx_t_use_policy_api: true
 
 # AZ Config:
 az1_name: pas-az1

@@ -18,6 +18,7 @@ properties-configuration:
     bosh_disk_path: ((bosh_folder_prefix))_pcf_disk
     bosh_template_folder: ((bosh_folder_prefix))_pcf_templates
     bosh_vm_folder: ((bosh_folder_prefix))_pcf_vms
+    nsx_t_use_policy_api: ((nsx_t_use_policy_api))
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: ((blobstore_type))
