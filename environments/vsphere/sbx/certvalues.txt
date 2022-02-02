@@ -1,11 +1,11 @@
-*.run.haas-412.pez.vmware.com, *.cfapps.haas-412.pez.vmware.com, *.uaa.run.haas-412.pez.vmware.com, *.login.run.haas-412.pez.vmware.com
+*.run.haas-442.pez.vmware.com, *.cfapps.haas-442.pez.vmware.com, *.uaa.run.haas-442.pez.vmware.com, *.login.run.haas-442.pez.vmware.com
 
 
 om generate-certificate \
-  -d "*.run.sbx.haas-412.pez.vmware.com" \
-  -d "*.cfapps.sbx.haas-412.pez.vmware.com" \
-  -d "*.login.run.sbx.haas-412.pez.vmware.com" \
-  -d "*.uaa.run.sbx.haas-412.pez.vmware.com" \
-  -d "*.pks.haas-412.pez.vmware.com" \
-  -d "*.pks.sys.sbx.haas-412.pez.vmware.com" \
-  -d "*.pks.sbx.haas-412.pez.vmware.com" > temp
+  -d "*.run.sbx.haas-442.pez.vmware.com" \
+  -d "*.cfapps.sbx.haas-442.pez.vmware.com" \
+  -d "*.login.run.sbx.haas-442.pez.vmware.com" \
+  -d "*.uaa.run.sbx.haas-442.pez.vmware.com" \
+  -d "*.pks.haas-442.pez.vmware.com" \
+  -d "*.pks.sys.sbx.haas-442.pez.vmware.com" \
+  -d "*.pks.sbx.haas-442.pez.vmware.com" > temp
