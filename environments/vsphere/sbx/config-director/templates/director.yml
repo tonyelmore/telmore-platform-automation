@@ -136,4 +136,6 @@ vmextensions-configuration:
       lb:
         server_pools:
         - name: sbx-pas-web-pool
+          port: 443
+        - name: sbx-pas-web-pool
           port: 80
