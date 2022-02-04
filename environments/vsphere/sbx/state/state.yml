@@ -1,0 +1,2 @@
+iaas: vsphere
+vm_id: /Datacenter/vm/pcf_opsman_vms/sbx-opsmgr
