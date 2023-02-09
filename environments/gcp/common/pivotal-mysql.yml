@@ -3,6 +3,8 @@ service_network_name: services
 global_recipient_email: aelmore@vmware.com
 deprecated_bindings_string: X
 singleton_availability_zone: zone-1
+az2_name: az1
+az3_name: az2
 
 recreate-all-service-instances_post_deploy_state: false
 register-broker_post_deploy_state: false
