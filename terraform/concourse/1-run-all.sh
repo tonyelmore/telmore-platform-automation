@@ -2,7 +2,7 @@
 
 # set -x
 
-export IAAS="nsxt"
+export IAAS="gcp"
 export PLATFORM="darwin"
 TOOLKIT_IMAGE_VERSION="5.0.20"
 CONCOURSE_VERSION="7.4.4"
@@ -36,7 +36,8 @@ cp state-${IAAS}.yml state.yml
 # find the correct image file
 # Hack to look for only yml file ... old regex isn't working anymore
 # IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.{yml,ova,raw} 2>/dev/null | head -n1)"
-IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.ova 2>/dev/null | head -n1)"
+# IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.ova 2>/dev/null | head -n1)"
+IMAGE_FILE="$(find downloaded-resources/opsman-image/${IAAS}/*.yml 2>/dev/null | head -n1)"
 echo $IMAGE_FILE
 
 docker run -it --rm -v $PWD:/workspace -w /workspace platform-automation-toolkit-image:${TOOLKIT_IMAGE_VERSION} \

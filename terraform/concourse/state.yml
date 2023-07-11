@@ -1,2 +1,2 @@
-iaas: vsphere
-vm_id: /Datacenter/vm/concourse_opsman_vms/ops-manager-vm
+iaas: gcp
+vm_id: control-ops-manager-vm
