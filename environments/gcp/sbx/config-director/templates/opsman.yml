@@ -4,7 +4,7 @@ opsman-configuration:
     gcp_service_account: ((gcp-service-account-key-json))
     project: ((project))
     region: ((region))
-    zone: ((zone))
+    zone: ((availability_zones.0))
     vpc_subnet: ((management_subnet_name))
     public_ip: ((ops_manager_public_ip))
     ssh_public_key: ((ops_manager_ssh_public_key))

@@ -1,7 +1,11 @@
 environment_name: sbx
 project: sa-aelmore
 region: us-west1
-zone: us-west1-a
+availability_zones: [
+  "us-west1-a",
+  "us-west1-b",
+  "us-west1-c"
+]
 management_subnet_name: sbx-management-subnet
 ops_manager_public_ip: "35.199.172.231"
 ops_manager_ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPnDbxGH0tQb9wCkVAKr90bzuyxF0TkNuiiSlwiY4axQjtAL/slxdgFYdocm8gVRI/ocKp4Z7ydn2q0j5HdHYn9bijzjAPk1U7ZMbfpjbQDx2LqYnzF94zBS2hx+3OVvs7F7ZddlUdnPRrmx//yvviLs0PeKC4jbPQ9JNdjDXTJTFif/9r6EhbIynaVajh3FhopJVVeMrWJI4PhjH3NeSHvrEfZP0aApehHHAAm09HIlZpHvYliVKLZ8fJW/jA9CXb6FWrkefVXPWkQ43TKTId7Y5o0Z3rK44tTziDzz3imNx8Ql2uVfRS1LBYYxQqlftaUFyEgTmpy1A43fFWoxZYQtGVFmfEnae+Mxmd0/hOXAttBI8e6qx3tM/7an+RrlADP6PqQg7NxymZCTjt84d8RltbH+ww6et728snEvBowDnr5H/NLl4sCz43RElzZI7r6zYP7lAbPa16qr6J1z4aYYMdBsQxa0pEJNEWwoDBGf4Ov2eCwbVggnHfIwHlJ+827K6tP2EeYYVYFxcz3rZ1770OeNg/x26sMrIZEFcgq5R7apiK8IgLh7/C8Kb0f0Y6PRIFLEglz/Iv970YHRKdbLs8QdikFbRiK4VPxnOwMYA81D8dDXH4Oy5sYnLxES9GPjH03q0WPWQDmp5RWMw2D4CYxxar/GJwP0hr3pNg/Q=="

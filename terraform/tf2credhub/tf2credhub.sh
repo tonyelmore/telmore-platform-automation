@@ -79,3 +79,7 @@ tf2credhub 'platform_vms_security_group_id'
 tf2credhub 'vpc_id'
 tf2credhub 'pks_api_lb_security_group_id'
 
+# GCP
+tf2credhub 'gcp-service-account-key-string'
+
+
