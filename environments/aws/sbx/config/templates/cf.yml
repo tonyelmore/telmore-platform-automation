@@ -349,117 +349,117 @@ product-properties:
 resource-config:
   backup_restore:
     instance_type:
-      id: ((backup_restore_instance_type))
-    instances: ((backup_restore_instances))
-    max_in_flight: ((backup_restore_max_in_flight))
+      id: ((resource-var-backup_restore_instance_type))
+    instances: ((resource-var-backup_restore_instances))
+    max_in_flight: ((resource-var-backup_restore_max_in_flight))
     persistent_disk:
-      size_mb: ((backup_restore_persistent_disk_size))
+      size_mb: ((resource-var-backup_restore_persistent_disk_size))
   clock_global:
     instance_type:
-      id: ((clock_global_instance_type))
-    instances: ((clock_global_instances))
-    max_in_flight: ((clock_global_max_in_flight))
+      id: ((resource-var-clock_global_instance_type))
+    instances: ((resource-var-clock_global_instances))
+    max_in_flight: ((resource-var-clock_global_max_in_flight))
   cloud_controller:
     instance_type:
-      id: ((cloud_controller_instance_type))
-    instances: ((cloud_controller_instances))
-    max_in_flight: ((cloud_controller_max_in_flight))
+      id: ((resource-var-cloud_controller_instance_type))
+    instances: ((resource-var-cloud_controller_instances))
+    max_in_flight: ((resource-var-cloud_controller_max_in_flight))
   cloud_controller_worker:
     instance_type:
-      id: ((cloud_controller_worker_instance_type))
-    instances: ((cloud_controller_worker_instances))
-    max_in_flight: ((cloud_controller_worker_max_in_flight))
+      id: ((resource-var-cloud_controller_worker_instance_type))
+    instances: ((resource-var-cloud_controller_worker_instances))
+    max_in_flight: ((resource-var-cloud_controller_worker_max_in_flight))
   credhub:
     instance_type:
-      id: ((credhub_instance_type))
-    instances: ((credhub_instances))
-    max_in_flight: ((credhub_max_in_flight))
+      id: ((resource-var-credhub_instance_type))
+    instances: ((resource-var-credhub_instances))
+    max_in_flight: ((resource-var-credhub_max_in_flight))
   diego_brain:
     instance_type:
-      id: ((diego_brain_instance_type))
-    instances: ((diego_brain_instances))
-    max_in_flight: ((diego_brain_max_in_flight))
+      id: ((resource-var-diego_brain_instance_type))
+    instances: ((resource-var-diego_brain_instances))
+    max_in_flight: ((resource-var-diego_brain_max_in_flight))
   diego_cell:
     instance_type:
-      id: ((diego_cell_instance_type))
-    instances: ((diego_cell_instances))
-    max_in_flight: ((diego_cell_max_in_flight))
+      id: ((resource-var-diego_cell_instance_type))
+    instances: ((resource-var-diego_cell_instances))
+    max_in_flight: ((resource-var-diego_cell_max_in_flight))
   diego_database:
     instance_type:
-      id: ((diego_database_instance_type))
-    instances: ((diego_database_instances))
-    max_in_flight: ((diego_database_max_in_flight))
+      id: ((resource-var-diego_database_instance_type))
+    instances: ((resource-var-diego_database_instances))
+    max_in_flight: ((resource-var-diego_database_max_in_flight))
   doppler:
     instance_type:
-      id: ((doppler_instance_type))
-    instances: ((doppler_instances))
-    max_in_flight: ((doppler_max_in_flight))
+      id: ((resource-var-doppler_instance_type))
+    instances: ((resource-var-doppler_instances))
+    max_in_flight: ((resource-var-doppler_max_in_flight))
   ha_proxy:
     instance_type:
-      id: ((ha_proxy_instance_type))
-    instances: ((ha_proxy_instances))
-    max_in_flight: ((ha_proxy_max_in_flight))
+      id: ((resource-var-ha_proxy_instance_type))
+    instances: ((resource-var-ha_proxy_instances))
+    max_in_flight: ((resource-var-ha_proxy_max_in_flight))
   istio_control:
     instance_type:
-      id: ((istio_control_instance_type))
-    instances: ((istio_control_instances))
-    max_in_flight: ((istio_control_max_in_flight))
+      id: ((resource-var-istio_control_instance_type))
+    instances: ((resource-var-istio_control_instances))
+    max_in_flight: ((resource-var-istio_control_max_in_flight))
   istio_router:
     instance_type:
-      id: ((istio_router_instance_type))
-    instances: ((istio_router_instances))
-    max_in_flight: ((istio_router_max_in_flight))
+      id: ((resource-var-istio_router_instance_type))
+    instances: ((resource-var-istio_router_instances))
+    max_in_flight: ((resource-var-istio_router_max_in_flight))
   loggregator_trafficcontroller:
     instance_type:
-      id: ((loggregator_trafficcontroller_instance_type))
-    instances: ((loggregator_trafficcontroller_instances))
-    max_in_flight: ((loggregator_trafficcontroller_max_in_flight))
+      id: ((resource-var-loggregator_trafficcontroller_instance_type))
+    instances: ((resource-var-loggregator_trafficcontroller_instances))
+    max_in_flight: ((resource-var-loggregator_trafficcontroller_max_in_flight))
   mysql:
     instance_type:
-      id: ((mysql_instance_type))
-    instances: ((mysql_instances))
-    max_in_flight: ((mysql_max_in_flight))
+      id: ((resource-var-mysql_instance_type))
+    instances: ((resource-var-mysql_instances))
+    max_in_flight: ((resource-var-mysql_max_in_flight))
     persistent_disk:
-      size_mb: ((mysql_persistent_disk_size))
+      size_mb: ((resource-var-mysql_persistent_disk_size))
   mysql_monitor:
     instance_type:
-      id: ((mysql_monitor_instance_type))
-    instances: ((mysql_monitor_instances))
-    max_in_flight: ((mysql_monitor_max_in_flight))
+      id: ((resource-var-mysql_monitor_instance_type))
+    instances: ((resource-var-mysql_monitor_instances))
+    max_in_flight: ((resource-var-mysql_monitor_max_in_flight))
   mysql_proxy:
     instance_type:
-      id: ((mysql_proxy_instance_type))
-    instances: ((mysql_proxy_instances))
-    max_in_flight: ((mysql_proxy_max_in_flight))
+      id: ((resource-var-mysql_proxy_instance_type))
+    instances: ((resource-var-mysql_proxy_instances))
+    max_in_flight: ((resource-var-mysql_proxy_max_in_flight))
   nats:
     instance_type:
-      id: ((nats_instance_type))
-    instances: ((nats_instances))
-    max_in_flight: ((nats_max_in_flight))
+      id: ((resource-var-nats_instance_type))
+    instances: ((resource-var-nats_instances))
+    max_in_flight: ((resource-var-nats_max_in_flight))
   nfs_server:
     instance_type:
-      id: ((nfs_server_instance_type))
-    instances: ((nfs_server_instances))
-    max_in_flight: ((nfs_server_max_in_flight))
+      id: ((resource-var-nfs_server_instance_type))
+    instances: ((resource-var-nfs_server_instances))
+    max_in_flight: ((resource-var-nfs_server_max_in_flight))
     persistent_disk:
-      size_mb: ((nfs_server_persistent_disk_size))
+      size_mb: ((resource-var-nfs_server_persistent_disk_size))
   route_syncer:
     instance_type:
-      id: ((route_syncer_instance_type))
-    instances: ((route_syncer_instances))
-    max_in_flight: ((route_syncer_max_in_flight))
+      id: ((resource-var-route_syncer_instance_type))
+    instances: ((resource-var-route_syncer_instances))
+    max_in_flight: ((resource-var-route_syncer_max_in_flight))
   router:
     instance_type:
-      id: ((router_instance_type))
-    instances: ((router_instances))
-    max_in_flight: ((router_max_in_flight))
+      id: ((resource-var-router_instance_type))
+    instances: ((resource-var-router_instances))
+    max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
     instance_type:
-      id: ((tcp_router_instance_type))
-    instances: ((tcp_router_instances))
-    max_in_flight: ((tcp_router_max_in_flight))
+      id: ((resource-var-tcp_router_instance_type))
+    instances: ((resource-var-tcp_router_instances))
+    max_in_flight: ((resource-var-tcp_router_max_in_flight))
   uaa:
     instance_type:
-      id: ((uaa_instance_type))
-    instances: ((uaa_instances))
-    max_in_flight: ((uaa_max_in_flight))
+      id: ((resource-var-uaa_instance_type))
+    instances: ((resource-var-uaa_instances))
+    max_in_flight: ((resource-var-uaa_max_in_flight))
