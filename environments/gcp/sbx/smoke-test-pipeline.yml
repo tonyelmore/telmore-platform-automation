@@ -1,0 +1,23 @@
+jobs:
+- name: smoke-test-job
+  plan:
+  - task: hello-world
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: ubuntu
+      run:
+        path: bash
+        args: [-c, "echo Hello, World"]
+  - task: test-credhub
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: ubuntu
+      run:
+        path: bash
+        args: [-c, "echo Hello, ((testkey))"]
