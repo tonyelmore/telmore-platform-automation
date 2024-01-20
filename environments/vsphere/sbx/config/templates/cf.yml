@@ -82,8 +82,6 @@ product-properties:
     value: ((mysql_proxy_startup_delay))
   .nfs_server.blobstore_internal_access_rules:
     value: ((nfs_server_blobstore_internal_access_rules))
-  .properties.allow_certs_without_san:
-    value: ((allow_certs_without_san))
   .properties.app_graceful_shutdown_period_in_seconds:
     value: ((app_graceful_shutdown_period_in_seconds))
   .properties.app_log_rate_limiting:
@@ -121,8 +119,16 @@ product-properties:
     value: ((cloud_controller_completed_tasks_cutoff_age_in_days))
   .properties.cloud_controller_default_health_check_timeout:
     value: ((cloud_controller_default_health_check_timeout))
+  .properties.cloud_controller_post_bbr_healthcheck_timeout_in_seconds:
+    value: ((cloud_controller_post_bbr_healthcheck_timeout_in_seconds))
   .properties.cloud_controller_temporary_disable_deployments:
     value: ((cloud_controller_temporary_disable_deployments))
+  .properties.cloud_controller_worker_alert_if_above_mb:
+    value: ((cloud_controller_worker_alert_if_above_mb))
+  .properties.cloud_controller_worker_restart_if_above_mb:
+    value: ((cloud_controller_worker_restart_if_above_mb))
+  .properties.cloud_controller_worker_restart_if_consistently_above_mb:
+    value: ((cloud_controller_worker_restart_if_consistently_above_mb))
   .properties.container_networking_interface_plugin:
     value: silk
   .properties.container_networking_interface_plugin.silk.enable_log_traffic:
@@ -338,6 +344,8 @@ product-properties:
     value: ((router_frontend_idle_timeout))
   .router.lb_healthy_threshold:
     value: ((router_lb_healthy_threshold))
+  .router.max_header_kb:
+    value: ((router_max_header_kb))
   .router.request_timeout_in_seconds:
     value: ((router_request_timeout_in_seconds))
   .uaa.apps_manager_access_token_lifetime:
@@ -352,6 +360,8 @@ product-properties:
     value: ((uaa_customize_username_label))
   .uaa.enable_uri_encoding_compatibility_mode:
     value: ((uaa_enable_uri_encoding_compatibility_mode))
+  .uaa.enforce_system_zone_policy_in_all_zones:
+    value: ((uaa_enforce_system_zone_policy_in_all_zones))
   .uaa.proxy_ips_regex:
     value: ((uaa_proxy_ips_regex))
   .uaa.service_provider_key_credentials:
