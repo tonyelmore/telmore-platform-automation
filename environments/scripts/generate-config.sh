@@ -111,21 +111,21 @@ touch ../${iaas}/common/${product}.yml
 # These defaults will be removed now ... using the remove_default_data.yml file
 # which is in the format of:
 # <property name in template>: <default var name to be removed>
-template_file="../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml"
-default_file="../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml"
-data_config_file="remove_default_data.yml"
+# template_file="../${iaas}/${INITIAL_FOUNDATION}/config/templates/${product}.yml"
+# default_file="../${iaas}/${INITIAL_FOUNDATION}/config/defaults/${product}.yml"
+# data_config_file="remove_default_data.yml"
 
-# First get all the keys from teh data file
-keys=$(yq -N -r 'keys | .[]' ${data_config_file})
+# # First get all the keys from teh data file
+# keys=$(yq -N -r 'keys | .[]' ${data_config_file})
 
-for k in ${keys[@]}; do
-  # check if the key is in the template file
-  if grep -q ${k} ${template_file}; then
-    echo "${k} is found in the template file ... leaving the value in the defaults file"
-  else
-    # get the default value to remove from the default file
-    default_value=$(bosh int ${data_config_file} --path="/${k}")
-    echo "${k} is not found in the template file ... remove ${default_value} from the defaults file"
-    sed -i "/^${default_value}/d" ${default_file}
-  fi
-done
+# for k in ${keys[@]}; do
+#   # check if the key is in the template file
+#   if grep -q ${k} ${template_file}; then
+#     echo "${k} is found in the template file ... leaving the value in the defaults file"
+#   else
+#     # get the default value to remove from the default file
+#     default_value=$(bosh int ${data_config_file} --path="/${k}")
+#     echo "${k} is not found in the template file ... remove ${default_value} from the defaults file"
+#     sed -i "/^${default_value}/d" ${default_file}
+#   fi
+# done
