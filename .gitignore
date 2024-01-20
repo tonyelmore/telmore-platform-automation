@@ -1,3 +1,4 @@
+.vscode
 control-plane/vsphere/downloads/
 control-plane/vsphere/config/
 control-plane/vsphere/target-control.sh
