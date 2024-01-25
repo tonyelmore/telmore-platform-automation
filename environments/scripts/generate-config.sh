@@ -42,6 +42,17 @@ if [[ ${product} == "vmware-nsx-t" ]]; then
   fi
 fi
 
+lts_substring="+LTS-T"
+if [[ ${product} == "cf" ]]; then
+  # don't really need the if check
+  # this takes the ${version} and remvoe the tmeplate which is defined as anything ending in "+LTS-T"
+  # if the result is empty (-z), the the ${version} did in fact end with that suffix
+  # if [[ -z ${version##*$lts_substring} ]]; then
+    # Remove the suffix defined in ${lts_substring} from ${version}
+    version=${version%$lts_substring*}
+  # fi
+fi
+
 wrkdir=$(find ${tmpdir}/${product} -name "${version}*")
 if [ ! -f ${wrkdir}/product.yml ]; then
   echo "Something wrong with configuration as expecting ${wrkdir}/product.yml to exist"
