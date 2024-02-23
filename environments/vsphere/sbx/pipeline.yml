@@ -44,7 +44,7 @@ resources:
 jobs:
 - name: validate-tile-configuration
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       #trigger: true
     - get: platform-automation-image
@@ -74,7 +74,7 @@ jobs:
 - name: pas
   serial: true
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ validate-tile-configuration ]
@@ -141,7 +141,7 @@ jobs:
 
 - name: pas-errands
   plan:
-  - aggregate:
+  - in_parallel:
     - get: configuration
       trigger: true
       passed: [ pas ]
