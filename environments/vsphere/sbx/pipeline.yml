@@ -12,15 +12,6 @@ resources:
     api_token: ((pivnet_token))
     product_slug: platform-automation
 
-- name: state
-  type: git
-  source:
-    branch: azeem
-    #password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
-    private_key: ((plat-auto-pipes-deploy-key.private_key))
-    #username: ((github_username))
-
 
 # - name: env
 #   type: git
