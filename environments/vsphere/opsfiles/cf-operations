@@ -1,4 +1,2 @@
-features/haproxy_forward_tls-disable.yml
-features/nfs_volume_driver-disable.yml
-resource/router_additional_vm_extensions.yml
-optional/add-routing_custom_ca_certificates.yml
+features/router_balancing_algorithm-least_connection.yml
+optional/add-cf_networking_search_domains.yml

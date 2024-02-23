@@ -1,11 +1,12 @@
-cloud_controller_apps_domain: cfapps.sbx.haas-442.pez.vmware.com
-cloud_controller_system_domain: run.sbx.haas-442.pez.vmware.com
-singleton_availability_zone: pas-az1
-enable_smb_volume_driver: false
+cloud_controller_apps_domain: apps.h2o-2-22042.h2o.vmware.com
+cloud_controller_system_domain: sys.h2o-2-22042.h2o.vmware.com
+singleton_availability_zone: az1
+enable_smb_volume_driver: true
+cf_networking_search_domains: h2o-2-22042.h2o.vmware.com
 
 
 # resource-var-diego_brain_instances: 1
-resource-var-ha_proxy_instances: 0
-resource-var-router_instances: 2
-resource-var-router_additional_vm_extensions: ["pas_gorouter_lb"]
+#resource-var-ha_proxy_instances: 0
+#resource-var-router_instances: 2
+#resource-var-router_additional_vm_extensions: ["pas_gorouter_lb"]
 # resource-var-diego_cell_instances: 3

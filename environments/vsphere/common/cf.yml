@@ -1,6 +1,6 @@
 security_acknowledgement: X
-network_name: PAS-Deployment
-mysql_monitor_recipient_email: telmore@pivotal.io
+network_name: deployment
+mysql_monitor_recipient_email: noreply@vmware.com
 credhub_internal_provider_keys_0_primary: true
 
 # turn off errands
