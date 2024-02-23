@@ -3,6 +3,8 @@ cloud_controller_system_domain: sys.h2o-2-22042.h2o.vmware.com
 singleton_availability_zone: az1
 enable_smb_volume_driver: true
 cf_networking_search_domains: h2o-2-22042.h2o.vmware.com
+foundation: sbx
+iaas: vsphere
 
 
 # resource-var-diego_brain_instances: 1
