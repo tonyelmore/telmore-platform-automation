@@ -5,6 +5,9 @@ enable_smb_volume_driver: true
 cf_networking_search_domains: h2o-2-22042.h2o.vmware.com
 foundation: sbx
 iaas: vsphere
+team: main
+#github_username: zeemba
+#github_token: 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
 
 
 # resource-var-diego_brain_instances: 1

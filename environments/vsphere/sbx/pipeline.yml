@@ -11,26 +11,18 @@ resources:
   source:
     api_token: ((pivnet_token))
     product_slug: platform-automation
-
-
-# - name: env
-#   type: git
-#   source:
-#     uri: ((pipeline-repo))
-#     private_key: ((plat-auto-pipes-deploy-key.private_key))
-#     branch: main
+    #product_version: 5\.1\.1*
 
 - name: configuration
   type: git
   source:
     branch: azeem
-    #password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    uri: git@github.com:tonyelmore/telmore-platform-automation.git
     private_key: ((plat-auto-pipes-deploy-key.private_key))
-    #username: ((github_username))
     paths:
     - "environments/((iaas))/((foundation))/pipeline.yml"
     - "environments/((iaas))/((foundation))/config"
+
 
 jobs:
 - name: validate-tile-configuration
@@ -42,22 +34,42 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["vsphere-platform-automation-image-5.1.2.tar.gz"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*tasks*"]
+        globs: ["platform-automation-tasks-5.1.2.zip"]
 
   - task: credhub-interpolate
     image: platform-automation-image
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: &credhub_interpolate_params
-      CREDHUB_SERVER: ((concourse_credhub_server))
-      CREDHUB_CA_CERT: ((concourse_credhub_ca))
-      CREDHUB_CLIENT: ((concourse_credhub_client_username))
-      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      CREDHUB_SERVER: ((credhub-server))
+      CREDHUB_CLIENT: ((credhub-client))
+      CREDHUB_SECRET: ((credhub-secret))
       PREFIX: '/concourse/((team))'
+      CREDHUB_CA_CERT: |
+          -----BEGIN CERTIFICATE-----
+          MIIDUDCCAjigAwIBAgIUXOUM1M+/JA1ksNvS8iDambOd61gwDQYJKoZIhvcNAQEL
+          BQAwHzELMAkGA1UEBhMCVVMxEDAOBgNVBAoMB1Bpdm90YWwwHhcNMjQwMTAyMDQz
+          MjQ4WhcNMjgwMTAyMDQzMjQ4WjAfMQswCQYDVQQGEwJVUzEQMA4GA1UECgwHUGl2
+          b3RhbDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANPNNrHMPrIjfa4m
+          w0vmw5A4gRLT/ByAggCG1/i1VLCeyB8rJZVR4a4eI8SL4fycZVxTkR9jIHw8X8Tz
+          p6gMfsDhryNOuef3VZmn8evJ6Jf+C6jYfXFYUQ/KV3Cn8DH+aEDkDl5gWOp/5K72
+          KcVAyRKUs0jZgWqx4mMqeeuAYUWvwMT3FuJEsHn2kLP/J4J+R3hzw4+rFTM5VNao
+          ClRuyOUCirqC5TKewpGrg2FXrc5AiCb9zqYfbhw/pRTu20osIvDgCsBiiD7xfnZH
+          GK8/NNRe2A0vNBXb213JvOwonb+Jq8WeI32VC0bUfvXH9k75EBGVcIfSUWK1YEQ3
+          M8EA2OECAwEAAaOBgzCBgDAdBgNVHQ4EFgQUm55v8asqZdejFZXzgj6gsE44rEUw
+          HwYDVR0jBBgwFoAUm55v8asqZdejFZXzgj6gsE44rEUwHQYDVR0lBBYwFAYIKwYB
+          BQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQDAgEG
+          MA0GCSqGSIb3DQEBCwUAA4IBAQBZi4ZoPcaOLmelVKaVa2Ekxf7h81Sn1E6FzosX
+          Gvabcr2B3JxSbEUavEs+UurdT91lIakMI474Nyx4Y+Vcw/ilkw3BRjNsCJ2zr6Kh
+          /GAEoB6/xngPgltySUieBdQvwgA3LEVl7bGAn/y50k1FJvdYbrlN9WhRJx6flkD6
+          qk2mtrE8w/aFUJafSGJpr2tGArjRqgyTmarxh6VlEV6qwBBZb/nLBSHQ9TsdKVCM
+          XgT09lq285+Tt80Xd6kGBgcljdAznE1NCNVtE16zt+ENoOhAMCSdMhWtn99nSmL8
+          7PmNJo5p0/dFA4HxM++QznQEmAqbgIEGFLwwLQRmW6hyBQYP
+          -----END CERTIFICATE-----
       INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
     input_mapping:
       files: configuration
@@ -73,12 +85,12 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["vsphere-platform-automation-image-5.1.2.tar.gz"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*tasks*"]
+        globs: ["platform-automation-tasks-5.1.2.zip"]
 
   - task: credhub-interpolate
     image: platform-automation-image
@@ -140,12 +152,12 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*image*"]
+        globs: ["vsphere-platform-automation-image-5.1.2.tar.gz"]
     - get: platform-automation-tasks
       resource: platform-automation
       params:
         unpack: true
-        globs: ["*tasks*"]
+        globs: ["platform-automation-tasks-5.1.2.zip"]
 
   - task: credhub-interpolate
     image: platform-automation-image
