@@ -34,48 +34,22 @@ product-properties:
     value: ((on-demand-broker_global_service_instance_quota))
   .on-demand-broker.max_in_flight:
     value: ((on-demand-broker_max_in_flight))
+  .properties.enable_inter_node_tls:
+    value: ((enable_inter_node_tls))
   .properties.enable_tls_selector:
     value: disabled
+  .properties.global_settings_log_cache_compatibility:
+    value: ((global_settings_log_cache_compatibility))
   .properties.global_settings_oauth:
     value: disabled
   .properties.global_settings_secure_bindings:
     value: "No"
   .properties.global_settings_shareable_instances:
-    selected_option: enabled
-    value: "Yes"
+    value: "No"
   .properties.metrics_polling_interval:
     value: ((metrics_polling_interval))
   .properties.multitenant_support:
-    selected_option: enabled
-    value: enabled
-  .properties.multitenant_support.enabled.broker_operator_set_policy_enabled:
-    value: ((multitenant_support_enabled_broker_operator_set_policy_enabled))
-  .properties.multitenant_support.enabled.disk_alarm_threshold:
-    value: ((multitenant_support_enabled_disk_alarm_threshold))
-  .properties.multitenant_support.enabled.instance_sharing:
-    value: ((multitenant_support_enabled_instance_sharing))
-  .properties.multitenant_support.enabled.server_admin_credentials:
-    value:
-      identity: ((multitenant_support_enabled_server_admin_credentials_identity))
-      password: ((multitenant_support_enabled_server_admin_credentials_password))
-  .properties.multitenant_support.enabled.server_cluster_partition_handling:
-    value: ((multitenant_support_enabled_server_cluster_partition_handling))
-  .properties.multitenant_support.enabled.server_plugins:
-    value:
-    - rabbitmq_management
-    - rabbitmq_prometheus
-    - rabbitmq_management
-    - rabbitmq_stomp
-    - rabbitmq_web_stomp
-    - rabbitmq_web_stomp_examples
-  .properties.multitenant_support.enabled.server_ports:
-    value: ((multitenant_support_enabled_server_ports))
-  .properties.multitenant_support.enabled.server_ssl_verification_depth:
-    value: ((multitenant_support_enabled_server_ssl_verification_depth))
-  .properties.multitenant_support.enabled.server_ssl_versions:
-    value:
-    - tlsv1.3
-    - tlsv1.2
+    value: disabled
   .properties.on_demand_broker_plan_1_cf_service_access:
     value: ((on_demand_broker_plan_1_cf_service_access))
   .properties.on_demand_broker_plan_1_check_queue_sync:
@@ -99,6 +73,8 @@ product-properties:
     value: ((on_demand_broker_plan_1_rabbitmq_cluster_partition_handling_strategy))
   .properties.on_demand_broker_plan_1_rabbitmq_number_of_nodes:
     value: ((on_demand_broker_plan_1_rabbitmq_number_of_nodes))
+  .properties.on_demand_broker_plan_1_rabbitmq_version:
+    value: ((on_demand_broker_plan_1_rabbitmq_version))
   .properties.on_demand_broker_plan_1_service_gateway_enabled:
     value: ((on_demand_broker_plan_1_service_gateway_enabled))
   .properties.on_demand_broker_plan_2_selector:

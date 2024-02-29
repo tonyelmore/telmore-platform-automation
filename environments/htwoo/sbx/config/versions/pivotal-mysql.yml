@@ -1,3 +1,5 @@
-product-glob: '*.pivotal'
-product-slug: pivotal-mysql
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*.pivotal"
+pivnet-product-slug: pivotal-mysql
 product-version: 2.10.16

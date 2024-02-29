@@ -21,7 +21,7 @@ cloud_controller_default_quota_max_number_services: 100
 cloud_controller_default_quota_memory_limit_mb: 10240
 cloud_controller_enable_custom_buildpacks: true
 cloud_controller_max_disk_quota_app: 2048
-cloud_controller_max_file_size: 1024
+cloud_controller_max_file_size: 2048
 cloud_controller_max_package_size: 2147483648
 cloud_controller_post_bbr_healthcheck_timeout_in_seconds: 60
 cloud_controller_security_event_logging_enabled: true
@@ -35,11 +35,13 @@ container_networking_interface_plugin_silk_enable_policy_enforcement: true
 container_networking_interface_plugin_silk_iptables_accepted_udp_logs_per_sec: 100
 container_networking_interface_plugin_silk_iptables_denied_logs_per_sec: 1
 container_networking_interface_plugin_silk_network_mtu: 1454
+container_networking_interface_plugin_silk_policy_enforcement_poll_interval: 5
 container_networking_interface_plugin_silk_vtep_port: 4789
 credhub_internal_provider_keys_0_primary: false
 default_loggregator_drain_metadata: true
 diego_brain_starting_container_count_maximum: 200
 diego_database_max_open_connections: 100
+disable_diego_cells: false
 disable_logs_in_firehose: false
 enable_garden_containerd_mode: true
 enable_log_cache_syslog_ingestion: false
@@ -87,6 +89,7 @@ router_drain_timeout: 900
 router_drain_wait: 20
 router_enable_isolated_routing: false
 router_enable_proxy: false
+router_enable_w3c: false
 router_enable_write_access_logs: true
 router_enable_zipkin: true
 router_frontend_idle_timeout: 900

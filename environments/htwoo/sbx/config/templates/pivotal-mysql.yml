@@ -26,18 +26,6 @@ product-properties:
     value: ((allow_lower_case_table_names_via_config_param))
   .properties.audit_logging_enabled:
     value: ((audit_logging_enabled))
-  .properties.backups_selector:
-    selected_option: gcs
-    value: GCS
-  .properties.backups_selector.gcs.bucket_name:
-    value: ((backups_selector_gcs_bucket_name))
-  .properties.backups_selector.gcs.cron_schedule:
-    value: ((backups_selector_gcs_cron_schedule))
-  .properties.backups_selector.gcs.project_id:
-    value: ((backups_selector_gcs_project_id))
-  .properties.backups_selector.gcs.service_account_json:
-    value:
-      secret: ((backups_selector_gcs_service_account_json))
   .properties.binlog_space_limit_enabled:
     value: ((binlog_space_limit_enabled))
   .properties.canary_instances:
