@@ -1,0 +1,15 @@
+security_acknowledgement: X
+network_name: PAS-Deployment
+mysql_monitor_recipient_email: telmore@pivotal.io
+credhub_internal_provider_keys_0_primary: true
+
+# turn off errands
+smoke_tests_post_deploy_state: false
+push-usage-service_post_deploy_state: false
+push-apps-manager_post_deploy_state: false
+deploy-notifications_post_deploy_state: false
+deploy-notifications-ui_post_deploy_state: false
+deploy-autoscaler_post_deploy_state: false
+nfsbrokerpush_post_deploy_state: false
+test-autoscaling_post_deploy_state: false
+smbbrokerpush_post_deploy_state: false

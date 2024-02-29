@@ -1,0 +1,3 @@
+product-glob: '*.pivotal'
+product-slug: p-dataflow
+product-version: 1.12.4

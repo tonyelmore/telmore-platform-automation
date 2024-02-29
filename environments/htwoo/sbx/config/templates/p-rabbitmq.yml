@@ -1,0 +1,151 @@
+errand-config:
+  broker-deregistrar:
+    pre-delete-state: ((broker-deregistrar_pre_delete_state))
+  broker-registrar:
+    post-deploy-state: ((broker-registrar_post_deploy_state))
+  delete-all-service-instances:
+    pre-delete-state: ((delete-all-service-instances_pre_delete_state))
+  deregister-broker:
+    pre-delete-state: ((deregister-broker_pre_delete_state))
+  on-demand-broker-smoke-tests:
+    post-deploy-state: ((on-demand-broker-smoke-tests_post_deploy_state))
+  recreate-all-service-instances:
+    post-deploy-state: ((recreate-all-service-instances_post_deploy_state))
+  register-broker:
+    post-deploy-state: ((register-broker_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+  upgrade-all-service-instances:
+    post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-rabbitmq
+product-properties:
+  .on-demand-broker.canaries:
+    value: ((on-demand-broker_canaries))
+  .on-demand-broker.global_service_instance_quota:
+    value: ((on-demand-broker_global_service_instance_quota))
+  .on-demand-broker.max_in_flight:
+    value: ((on-demand-broker_max_in_flight))
+  .properties.enable_tls_selector:
+    value: disabled
+  .properties.global_settings_oauth:
+    value: disabled
+  .properties.global_settings_secure_bindings:
+    value: "No"
+  .properties.global_settings_shareable_instances:
+    selected_option: enabled
+    value: "Yes"
+  .properties.metrics_polling_interval:
+    value: ((metrics_polling_interval))
+  .properties.multitenant_support:
+    selected_option: enabled
+    value: enabled
+  .properties.multitenant_support.enabled.broker_operator_set_policy_enabled:
+    value: ((multitenant_support_enabled_broker_operator_set_policy_enabled))
+  .properties.multitenant_support.enabled.disk_alarm_threshold:
+    value: ((multitenant_support_enabled_disk_alarm_threshold))
+  .properties.multitenant_support.enabled.instance_sharing:
+    value: ((multitenant_support_enabled_instance_sharing))
+  .properties.multitenant_support.enabled.server_admin_credentials:
+    value:
+      identity: ((multitenant_support_enabled_server_admin_credentials_identity))
+      password: ((multitenant_support_enabled_server_admin_credentials_password))
+  .properties.multitenant_support.enabled.server_cluster_partition_handling:
+    value: ((multitenant_support_enabled_server_cluster_partition_handling))
+  .properties.multitenant_support.enabled.server_plugins:
+    value:
+    - rabbitmq_management
+    - rabbitmq_prometheus
+    - rabbitmq_management
+    - rabbitmq_stomp
+    - rabbitmq_web_stomp
+    - rabbitmq_web_stomp_examples
+  .properties.multitenant_support.enabled.server_ports:
+    value: ((multitenant_support_enabled_server_ports))
+  .properties.multitenant_support.enabled.server_ssl_verification_depth:
+    value: ((multitenant_support_enabled_server_ssl_verification_depth))
+  .properties.multitenant_support.enabled.server_ssl_versions:
+    value:
+    - tlsv1.3
+    - tlsv1.2
+  .properties.on_demand_broker_plan_1_cf_service_access:
+    value: ((on_demand_broker_plan_1_cf_service_access))
+  .properties.on_demand_broker_plan_1_check_queue_sync:
+    value: ((on_demand_broker_plan_1_check_queue_sync))
+  .properties.on_demand_broker_plan_1_description:
+    value: ((on_demand_broker_plan_1_description))
+  .properties.on_demand_broker_plan_1_disk_limit_acknowledgement:
+    value:
+    - acknowledge
+  .properties.on_demand_broker_plan_1_features:
+    value: ((on_demand_broker_plan_1_features))
+  .properties.on_demand_broker_plan_1_instance_quota:
+    value: ((on_demand_broker_plan_1_instance_quota))
+  .properties.on_demand_broker_plan_1_name:
+    value: ((on_demand_broker_plan_1_name))
+  .properties.on_demand_broker_plan_1_paid:
+    value: ((on_demand_broker_plan_1_paid))
+  .properties.on_demand_broker_plan_1_rabbitmq_az_placement:
+    value: ((on_demand_broker_plan_1_rabbitmq_az_placement))
+  .properties.on_demand_broker_plan_1_rabbitmq_cluster_partition_handling_strategy:
+    value: ((on_demand_broker_plan_1_rabbitmq_cluster_partition_handling_strategy))
+  .properties.on_demand_broker_plan_1_rabbitmq_number_of_nodes:
+    value: ((on_demand_broker_plan_1_rabbitmq_number_of_nodes))
+  .properties.on_demand_broker_plan_1_service_gateway_enabled:
+    value: ((on_demand_broker_plan_1_service_gateway_enabled))
+  .properties.on_demand_broker_plan_2_selector:
+    value: disabled
+  .properties.on_demand_broker_plan_3_selector:
+    value: disabled
+  .properties.on_demand_broker_plan_4_selector:
+    value: disabled
+  .properties.on_demand_broker_plan_5_selector:
+    value: disabled
+  .properties.on_demand_tls_versions:
+    value:
+    - tlsv1.3
+    - tlsv1.2
+resource-config:
+  on-demand-broker:
+    instance_type:
+      id: ((resource-var-on-demand-broker_instance_type))
+    instances: ((resource-var-on-demand-broker_instances))
+    max_in_flight: ((resource-var-on-demand-broker_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-on-demand-broker_persistent_disk_size))
+  rabbitmq-broker:
+    instance_type:
+      id: ((resource-var-rabbitmq-broker_instance_type))
+    instances: ((resource-var-rabbitmq-broker_instances))
+    max_in_flight: ((resource-var-rabbitmq-broker_max_in_flight))
+  rabbitmq-haproxy:
+    instance_type:
+      id: ((resource-var-rabbitmq-haproxy_instance_type))
+    instances: ((resource-var-rabbitmq-haproxy_instances))
+    max_in_flight: ((resource-var-rabbitmq-haproxy_max_in_flight))
+  rabbitmq-server:
+    instance_type:
+      id: ((resource-var-rabbitmq-server_instance_type))
+    instances: ((resource-var-rabbitmq-server_instances))
+    max_in_flight: ((resource-var-rabbitmq-server_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-rabbitmq-server_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

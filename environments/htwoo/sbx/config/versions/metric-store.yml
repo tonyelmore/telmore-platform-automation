@@ -1,0 +1,3 @@
+product-glob: '*.pivotal'
+product-slug: p-metric-store
+product-version: 1.5.5

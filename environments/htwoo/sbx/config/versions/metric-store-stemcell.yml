@@ -1,0 +1,3 @@
+stemcell-glob: light*-aws-*.tgz
+stemcell-slug: stemcells-ubuntu-xenial
+stemcell-version: "621.813"

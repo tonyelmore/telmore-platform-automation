@@ -1,0 +1,137 @@
+errand-config:
+  delete-all-service-instances-and-deregister-broker:
+    pre-delete-state: ((delete-all-service-instances-and-deregister-broker_pre_delete_state))
+  recreate-all-service-instances:
+    post-deploy-state: ((recreate-all-service-instances_post_deploy_state))
+  register-broker:
+    post-deploy-state: ((register-broker_post_deploy_state))
+  smoke-tests:
+    post-deploy-state: ((smoke-tests_post_deploy_state))
+  upgrade-all-service-instances:
+    post-deploy-state: ((upgrade-all-service-instances_post_deploy_state))
+  validate-before-upgrade-instances:
+    post-deploy-state: ((validate-before-upgrade-instances_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: pivotal-mysql
+product-properties:
+  .properties.allow_lower_case_table_names_via_config_param:
+    value: ((allow_lower_case_table_names_via_config_param))
+  .properties.audit_logging_enabled:
+    value: ((audit_logging_enabled))
+  .properties.backups_selector:
+    selected_option: gcs
+    value: GCS
+  .properties.backups_selector.gcs.bucket_name:
+    value: ((backups_selector_gcs_bucket_name))
+  .properties.backups_selector.gcs.cron_schedule:
+    value: ((backups_selector_gcs_cron_schedule))
+  .properties.backups_selector.gcs.project_id:
+    value: ((backups_selector_gcs_project_id))
+  .properties.backups_selector.gcs.service_account_json:
+    value:
+      secret: ((backups_selector_gcs_service_account_json))
+  .properties.binlog_space_limit_enabled:
+    value: ((binlog_space_limit_enabled))
+  .properties.canary_instances:
+    value: ((canary_instances))
+  .properties.deprecated_bindings_string:
+    value: ((deprecated_bindings_string))
+  .properties.enable_lower_case_table_names:
+    value: ((enable_lower_case_table_names))
+  .properties.enable_read_only_admin:
+    value: ((enable_read_only_admin))
+  .properties.enable_secure_binding_credentials:
+    value: ((enable_secure_binding_credentials))
+  .properties.enable_tls_selector:
+    value: disabled
+  .properties.global_recipient_email:
+    value: ((global_recipient_email))
+  .properties.global_service_instance_limit:
+    value: ((global_service_instance_limit))
+  .properties.local_infile:
+    value: ((local_infile))
+  .properties.mysql_metrics_frequency:
+    value: ((mysql_metrics_frequency))
+  .properties.off_platform_access_selector:
+    value: disabled
+  .properties.plan1_selector:
+    value: single_node
+  .properties.plan1_selector.single_node.access_dropdown:
+    value: ((plan1_selector_single_node_access_dropdown))
+  .properties.plan1_selector.single_node.az_multi_select:
+    value: ((plan1_selector_single_node_az_multi_select))
+  .properties.plan1_selector.single_node.description:
+    value: ((plan1_selector_single_node_description))
+  .properties.plan1_selector.single_node.name:
+    value: ((plan1_selector_single_node_name))
+  .properties.plan1_selector.single_node.paid_plan:
+    value: ((plan1_selector_single_node_paid_plan))
+  .properties.plan2_selector:
+    value: single_node
+  .properties.plan2_selector.single_node.access_dropdown:
+    value: ((plan2_selector_single_node_access_dropdown))
+  .properties.plan2_selector.single_node.az_multi_select:
+    value: ((plan2_selector_single_node_az_multi_select))
+  .properties.plan2_selector.single_node.description:
+    value: ((plan2_selector_single_node_description))
+  .properties.plan2_selector.single_node.name:
+    value: ((plan2_selector_single_node_name))
+  .properties.plan2_selector.single_node.paid_plan:
+    value: ((plan2_selector_single_node_paid_plan))
+  .properties.plan3_selector:
+    value: single_node
+  .properties.plan3_selector.single_node.access_dropdown:
+    value: ((plan3_selector_single_node_access_dropdown))
+  .properties.plan3_selector.single_node.az_multi_select:
+    value: ((plan3_selector_single_node_az_multi_select))
+  .properties.plan3_selector.single_node.description:
+    value: ((plan3_selector_single_node_description))
+  .properties.plan3_selector.single_node.name:
+    value: ((plan3_selector_single_node_name))
+  .properties.plan3_selector.single_node.paid_plan:
+    value: ((plan3_selector_single_node_paid_plan))
+  .properties.plan4_selector:
+    value: Inactive
+  .properties.plan5_selector:
+    value: Inactive
+  .properties.plan6_selector:
+    value: Inactive
+  .properties.plan7_selector:
+    value: Inactive
+  .properties.plan8_selector:
+    value: Inactive
+  .properties.plan9_selector:
+    value: Inactive
+  .properties.request_timeout:
+    value: ((request_timeout))
+  .properties.simultaneous_upgrades:
+    value: ((simultaneous_upgrades))
+  .properties.userstat:
+    value: ((userstat))
+  .properties.wait_timeout:
+    value: ((wait_timeout))
+resource-config:
+  dedicated-mysql-broker:
+    instance_type:
+      id: ((resource-var-dedicated-mysql-broker_instance_type))
+    instances: ((resource-var-dedicated-mysql-broker_instances))
+    max_in_flight: ((resource-var-dedicated-mysql-broker_max_in_flight))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

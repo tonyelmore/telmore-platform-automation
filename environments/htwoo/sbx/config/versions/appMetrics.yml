@@ -1,0 +1,3 @@
+product-glob: '*.pivotal'
+product-slug: apm
+product-version: 2.1.5

@@ -1,0 +1,3 @@
+stemcell-glob: light*-aws-*.tgz
+stemcell-slug: stemcells-ubuntu-jammy
+stemcell-version: "1.351"

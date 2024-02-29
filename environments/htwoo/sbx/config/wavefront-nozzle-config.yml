@@ -1,0 +1,94 @@
+product-name: wavefront-nozzle
+product-properties:
+  .properties.advanced_config:
+    selected_option: normal
+    value: "no"
+  .properties.allow_paid_service_plans:
+    value: false
+  .properties.apply_open_security_group:
+    value: false
+  .properties.cf_quota_name:
+    value: runaway
+  .properties.custom_config_selector:
+    selected_option: custom
+    value: Custom
+  .properties.custom_config_selector.custom.custom_config:
+    value: traceZipkinListenerPorts=9411
+  .properties.custom_tag_foundation:
+    value: telmore-sbx
+  .properties.friendly_hostname:
+    value: telmore-pcf-proxy
+  .properties.org:
+    value: wavefront-nozzle-org
+  .properties.pcf_skip_ssl_validation:
+    value: true
+  .properties.space:
+    value: wavefront-apps-space
+  .properties.wavefront_service_broker_enable_global_access_to_plans:
+    value: true
+  .properties.wavefront_token:
+    value: ((wavefront_token))
+  .properties.wavefront_url:
+    value: https://demo.wavefront.com/api
+network-properties:
+  network:
+    name: PAS-Deployment
+  other_availability_zones:
+  - name: pas-az1
+  singleton_availability_zone:
+    name: pas-az1
+resource-config:
+  delete-all:
+    max_in_flight: 1
+    additional_networks: []
+    additional_vm_extensions: []
+    instance_type:
+      id: automatic
+    instances: automatic
+    nsx:
+      lbs: []
+      security_groups: []
+    nsxt:
+      lb:
+        server_pools: []
+      ns_groups: []
+      vif_type: null
+    swap_as_percent_of_memory_size: automatic
+  deploy-all:
+    max_in_flight: 1
+    additional_networks: []
+    additional_vm_extensions: []
+    instance_type:
+      id: automatic
+    instances: automatic
+    nsx:
+      lbs: []
+      security_groups: []
+    nsxt:
+      lb:
+        server_pools: []
+      ns_groups: []
+      vif_type: null
+    swap_as_percent_of_memory_size: automatic
+  wavefront_proxy:
+    max_in_flight: 1
+    additional_networks: []
+    additional_vm_extensions: []
+    instance_type:
+      id: automatic
+    instances: automatic
+    nsx:
+      lbs: []
+      security_groups: []
+    nsxt:
+      lb:
+        server_pools: []
+      ns_groups: []
+      vif_type: null
+    swap_as_percent_of_memory_size: automatic
+errand-config:
+  delete-all:
+    pre-delete-state: true
+  deploy-all:
+    post-deploy-state: true
+

@@ -1,0 +1,57 @@
+---
+infra_network_name: infra
+deployment_network_name: deployment
+service_network_name: services
+
+vcenter_username: administrator@vsphere.local
+ssl_verification_enabled: false
+nsx_networking_enabled: true
+# Generate
+nsx_address: nsxt01.h2o-2-23016.h2o.vmware.com
+nsx_username: admin
+nsx_mode: nsx-t
+
+dns: 10.79.2.5,10.79.2.6
+ntp_servers_string: time1.oc.vmware.com
+
+blobstore_type: local
+bosh_recreate_on_next_deploy: false
+bosh_recreate_persistent_disks_on_next_deploy: false
+bosh_director_recreate_on_next_deploy: false
+ca_certificate_duration: 1460
+custom_ssh_banner:
+database_type: internal
+director_hostname:
+director_worker_count: 5
+disable_dns_release: false
+director_metrics_server_enabled: true
+duration_overrides_enabled: false
+identification_tags: {}
+job_configuration_on_tmpfs: false
+keep_unreachable_vms: false
+leaf_certificate_duration: 730
+enable_signed_urls: true
+local_blobstore_tls_enabled: true
+max_threads:
+metrics_ip:
+metrics_server_enabled: true
+
+opentsdb_ip:
+post_deploy_enabled: false
+resurrector_enabled: false
+retry_bosh_deploys: false
+skip_director_drain: false
+system_metrics_runtime_enabled: true
+
+# security_configuration:
+generate_vm_passwords: true
+clear_default_trusted_certificates_store: false
+
+# syslog_configuration:
+syslog_enabled: false
+
+#resource configuration
+compilation_instances: automatic
+compilation_instance_type: xlarge.disk
+director_disk_size_mb: automatic
+director_instance_type: automatic

@@ -1,0 +1,3 @@
+product-glob: '*.pivotal'
+product-slug: p-scheduler
+product-version: 1.6.6

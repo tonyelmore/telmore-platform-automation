@@ -1,0 +1,5 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*-vsphere-*"
+pivnet-product-slug: "stemcells-ubuntu-jammy"
+product-version: "1.351"

@@ -1,0 +1,3 @@
+stemcell-glob: light*-aws-*.tgz
+stemcell-slug: stemcells-windows-server
+stemcell-version: "2019.59"

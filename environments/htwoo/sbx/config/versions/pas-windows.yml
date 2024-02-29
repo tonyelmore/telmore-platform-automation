@@ -1,0 +1,3 @@
+product-glob: pas-windows-*.pivotal
+product-slug: pas-windows
+product-version: 2.11.45
