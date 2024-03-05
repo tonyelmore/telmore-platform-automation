@@ -45,11 +45,43 @@ product-properties:
   .properties.global_settings_secure_bindings:
     value: "No"
   .properties.global_settings_shareable_instances:
-    value: "No"
+    selected_option: enabled
+    value: "Yes"
   .properties.metrics_polling_interval:
     value: ((metrics_polling_interval))
   .properties.multitenant_support:
-    value: disabled
+    selected_option: enabled
+    value: enabled
+  .properties.multitenant_support.enabled.broker_operator_set_policy_enabled:
+    value: ((multitenant_support_enabled_broker_operator_set_policy_enabled))
+  .properties.multitenant_support.enabled.disk_alarm_threshold:
+    value: ((multitenant_support_enabled_disk_alarm_threshold))
+  .properties.multitenant_support.enabled.instance_sharing:
+    value: ((multitenant_support_enabled_instance_sharing))
+  .properties.multitenant_support.enabled.rabbitmq_version:
+    value: ((multitenant_support_enabled_rabbitmq_version))
+  .properties.multitenant_support.enabled.server_admin_credentials:
+    value:
+      identity: ((multitenant_support_enabled_server_admin_credentials_identity))
+      password: ((multitenant_support_enabled_server_admin_credentials_password))
+  .properties.multitenant_support.enabled.server_cluster_partition_handling:
+    value: ((multitenant_support_enabled_server_cluster_partition_handling))
+  .properties.multitenant_support.enabled.server_plugins:
+    value:
+    - rabbitmq_management
+    - rabbitmq_prometheus
+    - rabbitmq_management
+    - rabbitmq_stomp
+    - rabbitmq_web_stomp
+    - rabbitmq_web_stomp_examples
+  .properties.multitenant_support.enabled.server_ports:
+    value: ((multitenant_support_enabled_server_ports))
+  .properties.multitenant_support.enabled.server_ssl_verification_depth:
+    value: ((multitenant_support_enabled_server_ssl_verification_depth))
+  .properties.multitenant_support.enabled.server_ssl_versions:
+    value:
+    - tlsv1.3
+    - tlsv1.2
   .properties.on_demand_broker_plan_1_cf_service_access:
     value: ((on_demand_broker_plan_1_cf_service_access))
   .properties.on_demand_broker_plan_1_check_queue_sync:

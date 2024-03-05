@@ -182,9 +182,8 @@ product-properties:
   .properties.haproxy_client_cert_validation:
     value: none
   .properties.haproxy_forward_tls:
-    value: enable
-  .properties.haproxy_forward_tls.enable.backend_ca:
-    value: ((haproxy_forward_tls_enable_backend_ca))
+    selected_option: disable
+    value: disable
   .properties.haproxy_hsts_support:
     value: disable
   .properties.haproxy_max_buffer_size:
@@ -218,7 +217,8 @@ product-properties:
   .properties.networkpolicyserverinternal_database_max_open_connections:
     value: ((networkpolicyserverinternal_database_max_open_connections))
   .properties.nfs_volume_driver:
-    value: enable
+    selected_option: disable
+    value: disable
   .properties.push_apps_manager_app_poll_interval:
     value: ((push_apps_manager_app_poll_interval))
   .properties.push_apps_manager_buildpack:

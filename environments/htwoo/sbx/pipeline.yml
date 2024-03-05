@@ -29,16 +29,16 @@ resources:
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
 
-# - name: configuration
-#   type: git
-#   source:
-#     branch: master
-#     password: ((github_token))
-#     uri: https://github.com/tonyelmore/telmore-platform-automation.git
-#     username: ((github_username))
-#     paths:
-#     - "environments/((iaas))/((foundation))/pipeline.yml"
-#     - "environments/((iaas))/((foundation))/config"
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/pipeline.yml"
+    - "environments/((iaas))/((foundation))/config"
 
 - name: director-configuration
   type: git
@@ -319,540 +319,540 @@ jobs:
 
 
 
-# - name: lock-tiles
-#   serial: true
-#   plan:
-#   - in_parallel:
-#     - put: lock
-#       params: {acquire: true}
-#     - get: configuration
-#       trigger: true
+- name: lock-tiles
+  serial: true
+  plan:
+  - in_parallel:
+    - put: lock
+      params: {acquire: true}
+    - get: configuration
+      trigger: true
 
-# - name: validate-tile-configuration
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: ["lock-tiles"]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: validate-tile-configuration
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: ["lock-tiles"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: &credhub_interpolate_params
-#       CREDHUB_SERVER: ((concourse_credhub_server))
-#       CREDHUB_CA_CERT: ((concourse_credhub_ca))
-#       CREDHUB_CLIENT: ((concourse_credhub_client_username))
-#       CREDHUB_SECRET: ((concourse_credhub_client_secret))
-#       PREFIX: '/concourse/((team))'
-#       INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &credhub_interpolate_params
+      CREDHUB_SERVER: ((concourse_credhub_server))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
+    input_mapping:
+      files: configuration
 
-# - name: pas
-#   serial: true
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: [ validate-tile-configuration ]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: pas
+  serial: true
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ validate-tile-configuration ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: download-stage-tile-stemcell
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
-#     input_mapping:
-#       config: configuration
-#       download-config: configuration
-#       env: interpolated-files
-#       secrets: interpolated-files
-#     params:
-#       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
-#       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
 
-#   - task: configure
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/configure-product.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#       vars: configuration
-#       secrets: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       VARS_FILES: |
-#         vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
-#         vars/environments/((iaas))/common/cf.yml
-#         vars/environments/((iaas))/((foundation))/config/vars/cf.yml
-#         secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
+        vars/environments/((iaas))/common/cf.yml
+        vars/environments/((iaas))/((foundation))/config/vars/cf.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-#   - task: apply-product-changes
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-#     attempts: 10
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-# - name: pas-errands
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: [ pas ]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: pas-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pas ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: run-smoke_tests
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: smoke_tests
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-smoke_tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: smoke_tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-push-usage-service
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: push-usage-service
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-push-usage-service
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: push-usage-service
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-push-apps-manager
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: push-apps-manager
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-push-apps-manager
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: push-apps-manager
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-deploy-notifications
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-deploy-notifications
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: deploy-notifications
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-deploy-notifications-ui
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications-ui
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-deploy-notifications-ui
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: deploy-notifications-ui
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-deploy-autoscaler
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-autoscaler
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-deploy-autoscaler
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: deploy-autoscaler
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-nfsbrokerpush
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: nfsbrokerpush
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-nfsbrokerpush
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: nfsbrokerpush
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: run-test-autoscaling
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications-ui
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: run-test-autoscaling
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: deploy-notifications-ui
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
-# - name: pivotal-mysql
-#   serial: true
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: [ pas ]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: pivotal-mysql
+  serial: true
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pas ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: download-stage-tile-stemcell
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
-#     input_mapping:
-#       config: configuration
-#       download-config: configuration
-#       env: interpolated-files
-#       secrets: interpolated-files
-#     params:
-#       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql.yml
-#       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql-stemcell.yml
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
 
-#   - task: configure
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/configure-product.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#       vars: configuration
-#       secrets: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       VARS_FILES: |
-#         vars/environments/((iaas))/((foundation))/config/defaults/pivotal-mysql.yml
-#         vars/environments/((iaas))/common/pivotal-mysql.yml
-#         vars/environments/((iaas))/((foundation))/config/vars/pivotal-mysql.yml
-#         secrets/environments/((iaas))/((foundation))/config/secrets/pivotal-mysql.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/pivotal-mysql.yml
+        vars/environments/((iaas))/common/pivotal-mysql.yml
+        vars/environments/((iaas))/((foundation))/config/vars/pivotal-mysql.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/pivotal-mysql.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-#   - task: apply-product-changes
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-#     attempts: 10
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-# - name: pivotal-mysql-errands
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: [ pivotal-mysql ]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: pivotal-mysql-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pivotal-mysql ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: register-broker
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       ERRAND_NAME: register-broker
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: dedicated-mysql-broker/first
+  - task: register-broker
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      ERRAND_NAME: register-broker
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: dedicated-mysql-broker/first
 
-#   - task: smoke-tests
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       ERRAND_NAME: smoke-tests
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: dedicated-mysql-broker/first
+  - task: smoke-tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      ERRAND_NAME: smoke-tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: dedicated-mysql-broker/first
 
-#   - task: upgrade-all-service-instances
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
-#       ERRAND_NAME: upgrade-all-service-instances
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: dedicated-mysql-broker/first
+  - task: upgrade-all-service-instances
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pivotal-mysql.yml
+      ERRAND_NAME: upgrade-all-service-instances
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: dedicated-mysql-broker/first
 
-# - name: p-rabbitmq
-#   serial: true
-#   plan:
-#   - in_parallel:
-#       - get: configuration
-#         trigger: true
-#         passed: [ pivotal-mysql ]
-#       - get: platform-automation-image
-#         resource: platform-automation
-#         params:
-#           unpack: true
-#           globs: ["vsphere-platform-automation-image*"]
-#       - get: platform-automation-tasks
-#         resource: platform-automation
-#         params:
-#           unpack: true
-#           globs: ["*tasks*"]
+- name: p-rabbitmq
+  serial: true
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ pivotal-mysql ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: download-stage-tile-stemcell
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
-#     input_mapping:
-#       config: configuration
-#       download-config: configuration
-#       env: interpolated-files
-#       secrets: interpolated-files
-#     params:
-#       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-rabbitmq.yml
-#       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-rabbitmq-stemcell.yml
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-rabbitmq.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-rabbitmq-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
 
-#   - task: configure
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/configure-product.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#       vars: configuration
-#       secrets: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       VARS_FILES: |
-#         vars/environments/((iaas))/((foundation))/config/defaults/p-rabbitmq.yml
-#         vars/environments/((iaas))/common/p-rabbitmq.yml
-#         vars/environments/((iaas))/((foundation))/config/vars/p-rabbitmq.yml
-#         secrets/environments/((iaas))/((foundation))/config/secrets/p-rabbitmq.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/p-rabbitmq.yml
+        vars/environments/((iaas))/common/p-rabbitmq.yml
+        vars/environments/((iaas))/((foundation))/config/vars/p-rabbitmq.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/p-rabbitmq.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-#   - task: apply-product-changes
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-#     attempts: 10
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-# - name: p-rabbitmq-errands
-#   plan:
-#   - in_parallel:
-#       - get: configuration
-#         trigger: true
-#         passed: [ p-rabbitmq ]
-#       - get: platform-automation-image
-#         resource: platform-automation
-#         params:
-#           unpack: true
-#           globs: ["vsphere-platform-automation-image*"]
-#       - get: platform-automation-tasks
-#         resource: platform-automation
-#         params:
-#           unpack: true
-#           globs: ["*tasks*"]
+- name: p-rabbitmq-errands
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ p-rabbitmq ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
 
-#   - task: broker-registrar
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ERRAND_NAME: broker-registrar
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: rabbitmq-broker/first
+  - task: broker-registrar
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ERRAND_NAME: broker-registrar
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: rabbitmq-broker/first
 
-#   - task: smoke-tests
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ERRAND_NAME: smoke-tests
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: rabbitmq-broker/first
+  - task: smoke-tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ERRAND_NAME: smoke-tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: rabbitmq-broker/first
 
-#   - task: register-broker
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ERRAND_NAME: register-broker
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: on-demand-broker/first
+  - task: register-broker
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ERRAND_NAME: register-broker
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: on-demand-broker/first
 
-#   - task: on-demand-broker-smoke-tests
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ERRAND_NAME: on-demand-broker-smoke-tests
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: on-demand-broker/first
+  - task: on-demand-broker-smoke-tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ERRAND_NAME: on-demand-broker-smoke-tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: on-demand-broker/first
 
-#   - task: upgrade-all-service-instances
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
-#       ERRAND_NAME: upgrade-all-service-instances
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: on-demand-broker/first
+  - task: upgrade-all-service-instances
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-rabbitmq.yml
+      ERRAND_NAME: upgrade-all-service-instances
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: on-demand-broker/first
 
-# - name: unlock-tile
-#   serial: true
-#   plan:
-#   - get: configuration
-#     trigger: true
-#     passed:
-#     - "pas-errands"
-#     - "pivotal-mysql-errands"
-#     - "p-rabbitmq-errands"
-#   - get: lock
-#   - put: lock
-#     params:
-#       release: lock
+- name: unlock-tile
+  serial: true
+  plan:
+  - get: configuration
+    trigger: true
+    passed:
+    - "pas-errands"
+    - "pivotal-mysql-errands"
+    - "p-rabbitmq-errands"
+  - get: lock
+  - put: lock
+    params:
+      release: lock
 

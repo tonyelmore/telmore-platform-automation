@@ -1,1 +1,2 @@
-singleton_availability_zone: pas-az1
+singleton_availability_zone: az1
+multitenant_support_enabled_rabbitmq_version: "3.11"

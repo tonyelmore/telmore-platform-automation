@@ -1,4 +1,4 @@
-network_name: PAS-Deployment
+network_name: deployment
 
 multitenant_support_enabled_broker_operator_set_policy_enabled: false
 multitenant_support_enabled_disk_alarm_threshold: '{mem_relative,1.5}'
@@ -9,9 +9,9 @@ multitenant_support_enabled_server_ssl_verification_depth: 5
 multitenant_support_enabled_instance_sharing: true
 
 on_demand_broker_plan_1_rabbitmq_az_placement:
-- pas-az1
+- az1
 
-service_network_name: PAS-Services
+service_network_name: services
 
 register-broker_post_deploy_state: false  # on-demand-broker/first
 on-demand-broker-smoke-tests_post_deploy_state: false  # on-demand-broker/first
