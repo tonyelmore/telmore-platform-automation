@@ -1,27 +1,3 @@
-iaas-configurations:
-  name: ((iaas_configuration_name))
-  vcenter_host: ((vcenter_host))
-  datacenter: ((datacenter))
-  ephemeral_datastore_clusters_string: ""
-  ephemeral_datastores_string: ((ephemeral_datastores_string))
-  persistent_datastore_clusters_string: ""
-  persistent_datastores_string: ((persistent_datastores_string))
-  vcenter_username: ((vcenter_username))
-  vcenter_password: ((vcenter_password))
-  ssl_verification_enabled: ((ssl_verification_enabled))
-  nsx_networking_enabled: ((nsx_networking_enabled))
-  nsx_address: ((nsx_address))
-  nsx_ca_certificate: ((nsx_ca_certificate))
-  nsx_mode: ((nsx_mode))
-  nsx_t_auth_type: local_user
-  nsx_username: ((nsx_username))
-  nsx_password: ((nsx_password))
-  bosh_disk_path: ((bosh_folder_prefix))_disk
-  bosh_template_folder: ((bosh_folder_prefix))_templates
-  bosh_vm_folder: ((bosh_folder_prefix))_vms
-  nsx_t_use_policy_api: ((nsx_t_use_policy_api))
-  additional_cloud_properties: {}
-  disk_type: thin
 az-configuration:
   - name: ((az1_name))
     iaas_configuration_name: ((iaas_configuration_name))
@@ -65,6 +41,30 @@ network-assignment:
   singleton_availability_zone:
     name: ((az1_name))
 properties-configuration:
+  iaas_configuration:
+    name: ((iaas_configuration_name))
+    vcenter_host: ((vcenter_host))
+    datacenter: ((datacenter))
+    ephemeral_datastore_clusters_string: ""
+    ephemeral_datastores_string: ((ephemeral_datastores_string))
+    persistent_datastore_clusters_string: ""
+    persistent_datastores_string: ((persistent_datastores_string))
+    vcenter_username: ((vcenter_username))
+    vcenter_password: ((vcenter_password))
+    ssl_verification_enabled: ((ssl_verification_enabled))
+    nsx_networking_enabled: ((nsx_networking_enabled))
+    nsx_address: ((nsx_address))
+    nsx_ca_certificate: ((nsx_ca_certificate))
+    nsx_mode: ((nsx_mode))
+    nsx_t_auth_type: local_user
+    nsx_username: ((nsx_username))
+    nsx_password: ((nsx_password))
+    bosh_disk_path: ((bosh_folder_prefix))_disk
+    bosh_template_folder: ((bosh_folder_prefix))_templates
+    bosh_vm_folder: ((bosh_folder_prefix))_vms
+    nsx_t_use_policy_api: ((nsx_t_use_policy_api))
+    additional_cloud_properties: {}
+    disk_type: thin
   director_configuration:
     additional_ssh_users: []
     allow_legacy_agents: true
