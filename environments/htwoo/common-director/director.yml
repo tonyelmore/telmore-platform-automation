@@ -7,7 +7,7 @@ vcenter_username: administrator@vsphere.local
 ssl_verification_enabled: false
 nsx_networking_enabled: true
 # Generate
-nsx_address: nsxt01.h2o-2-23016.h2o.vmware.com
+nsx_address: nsxt01a.h2o-2-23016.h2o.vmware.com
 nsx_username: admin
 nsx_mode: nsx-t
 
