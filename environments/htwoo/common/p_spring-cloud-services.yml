@@ -1,3 +1,0 @@
-network_name: PAS-Deployment
- 
-register-brokers_post_deploy_state: false  # spring-cloud-services/first

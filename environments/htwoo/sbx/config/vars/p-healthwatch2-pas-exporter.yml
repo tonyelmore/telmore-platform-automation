@@ -1,4 +1,0 @@
-network_name: PAS-Deployment
-singleton_availability_zone:  pas-az1
-service_network_name: PAS-Services
-bosh-health-exporter_health_check_az: pas-az1
