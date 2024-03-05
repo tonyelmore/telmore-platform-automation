@@ -1,4 +1,4 @@
-iaas_configurations:
+iaas-configurations:
   name: ((iaas_configuration_name))
   vcenter_host: ((vcenter_host))
   datacenter: ((datacenter))
