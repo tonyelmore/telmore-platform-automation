@@ -5,7 +5,6 @@ plan2_selector_single_node_az_multi_select: ["az1"]
 plan3_selector_single_node_az_multi_select: ["az1"]
 
 global_recipient_email: test@me.com
-deprecated_bindings_string: X
 
 backups_selector_s3_bucket_name: mysql-backups
 backups_selector_s3_cron_schedule: "0 */8 * * *"
