@@ -646,7 +646,7 @@ jobs:
     input_mapping:
       files: configuration
 
-  - task: register-broker
+  - task: upgrade-all-instances
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -969,7 +969,6 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-scheduler.yml
       ERRAND_NAME: register-broker
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: on-demand-broker/first
 
   - task: publicize-scheduler
     attempts: 5
@@ -994,7 +993,6 @@ jobs:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-scheduler.yml
       ERRAND_NAME: test-scheduler
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: on-demand-broker/first
 
 - name: p_spring-cloud-services
   serial: true
@@ -1088,7 +1086,7 @@ jobs:
     input_mapping:
       files: configuration
 
-  - task: register-broker
+  - task: register-brokers
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -1097,7 +1095,7 @@ jobs:
       env: interpolated-files
     params:
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p_spring-cloud-services.yml
-      ERRAND_NAME: deploy-scheduler
+      ERRAND_NAME: register-brokers
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: spring-cloud-services/first
 

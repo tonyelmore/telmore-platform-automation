@@ -1,0 +1,2 @@
+register-brokers_post_deploy_state: false
+upgrade-all-instances_post_deploy_state: false
