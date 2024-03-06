@@ -6,3 +6,9 @@ plan3_selector_single_node_az_multi_select: ["az1"]
 
 global_recipient_email: test@me.com
 deprecated_bindings_string: X
+
+backups_selector_s3_bucket_name: mysql-backups
+backups_selector_s3_cron_schedule: "0 */8 * * *"
+backups_selector_s3_force_path_style: false
+backups_selector_s3_secret_access_key: admin
+backups_selector_s3_endpoint_url: "http://minio.h2o-2-23016.h2o.vmware.com:9200"

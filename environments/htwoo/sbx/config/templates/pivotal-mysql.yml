@@ -26,6 +26,23 @@ product-properties:
     value: ((allow_lower_case_table_names_via_config_param))
   .properties.audit_logging_enabled:
     value: ((audit_logging_enabled))
+  .properties.backups_selector:
+    selected_option: s3
+    value: S3 Backups
+  .properties.backups_selector.s3.access_key_id:
+    value:
+      secret: ((backups_selector_s3_access_key_id))
+  .properties.backups_selector.s3.bucket_name:
+    value: ((backups_selector_s3_bucket_name))
+  .properties.backups_selector.s3.cron_schedule:
+    value: ((backups_selector_s3_cron_schedule))
+  .properties.backups_selector.s3.endpoint_url:
+    value: ((backups_selector_s3_endpoint_url))
+  .properties.backups_selector.s3.force_path_style:
+    value: ((backups_selector_s3_force_path_style))
+  .properties.backups_selector.s3.secret_access_key:
+    value:
+      secret: ((backups_selector_s3_secret_access_key))
   .properties.binlog_space_limit_enabled:
     value: ((binlog_space_limit_enabled))
   .properties.canary_instances:
