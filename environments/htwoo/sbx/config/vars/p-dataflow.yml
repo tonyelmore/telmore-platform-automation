@@ -1,0 +1,4 @@
+maven_repositories_0_password: 
+maven_repositories_0_username: 
+network_name: deployment
+singleton_availability_zone: az1

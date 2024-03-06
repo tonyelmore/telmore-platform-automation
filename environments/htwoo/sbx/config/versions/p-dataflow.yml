@@ -1,3 +1,5 @@
-product-glob: '*.pivotal'
-product-slug: p-dataflow
-product-version: 1.12.4
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*.pivotal"
+pivnet-product-slug: "p-dataflow"
+product-version: "1.12.4"

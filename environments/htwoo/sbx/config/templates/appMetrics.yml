@@ -1,0 +1,61 @@
+errand-config:
+  delete-space:
+    pre-delete-state: ((delete-space_pre_delete_state))
+  migrate-route:
+    post-deploy-state: ((migrate-route_post_deploy_state))
+  push-app-metrics:
+    post-deploy-state: ((push-app-metrics_post_deploy_state))
+  smoke-test:
+    post-deploy-state: ((smoke-test_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: appMetrics
+product-properties:
+  .db-and-errand-runner.enable_logs:
+    value: ((db-and-errand-runner_enable_logs))
+  .db-and-errand-runner.postgres_ciphers:
+    value: ((db-and-errand-runner_postgres_ciphers))
+  .db-and-errand-runner.use_socks_proxy:
+    value: ((db-and-errand-runner_use_socks_proxy))
+  .log-store-vms.log_store_enable_event_alerting:
+    value: ((log-store-vms_log_store_enable_event_alerting))
+  .log-store-vms.log_store_partition_count:
+    value: ((log-store-vms_log_store_partition_count))
+  .log-store-vms.log_store_prune_interval:
+    value: ((log-store-vms_log_store_prune_interval))
+  .log-store-vms.log_store_prune_threshold:
+    value: ((log-store-vms_log_store_prune_threshold))
+  .log-store-vms.log_store_replication_factor:
+    value: ((log-store-vms_log_store_replication_factor))
+  .log-store-vms.log_store_retention_period:
+    value: ((log-store-vms_log_store_retention_period))
+resource-config:
+  db-and-errand-runner:
+    instance_type:
+      id: ((resource-var-db-and-errand-runner_instance_type))
+    max_in_flight: ((resource-var-db-and-errand-runner_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-db-and-errand-runner_persistent_disk_size))
+  log-store-vms:
+    instance_type:
+      id: ((resource-var-log-store-vms_instance_type))
+    instances: ((resource-var-log-store-vms_instances))
+    max_in_flight: ((resource-var-log-store-vms_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-log-store-vms_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

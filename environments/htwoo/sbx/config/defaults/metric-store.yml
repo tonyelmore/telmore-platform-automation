@@ -1,0 +1,16 @@
+max_concurrent_queries: 1
+replication_factor: 2
+syslog_address: null
+syslog_custom_rsyslog_configuration: ""
+syslog_enabled: false
+syslog_forward_debug_logs: false
+syslog_permitted_peer: false
+syslog_port: null
+syslog_queue_size: 100000
+syslog_ssl_ca_certificate: null
+syslog_tls_enabled: false
+syslog_transport_protocol: tcp
+resource-var-metric-store_instance_type: automatic
+resource-var-metric-store_instances: automatic
+resource-var-metric-store_max_in_flight: default
+resource-var-metric-store_persistent_disk_size: automatic

@@ -1,3 +1,5 @@
-product-glob: '*.pivotal'
-product-slug: wavefront-nozzle
-product-version: 4.3.0
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*.pivotal"
+pivnet-product-slug: "wavefront-nozzle"
+product-version: "4.3.0"

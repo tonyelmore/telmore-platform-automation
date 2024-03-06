@@ -1,0 +1,32 @@
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: metric-store
+product-properties:
+  .properties.max_concurrent_queries:
+    value: ((max_concurrent_queries))
+  .properties.replication_factor:
+    value: ((replication_factor))
+resource-config:
+  metric-store:
+    instance_type:
+      id: ((resource-var-metric-store_instance_type))
+    instances: ((resource-var-metric-store_instances))
+    max_in_flight: ((resource-var-metric-store_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-metric-store_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))
