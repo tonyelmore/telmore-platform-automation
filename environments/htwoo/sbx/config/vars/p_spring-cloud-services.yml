@@ -1,0 +1,2 @@
+network_name: deployment
+singleton_availability_zone: az1

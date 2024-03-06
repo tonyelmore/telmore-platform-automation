@@ -1,0 +1,4 @@
+database_source_service_broker_name: scheduler-db
+database_source_service_broker_plan_name: db-small
+network_name: deployment
+singleton_availability_zone: az1

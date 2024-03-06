@@ -1,3 +1,5 @@
-stemcell-glob: light*-aws-*.tgz
-stemcell-slug: stemcells-ubuntu-jammy
-stemcell-version: "1.351"
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*-vsphere-*"
+pivnet-product-slug: "stemcells-ubuntu-jammy"
+product-version: "1.351"

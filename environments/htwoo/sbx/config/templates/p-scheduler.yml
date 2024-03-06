@@ -1,0 +1,57 @@
+errand-config:
+  create-uaa-client:
+    post-deploy-state: ((create-uaa-client_post_deploy_state))
+  deploy-scheduler:
+    post-deploy-state: ((deploy-scheduler_post_deploy_state))
+  destroy-scheduler:
+    pre-delete-state: ((destroy-scheduler_pre_delete_state))
+  publicize-scheduler:
+    post-deploy-state: ((publicize-scheduler_post_deploy_state))
+  register-broker:
+    post-deploy-state: ((register-broker_post_deploy_state))
+  test-scheduler:
+    post-deploy-state: ((test-scheduler_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: p-scheduler
+product-properties:
+  .deploy-scheduler.enable_calls:
+    value: ((deploy-scheduler_enable_calls))
+  .deploy-scheduler.quartz_acquire_triggers_within_lock:
+    value: ((deploy-scheduler_quartz_acquire_triggers_within_lock))
+  .properties.database_source:
+    value: service_broker
+  .properties.database_source.service_broker.name:
+    value: ((database_source_service_broker_name))
+  .properties.database_source.service_broker.plan_name:
+    value: ((database_source_service_broker_plan_name))
+resource-config:
+  create-uaa-client:
+    instance_type:
+      id: ((resource-var-create-uaa-client_instance_type))
+    max_in_flight: ((resource-var-create-uaa-client_max_in_flight))
+  deploy-scheduler:
+    instance_type:
+      id: ((resource-var-deploy-scheduler_instance_type))
+    max_in_flight: ((resource-var-deploy-scheduler_max_in_flight))
+  destroy-scheduler:
+    instance_type:
+      id: ((resource-var-destroy-scheduler_instance_type))
+    max_in_flight: ((resource-var-destroy-scheduler_max_in_flight))
+  publicize-scheduler:
+    instance_type:
+      id: ((resource-var-publicize-scheduler_instance_type))
+    max_in_flight: ((resource-var-publicize-scheduler_max_in_flight))
+  register-broker:
+    instance_type:
+      id: ((resource-var-register-broker_instance_type))
+    max_in_flight: ((resource-var-register-broker_max_in_flight))
+  test-scheduler:
+    instance_type:
+      id: ((resource-var-test-scheduler_instance_type))
+    max_in_flight: ((resource-var-test-scheduler_max_in_flight))
