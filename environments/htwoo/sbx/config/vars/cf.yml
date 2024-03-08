@@ -3,9 +3,9 @@ cloud_controller_system_domain: sys.h2o-2-23016.h2o.vmware.com
 singleton_availability_zone: az1
 enable_smb_volume_driver: false
 
+cloud_controller_fs4_only_fs3_and_fs4_option_cloud_controller_default_stack: cflinuxfs3
 
 # resource-var-diego_brain_instances: 1
-resource-var-ha_proxy_instances: 0
 resource-var-router_instances: 2
 # resource-var-router_additional_vm_extensions: ["pas_gorouter_lb"]
 # resource-var-diego_cell_instances: 3
