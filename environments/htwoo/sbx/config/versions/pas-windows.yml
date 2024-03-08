@@ -1,3 +1,5 @@
-product-glob: pas-windows-*.pivotal
-product-slug: pas-windows
-product-version: 2.11.45
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "pas-windows-*.pivotal"
+pivnet-product-slug: "pas-windows"
+product-version: "2.11.45"

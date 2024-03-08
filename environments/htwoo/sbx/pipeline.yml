@@ -1298,6 +1298,124 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: db-and-errand-runner/first
 
+- name: pas-windows
+  serial: true
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ appmetrics ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pas-windows.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pas-windows-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pas-windows.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pas-windows.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/pas-windows.yml
+        vars/environments/((iaas))/common/pas-windows.yml
+        vars/environments/((iaas))/((foundation))/config/vars/pas-windows.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/pas-windows.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pas-windows.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+- name: pas-windows-errands
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ pas-windows ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: install-hwc-buildpack
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/z_run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pas-windows.yml
+      ERRAND_NAME: install-hwc-buildpack
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: windows_diego_cell/first
+
+  # - task: smoke_tests_windows
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: configuration/ci/tasks-proposed/z_run-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/pas-windows.yml
+  #     ERRAND_NAME: smoke_tests_windows
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     INSTANCE: windows_diego_cell/first
+
 - name: unlock-tile
   serial: true
   plan:
@@ -1311,6 +1429,7 @@ jobs:
     - "p_spring-cloud-services-errands"
     - "metric-store"
     - "appmetrics-errands"
+    - "pas-windows-errands"
   - get: lock
   - put: lock
     params:

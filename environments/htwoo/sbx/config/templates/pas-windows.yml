@@ -1,0 +1,34 @@
+errand-config:
+  install-hwc-buildpack:
+    post-deploy-state: ((install-hwc-buildpack_post_deploy_state))
+  smoke_tests_windows:
+    post-deploy-state: ((smoke_tests_windows_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: pas-windows
+product-properties:
+  .properties.app_log_rate_limiting:
+    value: disable
+  .properties.bosh_ssh_enabled:
+    value: ((bosh_ssh_enabled))
+  .properties.kms:
+    value: disable
+  .properties.route_integrity:
+    value: disable
+  .properties.smoke_tests_windows:
+    value: on_demand
+  .properties.system_logging:
+    value: disable
+  .properties.windows_admin_password:
+    value: use_default
+resource-config:
+  windows_diego_cell:
+    instance_type:
+      id: ((resource-var-windows_diego_cell_instance_type))
+    instances: ((resource-var-windows_diego_cell_instances))
+    max_in_flight: ((resource-var-windows_diego_cell_max_in_flight))

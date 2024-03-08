@@ -1,0 +1,6 @@
+bosh_ssh_enabled: false
+install-hwc-buildpack_post_deploy_state: default
+smoke_tests_windows_post_deploy_state: default
+resource-var-windows_diego_cell_instance_type: automatic
+resource-var-windows_diego_cell_instances: automatic
+resource-var-windows_diego_cell_max_in_flight: default

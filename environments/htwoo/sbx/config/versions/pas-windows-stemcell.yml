@@ -1,3 +1,5 @@
-stemcell-glob: light*-aws-*.tgz
-stemcell-slug: stemcells-windows-server
-stemcell-version: "2019.59"
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "*-vsphere-*"
+pivnet-product-slug: "stemcells-windows-server"
+product-version: "2019.59"
