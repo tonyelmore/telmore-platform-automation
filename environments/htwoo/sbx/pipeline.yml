@@ -449,7 +449,7 @@ jobs:
     input_mapping:
       files: configuration
 
-  - task: run-smoke_tests
+  - task: smoke_tests
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -462,7 +462,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-push-usage-service
+  - task: push-usage-service
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -475,7 +475,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-push-apps-manager
+  - task: push-apps-manager
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -488,7 +488,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-deploy-notifications
+  - task: deploy-notifications
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -501,7 +501,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-deploy-notifications-ui
+  - task: deploy-notifications-ui
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -514,7 +514,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-deploy-autoscaler
+  - task: deploy-autoscaler
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -527,7 +527,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-nfsbrokerpush
+  - task: nfsbrokerpush
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -540,7 +540,7 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  - task: run-test-autoscaling
+  - task: deploy-notifications-ui
     attempts: 5
     image: platform-automation-image
     file: configuration/ci/tasks-proposed/z_run-errand.yml
@@ -552,6 +552,19 @@ jobs:
       ERRAND_NAME: deploy-notifications-ui
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
+
+  # - task: push-tas-portal
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: configuration/ci/tasks-proposed/z_run-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+  #     ERRAND_NAME: push-tas-portal
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  #     INSTANCE: clock_global/first
 
 - name: pivotal-mysql
   serial: true
@@ -1297,13 +1310,130 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: db-and-errand-runner/first
 
+- name: p-dataflow
+  serial: true
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ appmetrics ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: download-stage-tile-stemcell
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    input_mapping:
+      config: configuration
+      download-config: configuration
+      env: interpolated-files
+      secrets: interpolated-files
+    params:
+      DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-dataflow.yml
+      DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/p-dataflow-stemcell.yml
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+
+  - task: configure
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+      vars: configuration
+      secrets: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/p-dataflow.yml
+        vars/environments/((iaas))/common/p-dataflow.yml
+        vars/environments/((iaas))/((foundation))/config/vars/p-dataflow.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/p-dataflow.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/apply-product-changes.yml
+    attempts: 10
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+- name: p-dataflow-errands
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ p-dataflow ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  - task: deploy-all
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/z_run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+      ERRAND_NAME: deploy-all
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+  - task: run-tests
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/z_run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+      ERRAND_NAME: run-tests
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+
+
 # - name: pas-windows
 #   serial: true
 #   plan:
 #   - in_parallel:
 #       - get: configuration
 #         trigger: true
-#         passed: [ appmetrics ]
+#         passed: [ p-dataflow ]
 #       - get: platform-automation-image
 #         resource: platform-automation
 #         params:
@@ -1428,6 +1558,7 @@ jobs:
     - "p_spring-cloud-services-errands"
     - "metric-store"
     - "appmetrics-errands"
+    - "p-dataflow-errands"
     # - "pas-windows-errands"
   - get: lock
   - put: lock
