@@ -22,8 +22,6 @@ product-properties:
     value: ((db-and-errand-runner_postgres_ciphers))
   .db-and-errand-runner.use_socks_proxy:
     value: ((db-and-errand-runner_use_socks_proxy))
-  .log-store-vms.log_store_enable_envelope_selector:
-    value: ((log-store-vms_log_store_enable_envelope_selector))
   .log-store-vms.log_store_enable_event_alerting:
     value: ((log-store-vms_log_store_enable_event_alerting))
   .log-store-vms.log_store_partition_count:

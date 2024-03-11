@@ -7,8 +7,6 @@ network-properties:
     name: ((singleton_availability_zone))
 product-name: metric-store
 product-properties:
-  .properties.enable_envelope_selector:
-    value: ((enable_envelope_selector))
   .properties.max_concurrent_queries:
     value: ((max_concurrent_queries))
   .properties.replication_factor:

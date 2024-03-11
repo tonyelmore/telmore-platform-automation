@@ -5,7 +5,6 @@ java_buildpack: java_buildpack_offline
 service_completion_timeout_minutes: 30
 service_key_access: false
 service_registry_access: global
-stack: cflinuxfs4
 syslog_address: null
 syslog_custom_rsyslog_configuration: ""
 syslog_enabled: false

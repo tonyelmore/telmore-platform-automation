@@ -28,8 +28,6 @@ product-properties:
     value: ((service_key_access))
   .properties.service_registry_access:
     value: ((service_registry_access))
-  .properties.stack:
-    value: ((stack))
 resource-config:
   spring-cloud-services:
     instance_type:

@@ -1,0 +1,129 @@
+errand-config:
+  bosh-cleanup-wait:
+    pre-delete-state: ((bosh-cleanup-wait_pre_delete_state))
+  delete-cf-sli-user:
+    pre-delete-state: ((delete-cf-sli-user_pre_delete_state))
+  delete-v3-cf-nozzle:
+    post-deploy-state: ((delete-v3-cf-nozzle_post_deploy_state))
+  register-cf-service-broker:
+    post-deploy-state: ((register-cf-service-broker_post_deploy_state))
+network-properties:
+  network:
+    name: ((network_name))
+  other_availability_zones:
+  - name: ((singleton_availability_zone))
+  service_network:
+    name: ((service_network_name))
+  singleton_availability_zone:
+    name: ((singleton_availability_zone))
+product-name: wavefront-nozzle
+product-properties:
+  .properties.allowlist_blocklist_selector:
+    value: default
+  .properties.auth_config_selector:
+    value: wavefront_api_token
+  .properties.auth_config_selector.wavefront_api_token.wavefront_token:
+    value:
+      secret: ((auth_config_selector_wavefront_api_token_wavefront_token))
+  .properties.cc_exporter_enabled:
+    value: ((cc_exporter_enabled))
+  .properties.custom_config_selector:
+    value: default
+  .properties.friendly_hostname:
+    value: ((friendly_hostname))
+  .properties.global_wavefront_service_broker_access:
+    value: ((global_wavefront_service_broker_access))
+  .properties.quota_collector_enabled:
+    value: ((quota_collector_enabled))
+  .properties.rabbitmq_per_object_metrics_enabled:
+    value: ((rabbitmq_per_object_metrics_enabled))
+  .properties.service_bindings_enabled:
+    value: ((service_bindings_enabled))
+  .properties.telegraf_advanced_options:
+    value: "no"
+  .properties.wavefront_legacy_service_bindings:
+    value: ((wavefront_legacy_service_bindings))
+  .properties.wavefront_url:
+    value: ((wavefront_url))
+  .tas-exporters.health_check_az:
+    value: ((tas-exporters_health_check_az))
+  .tas-exporters.latency_forwarder_buffer_size:
+    value: ((tas-exporters_latency_forwarder_buffer_size))
+  .tas-exporters.latency_forwarder_worker_count:
+    value: ((tas-exporters_latency_forwarder_worker_count))
+  .telegraf_agent.flush_interval:
+    value: ((telegraf_agent_flush_interval))
+  .telegraf_agent.foundation_name:
+    value: ((telegraf_agent_foundation_name))
+  .telegraf_agent.interval:
+    value: ((telegraf_agent_interval))
+  .telegraf_agent.metric_buffer_limit:
+    value: ((telegraf_agent_metric_buffer_limit))
+resource-config:
+  pas-exporter-container:
+    instance_type:
+      id: ((resource-var-pas-exporter-container_instance_type))
+    instances: ((resource-var-pas-exporter-container_instances))
+    max_in_flight: ((resource-var-pas-exporter-container_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-container_persistent_disk_size))
+  pas-exporter-counter:
+    instance_type:
+      id: ((resource-var-pas-exporter-counter_instance_type))
+    instances: ((resource-var-pas-exporter-counter_instances))
+    max_in_flight: ((resource-var-pas-exporter-counter_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-counter_persistent_disk_size))
+  pas-exporter-gauge:
+    instance_type:
+      id: ((resource-var-pas-exporter-gauge_instance_type))
+    instances: ((resource-var-pas-exporter-gauge_instances))
+    max_in_flight: ((resource-var-pas-exporter-gauge_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-gauge_persistent_disk_size))
+  pas-exporter-timer:
+    instance_type:
+      id: ((resource-var-pas-exporter-timer_instance_type))
+    instances: ((resource-var-pas-exporter-timer_instances))
+    max_in_flight: ((resource-var-pas-exporter-timer_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-pas-exporter-timer_persistent_disk_size))
+  tas-exporters:
+    instance_type:
+      id: ((resource-var-tas-exporters_instance_type))
+    instances: ((resource-var-tas-exporters_instances))
+    max_in_flight: ((resource-var-tas-exporters_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-tas-exporters_persistent_disk_size))
+  telegraf_agent:
+    instance_type:
+      id: ((resource-var-telegraf_agent_instance_type))
+    instances: ((resource-var-telegraf_agent_instances))
+    max_in_flight: ((resource-var-telegraf_agent_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-telegraf_agent_persistent_disk_size))
+  telegraf_standalone:
+    instance_type:
+      id: ((resource-var-telegraf_standalone_instance_type))
+    instances: ((resource-var-telegraf_standalone_instances))
+    max_in_flight: ((resource-var-telegraf_standalone_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-telegraf_standalone_persistent_disk_size))
+  wavefront_proxy:
+    instance_type:
+      id: ((resource-var-wavefront_proxy_instance_type))
+    instances: ((resource-var-wavefront_proxy_instances))
+    max_in_flight: ((resource-var-wavefront_proxy_max_in_flight))
+    persistent_disk:
+      size_mb: ((resource-var-wavefront_proxy_persistent_disk_size))
+syslog-properties:
+  address: ((syslog_address))
+  custom_rsyslog_configuration: ((syslog_custom_rsyslog_configuration))
+  enabled: ((syslog_enabled))
+  forward_debug_logs: ((syslog_forward_debug_logs))
+  permitted_peer: ((syslog_permitted_peer))
+  port: ((syslog_port))
+  queue_size: ((syslog_queue_size))
+  ssl_ca_certificate: ((syslog_ssl_ca_certificate))
+  tls_enabled: ((syslog_tls_enabled))
+  transport_protocol: ((syslog_transport_protocol))

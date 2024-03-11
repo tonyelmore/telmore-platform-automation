@@ -47,14 +47,16 @@ product-properties:
     value: ((binlog_space_limit_enabled))
   .properties.canary_instances:
     value: ((canary_instances))
+  .properties.deprecated_bindings_string:
+    value: ((deprecated_bindings_string))
   .properties.enable_lower_case_table_names:
     value: ((enable_lower_case_table_names))
   .properties.enable_read_only_admin:
     value: ((enable_read_only_admin))
   .properties.enable_secure_binding_credentials:
     value: ((enable_secure_binding_credentials))
-  .properties.enforce_client_tls:
-    value: ((enforce_client_tls))
+  .properties.enable_tls_selector:
+    value: disabled
   .properties.global_recipient_email:
     value: ((global_recipient_email))
   .properties.global_service_instance_limit:
@@ -77,8 +79,6 @@ product-properties:
     value: ((plan1_selector_single_node_name))
   .properties.plan1_selector.single_node.paid_plan:
     value: ((plan1_selector_single_node_paid_plan))
-  .properties.plan1_selector.single_node.version_dropdown:
-    value: ((plan1_selector_single_node_version_dropdown))
   .properties.plan2_selector:
     value: single_node
   .properties.plan2_selector.single_node.access_dropdown:
@@ -91,8 +91,6 @@ product-properties:
     value: ((plan2_selector_single_node_name))
   .properties.plan2_selector.single_node.paid_plan:
     value: ((plan2_selector_single_node_paid_plan))
-  .properties.plan2_selector.single_node.version_dropdown:
-    value: ((plan2_selector_single_node_version_dropdown))
   .properties.plan3_selector:
     value: single_node
   .properties.plan3_selector.single_node.access_dropdown:
@@ -105,8 +103,6 @@ product-properties:
     value: ((plan3_selector_single_node_name))
   .properties.plan3_selector.single_node.paid_plan:
     value: ((plan3_selector_single_node_paid_plan))
-  .properties.plan3_selector.single_node.version_dropdown:
-    value: ((plan3_selector_single_node_version_dropdown))
   .properties.plan4_selector:
     value: Inactive
   .properties.plan5_selector:
@@ -118,24 +114,6 @@ product-properties:
   .properties.plan8_selector:
     value: Inactive
   .properties.plan9_selector:
-    value: Inactive
-  .properties.plan10_selector:
-    value: Inactive
-  .properties.plan11_selector:
-    value: Inactive
-  .properties.plan12_selector:
-    value: Inactive
-  .properties.plan13_selector:
-    value: Inactive
-  .properties.plan14_selector:
-    value: Inactive
-  .properties.plan15_selector:
-    value: Inactive
-  .properties.plan16_selector:
-    value: Inactive
-  .properties.plan17_selector:
-    value: Inactive
-  .properties.plan18_selector:
     value: Inactive
   .properties.request_timeout:
     value: ((request_timeout))

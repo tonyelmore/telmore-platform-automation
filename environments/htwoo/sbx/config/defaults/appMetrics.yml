@@ -1,7 +1,6 @@
 db-and-errand-runner_enable_logs: true
 db-and-errand-runner_postgres_ciphers: HIGH:+3DES:!aNULL
 db-and-errand-runner_use_socks_proxy: false
-log-store-vms_log_store_enable_envelope_selector: false
 log-store-vms_log_store_enable_event_alerting: false
 log-store-vms_log_store_partition_count: 64
 log-store-vms_log_store_prune_interval: 2m
