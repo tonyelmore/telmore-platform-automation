@@ -125,5 +125,23 @@ resource-configuration:
       id: ((director_instance_type))
     persistent_disk:
       size_mb: ((director_disk_size_mb))
-vmextensions-configuration: []
 vmtypes-configuration: {}
+vmextensions-configuration:
+- name: tas_ssh_vm_extension
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: tas-ssh-pool
+- name: tas_tcp_vm_extension
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: tas-tcp-pool
+- name: tas_gorouter_vm_extension
+  cloud_properties:
+    nsxt:
+      lb:
+        server_pools:
+        - name: tas-web-pool
