@@ -11,4 +11,4 @@ resource-var-router_instances: 2
 resource-var-router_additional_vm_extensions: ["tas_gorouter_vm_extension"]
 # resource-var-diego_cell_instances: 3
 resource-var-diego_brain_additional_vm_extensions: ["tas_ssh_vm_extension"]
-resource-var-tcp_router_additional_vm_extensions: ["pas_tcp_vm_extension"]
+resource-var-tcp_router_additional_vm_extensions: ["tas_tcp_vm_extension"]
