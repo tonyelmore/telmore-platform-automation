@@ -13,4 +13,5 @@ backups_selector_s3_secret_access_key: admin
 backups_selector_s3_endpoint_url: "http://minio.h2o-2-23016.h2o.vmware.com:9200"
 
 
-deprecated_bindings_string: X
+# Removed between 2.10.16 and 3.1.2
+# deprecated_bindings_string: X
