@@ -553,18 +553,19 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
       INSTANCE: clock_global/first
 
-  # - task: push-tas-portal
-  #   attempts: 5
-  #   image: platform-automation-image
-  #   file: configuration/ci/tasks-proposed/z_run-errand.yml
-  #   input_mapping:
-  #     config: configuration
-  #     env: interpolated-files
-  #   params:
-  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-  #     ERRAND_NAME: push-tas-portal
-  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-  #     INSTANCE: clock_global/first
+  # This is for V4 only
+  - task: push-tas-portal
+    attempts: 5
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/z_run-errand.yml
+    input_mapping:
+      config: configuration
+      env: interpolated-files
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      ERRAND_NAME: push-tas-portal
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      INSTANCE: clock_global/first
 
 - name: pivotal-mysql
   serial: true
@@ -1426,17 +1427,18 @@ jobs:
       ERRAND_NAME: deploy-all
       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-  - task: run-tests
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
-      ERRAND_NAME: run-tests
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  # This is removed in v 1.14.1
+  # - task: run-tests
+  #   attempts: 5
+  #   image: platform-automation-image
+  #   file: configuration/ci/tasks-proposed/z_run-errand.yml
+  #   input_mapping:
+  #     config: configuration
+  #     env: interpolated-files
+  #   params:
+  #     CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/p-dataflow.yml
+  #     ERRAND_NAME: run-tests
+  #     ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
 - name: pas-windows
   serial: true

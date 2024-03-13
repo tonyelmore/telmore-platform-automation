@@ -12,8 +12,6 @@ network-properties:
     name: ((singleton_availability_zone))
 product-name: pas-windows
 product-properties:
-  .properties.app_log_rate_limiting:
-    value: disable
   .properties.bosh_ssh_enabled:
     value: ((bosh_ssh_enabled))
   .properties.kms:
@@ -24,8 +22,12 @@ product-properties:
     value: on_demand
   .properties.system_logging:
     value: disable
+  .properties.winc_network_subnet_range:
+    value: ((winc_network_subnet_range))
   .properties.windows_admin_password:
     value: use_default
+  .properties.windows_authentication:
+    value: disable
 resource-config:
   windows_diego_cell:
     instance_type:

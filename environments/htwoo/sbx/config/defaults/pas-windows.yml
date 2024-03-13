@@ -1,4 +1,5 @@
 bosh_ssh_enabled: false
+winc_network_subnet_range: 172.30.0.0/22
 install-hwc-buildpack_post_deploy_state: default
 smoke_tests_windows_post_deploy_state: default
 resource-var-windows_diego_cell_instance_type: automatic

@@ -43,10 +43,10 @@ if [[ ${product} == "vmware-nsx-t" ]]; then
 fi
 
 lts_substring="+LTS-T"
-if [[ ${product} == "cf" ]]; then
+if [[ ${product} == "cf" || ${product} == "pas-windows" ]]; then
   # don't really need the if check
-  # this takes the ${version} and remvoe the tmeplate which is defined as anything ending in "+LTS-T"
-  # if the result is empty (-z), the the ${version} did in fact end with that suffix
+  # this takes the ${version} and remove the template which is defined as anything ending in "+LTS-T"
+  # if the result is empty (-z), then the ${version} did in fact end with that suffix
   # if [[ -z ${version##*$lts_substring} ]]; then
     # Remove the suffix defined in ${lts_substring} from ${version}
     version=${version%$lts_substring*}

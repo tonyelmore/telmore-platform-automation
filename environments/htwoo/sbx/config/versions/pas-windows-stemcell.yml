@@ -2,4 +2,4 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "*-vsphere-*"
 pivnet-product-slug: "stemcells-windows-server-internal"
-product-version: "2019.59"
+product-version: "2019.70"

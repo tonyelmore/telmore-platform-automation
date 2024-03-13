@@ -2,4 +2,7 @@
 pivnet-api-token: ((pivnet-api-token))
 pivnet-file-glob: "pas-windows-*.pivotal"
 pivnet-product-slug: "pas-windows"
-product-version: "2.11.45"
+product-version: "4.0.18+LTS-T"
+
+# Do we need to set the enable_log_cache_syslog_injection to true in 2.11 before we can upgrade?
+# We had to for TAS.

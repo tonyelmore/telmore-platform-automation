@@ -5,8 +5,6 @@ errand-config:
     pre-delete-state: ((delete-all_pre_delete_state))
   deploy-all:
     post-deploy-state: ((deploy-all_post_deploy_state))
-  run-tests:
-    post-deploy-state: ((run-tests_post_deploy_state))
 network-properties:
   network:
     name: ((network_name))
@@ -58,7 +56,3 @@ resource-config:
     instance_type:
       id: ((resource-var-deploy-all_instance_type))
     max_in_flight: ((resource-var-deploy-all_max_in_flight))
-  run-tests:
-    instance_type:
-      id: ((resource-var-run-tests_instance_type))
-    max_in_flight: ((resource-var-run-tests_max_in_flight))
