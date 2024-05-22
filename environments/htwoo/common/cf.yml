@@ -15,3 +15,4 @@ test-autoscaling_post_deploy_state: false
 smbbrokerpush_post_deploy_state: false
 metric_registrar_smoke_test_post_deploy_state: false
 rotate_cc_database_key_post_deploy_state: false
+push-tas-portal_post_deploy_state: false
