@@ -31,9 +31,10 @@ run:
     echo "Pre-configure process started"
 
     echo "Install yq"
+    apt-get -y update && apt-get -y install wget
     wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
     yq -h
-    
+
     echo "Foundation name is: ${FOUNDATION_NAME}"
     echo "Param file is: ${PARAM_FILE}"
 
