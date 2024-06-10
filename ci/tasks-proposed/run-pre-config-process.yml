@@ -45,17 +45,20 @@ run:
     SOME_STRING="this is some default string"
     FAIL_FLAG="false"
 
-    tasks=$(yq ".[] | .task" task-repo/${PARAM_FILE})
-    for task in $tasks; do
+    tasks=$(yq  -r '.[] | .task' task-repo/${PARAM_FILE})
+    for task in ${tasks[@]}; do
       echo "Task is: ${task}"
-      # Interpolate all of the parameters
-      params=$(yq ".[] | .params" task-repo/${PARAM_FILE})
-      for param in $params; do
+      # Interpolate all of the parameters for the task
+      params=$(yq -r --arg task "${task}" '.[] | select(.task == $task) | .params | to_entries[] | " \(.key): \(.value)"' task-repo/${PARAM_FILE})
+
+      echo "${params}"
+      
+      for param in ${params[@]}; do
         echo "Param is: ${param}"
         export $param
       done
     done
-    
+
     source task-repo/ci/tasks-proposed/${task}
 
     echo "Pre-configure process completed"
