@@ -1,11 +1,13 @@
 ---
-- task: create_api_token.sh
+- task: testme.sh
   params:
     FOUNDATION_NAME: ((foundation))
     WAVEFRONT_AUTOMATION_API_TOKEN: ((wavefront_automation_api_token))
     WAVEFRONT_API: https://my.wavefront.com/api
     TOKEN_FILE: config/tas-wavefront-api-token/((foundation)).yml
     FOO: ((bar))
+    SOME_STRING: "this is some default string"
+    FAIL_FLAG: false
 
 
 - task: some-other-task.yml
