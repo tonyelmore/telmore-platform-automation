@@ -49,10 +49,10 @@ run:
     for task in ${tasks[@]}; do
       echo "Task is: ${task}"
       # Interpolate all of the parameters for the task
-      params=$(yq -r --arg task "${task}" '.[] | select(.task == $task) | .params | to_entries[] | " \(.key): \(.value)"' task-repo/${PARAM_FILE})
+      params=$(yq -r ".[] | select(.task == \"$task\") | .params | to_entries[] | \" \(.key): \(.value)\"" task-repo/${PARAM_FILE})
 
       echo "${params}"
-      
+
       for param in ${params[@]}; do
         echo "Param is: ${param}"
         export $param
