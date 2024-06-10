@@ -31,9 +31,10 @@ run:
     echo "Pre-configure process started"
 
     echo "Install yq"
-    apk add --no-cache python3 py3-pip
+    apt-get update
+    apt-get install -y python3-pip
     pip3 install yq
-    
+
     echo "Foundation name is: ${FOUNDATION_NAME}"
     echo "Param file is: ${PARAM_FILE}"
 
