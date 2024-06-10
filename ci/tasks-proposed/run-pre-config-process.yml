@@ -66,8 +66,10 @@ run:
         export "${key}"="${value}"
       done <<< "${params}"
 
-    done
+      echo "Running task: ${task}"
+      source task-repo/ci/tasks-proposed/${task}
+      echo "Completed task: ${task}"
 
-    source task-repo/ci/tasks-proposed/${task}
+    done
 
     echo "Pre-configure process completed"
