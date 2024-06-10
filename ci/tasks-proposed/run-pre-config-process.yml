@@ -49,14 +49,19 @@ run:
     for task in ${tasks[@]}; do
       echo "Task is: ${task}"
       # Interpolate all of the parameters for the task
-      params=$(yq -r ".[] | select(.task == \"$task\") | .params | to_entries[] | \" \(.key): \(.value)\"" task-repo/${PARAM_FILE})
+      params=$(yq eval ".[] | select(.task == \"$task\") | .params | to_entries[] | .key + \"=\" .value" task-repo/${PARAM_FILE})
 
-      echo "${params}"
 
-      for param in ${params[@]}; do
-        echo "Param is: ${param}"
-        export $param
-      done
+      while IFS= read -r param; do
+        key=$(echo "$param" | cut -d '=' -f1)
+        value=$(echo "$param" | cut -d '=' -f2-)
+
+        # Remove colon if present in the value
+        value="${value/:/}"
+
+        export "${key}"="${value}"
+      done <<< "${params}"
+
     done
 
     source task-repo/ci/tasks-proposed/${task}
