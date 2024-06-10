@@ -38,18 +38,22 @@ run:
     echo "Foundation name is: ${FOUNDATION}"
     echo "Param file is: ${PARAM_FILE}"
 
-    # Get the task name from the param_file
-    # The param file should have a task that would be executed
+    # Get the task name from the param_file - that is the task to execute
 
-    task="testme.sh"
-    SOME_STRING="this is some default string"
-    FAIL_FLAG="false"
+    # Some test code to set up interpolation and exporting of env variables
+    # Because I don't have prepare-tasks-with-secrets integrated yet
+    export OM_VARS_ENV=MY
+    export MY_foundation=sandbox
+    export MY_wavefront_automation_api_token=my-wavefront-token
+    export MY_bar=foobar
+    om interpolate -c task-repo/${PARAM_FILE} > task-repo/${PARAM_FILE}.interpolated
+    # End of test code
 
-    tasks=$(yq  -r '.[] | .task' task-repo/${PARAM_FILE})
+    tasks=$(yq  -r '.[] | .task' task-repo/${PARAM_FILE}.interpolated)
     for task in ${tasks[@]}; do
       echo "Task is: ${task}"
       # Interpolate all of the parameters for the task
-      params=$(yq eval ".[] | select(.task == \"$task\") | .params | to_entries[] | .key + \"=\" .value" task-repo/${PARAM_FILE})
+      params=$(yq eval ".[] | select(.task == \"$task\") | .params | to_entries[] | .key + \"=\" .value" task-repo/${PARAM_FILE}.interpolated)
 
 
       while IFS= read -r param; do
