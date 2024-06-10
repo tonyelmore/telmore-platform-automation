@@ -16,7 +16,7 @@ inputs:
 - name: task-repo
 
 params:
-  FOUNDATION_NAME: 
+  FOUNDATION: 
   PARAM_FILE: 
   VARS_FILES:
 
@@ -35,7 +35,7 @@ run:
     wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
     yq -h
 
-    echo "Foundation name is: ${FOUNDATION_NAME}"
+    echo "Foundation name is: ${FOUNDATION}"
     echo "Param file is: ${PARAM_FILE}"
 
     # Get the task name from the param_file
@@ -45,7 +45,7 @@ run:
     SOME_STRING="this is some default string"
     FAIL_FLAG="false"
 
-    cat task-repo/ci/tasks-proposed/${task} | yq .
+    cat task-repo/${PARAM_FILE} | yq .
 
     source task-repo/ci/tasks-proposed/${task}
 
