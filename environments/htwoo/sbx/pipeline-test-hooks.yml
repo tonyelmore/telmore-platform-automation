@@ -19,15 +19,12 @@ resources:
     password: ((github_token))
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
-    paths:
-    - "environments/((iaas))/((foundation))/config"
 
 jobs:
 - name: validate-tile-configuration
   plan:
   - in_parallel:
     - get: configuration
-      trigger: true
     - get: platform-automation-image
       resource: platform-automation
       params:

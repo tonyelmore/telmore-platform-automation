@@ -30,6 +30,10 @@ run:
 
     echo "Pre-configure process started"
 
+    echo "Install yq"
+    apk add --no-cache python3 py3-pip
+    pip3 install yq
+    
     echo "Foundation name is: ${FOUNDATION_NAME}"
     echo "Param file is: ${PARAM_FILE}"
 
@@ -39,6 +43,9 @@ run:
     task="testme.sh"
     SOME_STRING="this is some default string"
     FAIL_FLAG="false"
+
+    cat task-repo/ci/tasks-proposed/${task} | yq .
+
     source task-repo/ci/tasks-proposed/${task}
 
     echo "Pre-configure process completed"

@@ -1,0 +1,9 @@
+---
+- task: create_api_token.sh
+  params:
+    WAVEFRONT_API: https://my.wavefront.com/api
+
+
+- tasks: some-other-task.yml
+  params:
+    PARAM_FILE: config/pre-config-process/params/wavefront-nozzle.yml
