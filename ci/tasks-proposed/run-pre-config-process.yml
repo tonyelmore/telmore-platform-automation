@@ -12,6 +12,9 @@
 ---
 platform: linux
 
+inputs:
+- name: task-repo
+
 params:
   FOUNDATION_NAME: 
   PARAM_FILE: 
@@ -36,6 +39,6 @@ run:
     task="testme.sh"
     SOME_STRING="this is some default string"
     FAIL_FLAG="false"
-    source ${task}
+    source task-repo/ci/tasks-proposed/${task}
 
     echo "Pre-configure process completed"

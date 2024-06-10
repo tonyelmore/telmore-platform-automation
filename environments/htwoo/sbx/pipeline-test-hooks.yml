@@ -28,7 +28,6 @@ jobs:
   - in_parallel:
     - get: configuration
       trigger: true
-      passed: ["lock-tiles"]
     - get: platform-automation-image
       resource: platform-automation
       params:
