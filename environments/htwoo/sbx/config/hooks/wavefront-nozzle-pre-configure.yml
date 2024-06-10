@@ -8,6 +8,6 @@
     FOO: ((bar))
 
 
-- tasks: some-other-task.yml
+- task: some-other-task.yml
   params:
     PARAM_FILE: config/pre-config-process/params/wavefront-nozzle.yml
