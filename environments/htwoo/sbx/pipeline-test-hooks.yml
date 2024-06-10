@@ -1,0 +1,125 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config"
+
+jobs:
+- name: validate-tile-configuration
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: ["lock-tiles"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &credhub_interpolate_params
+      CREDHUB_SERVER: ((concourse_credhub_server))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
+    input_mapping:
+      files: configuration
+
+
+- name: test-hooks
+  serial: true
+  plan:
+  - in_parallel:
+      - get: configuration
+        trigger: true
+        passed: [ validate-tile-configuration ]
+      - get: platform-automation-image
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["vsphere-platform-automation-image*"]
+      - get: platform-automation-tasks
+        resource: platform-automation
+        params:
+          unpack: true
+          globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
+  # - task: create-wavefront-token
+  #   image: platform-automation-image
+  #   file: configuration/ci/tasks-proposed/create_api_token.yml
+  #   input_mapping:
+  #     config: configuration
+  #     task-repo: configuration
+  #   output_mapping:
+  #     config: configuration
+  #   params:
+  #     FOUNDATION_NAME: ((foundation))
+  #     WAVEFRONT_AUTOMATION_API_TOKEN: ((wavefront_automation_api_token))
+  #     WAVEFRONT_API: https://my.wavefront.com/api
+  #     TOKEN_FILE: config/tas-wavefront-api-token/((foundation)).yml
+
+  - task: run-pre-configure-hook
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-pre-config-process.yml
+    input_mapping:
+      task-repo: configuration
+      config: configuration
+    output_mapping:
+      config: configuration
+    params:
+      TILE: wavefront-nozzle
+      FOUNDATION: ((foundation))
+      PARAM_FILE: environments/htwoo/((foundation))/config/hooks/wavefront-nozzle-pre-configure.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/wavefront-nozzle.yml
+        vars/environments/((iaas))/common/wavefront-nozzle.yml
+        vars/environments/((iaas))/((foundation))/config/vars/wavefront-nozzle.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/wavefront-nozzle.yml
+
+# Need to add some better testing in order to test for any data passed via env vars
+  - task: test-configure-then-apply-change
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/test.yml
+
+  - task: run-post-apply-change-hook
+    image: platform-automation-image
+    file: configuration/ci/tasks-proposed/run-post-apply-change-hook.yml
+    params:
+      FOUNDATION: ((foundation))
+      TILE: wavefront-nozzle
+      param_file: config/pre-config-process/wavefront-nozzle-params.yml

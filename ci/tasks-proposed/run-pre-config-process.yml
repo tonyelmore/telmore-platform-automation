@@ -1,0 +1,41 @@
+# For each task
+#   Interpolate all of the parameters 
+#   Export the list of parameters
+#   Source the task
+
+
+#   export FOUNDASTION+NAME=blah
+#   export WAVEFRONT_AUTOMATION_API_TOKEN = force-unlock
+#   source ${task}
+
+
+---
+platform: linux
+
+params:
+  FOUNDATION_NAME: 
+  PARAM_FILE: 
+  VARS_FILES:
+
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -eux
+
+    echo "Pre-configure process started"
+
+    echo "Foundation name is: ${FOUNDATION_NAME}"
+    echo "Param file is: ${PARAM_FILE}"
+
+    # Get the task name from the param_file
+    # The param file should have a task that would be executed
+
+    task="testme.sh"
+    SOME_STRING="this is some default string"
+    FAIL_FLAG="false"
+    source ${task}
+
+    echo "Pre-configure process completed"

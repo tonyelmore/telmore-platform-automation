@@ -1,0 +1,13 @@
+---
+- task: create_api_token.sh
+  params:
+    FOUNDATION_NAME: ((foundation))
+    WAVEFRONT_AUTOMATION_API_TOKEN: ((wavefront_automation_api_token))
+    WAVEFRONT_API: https://my.wavefront.com/api
+    TOKEN_FILE: config/tas-wavefront-api-token/((foundation)).yml
+    FOO: ((bar))
+
+
+- tasks: some-other-task.yml
+  params:
+    PARAM_FILE: config/pre-config-process/params/wavefront-nozzle.yml
