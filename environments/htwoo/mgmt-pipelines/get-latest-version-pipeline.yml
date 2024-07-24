@@ -100,6 +100,11 @@ jobs:
       params:
         unpack: true
         globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
     - get: ops-manager
       params:
         globs: [] # Only need the metadata
@@ -112,7 +117,7 @@ jobs:
     file: platform-automation-tasks/tasks/credhub-interpolate.yml
     params: *credhub_interpolate_params
     input_mapping:
-      files: configuration
+      files: source
 
   - task: update-product-version
     file: source/ci/tasks-proposed/update-product-version.yml
@@ -123,6 +128,8 @@ jobs:
     params:
       PRODUCT_NAME: opsman
       PRODUCT_SLUG: ops-manager
+      ENV_FILE: environments/((iaas))/mgmt-pipelines/secrets/env.yml
+
 
 - name: update-cf
   serial: true
@@ -136,6 +143,11 @@ jobs:
       params:
         unpack: true
         globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
     - get: stemcell-jammy-1
       params:
         globs: []
@@ -145,6 +157,14 @@ jobs:
     - get: jq
       params:
         globs: [jq-linux64]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: source
+
   - task: update-product-version
     file: source/ci/tasks-proposed/update-product-version.yml
     image: platform-automation-image
@@ -154,6 +174,7 @@ jobs:
     params:
       PRODUCT_NAME: cf
       PRODUCT_SLUG: elastic-runtime
+      ENV_FILE: environments/((iaas))/mgmt-pipelines/secrets/env.yml
 
 - name: update-twistlock
   serial: true
@@ -167,6 +188,11 @@ jobs:
       params:
         unpack: true
         globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
     - get: stemcell-jammy-1
       params:
         globs: []
@@ -176,6 +202,14 @@ jobs:
     - get: jq
       params:
         globs: [jq-linux64]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: source
+
   - task: update-product-version
     file: source/ci/tasks-proposed/update-product-version.yml
     image: platform-automation-image
@@ -185,3 +219,4 @@ jobs:
     params:
       PRODUCT_NAME: twistlock
       PRODUCT_SLUG: twistlock
+      ENV_FILE: environments/((iaas))/mgmt-pipelines/secrets/env.yml
