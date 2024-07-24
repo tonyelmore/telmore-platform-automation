@@ -86,7 +86,7 @@ jobs:
       PREFIX: '/concourse/((team))'
       INTERPOLATION_PATHS: "environments/((iaas))/mgmt-pipelines/secrets"
     input_mapping:
-      files: configuration
+      files: source
 
 - name: update-ops-manager
   serial: true

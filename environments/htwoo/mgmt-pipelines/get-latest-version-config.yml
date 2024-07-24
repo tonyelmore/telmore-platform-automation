@@ -11,3 +11,4 @@ p-metric-store_version_regex: ^1\.6\..*$
 wavefront-nozzle_version_regex: ^4\.3\..*$
 p-dataflow_version_regex: ^1\.14\..*$
 twistlock_version_regex: ^32\.07\.123$
+
