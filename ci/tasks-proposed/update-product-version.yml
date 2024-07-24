@@ -5,8 +5,7 @@ inputs:
 - name: product
 - name: source
 - name: jq
-- name: stemcell
-  optional: true
+- name: env
 
 outputs:
 - name: source
@@ -14,16 +13,10 @@ outputs:
 params:
   PRODUCT_NAME: ''
   PRODUCT_SLUG: ''
-  ENVIRONMENT: ''
-  IAAS: ''
-  OM_TARGET: ((opsman.url))
-  OM_USERNAME: ((opsman.user))
-  OM_PASSWORD: ((opsman.password))
-  OM_SKIP_SSL_VALIDATION: "true"
-  PIVNET_TOKEN: ((pivnet-api-token))
-  GIT_PRIVATE_KEY: ((git_private_key))
-  GITHUB_TOKEN: ((github-access-token))
-  CONFIG_DIR: config
+  ENV_FILE: env.yml
+  # - Filepath of the env config YAML
+  # - Relative to root of the `env` input
+
 
 run:
   path: bash
@@ -33,43 +26,13 @@ run:
     set -euxo pipefail
     basedir=$(pwd)
 
-    source source/pipelines/tasks/common.sh
-
     version=$(om interpolate -c product/metadata.yaml --path /release/version)
-    deployed_version=$(om staged-products -f json | jq -r --arg product "${PRODUCT_NAME}" '.[] | select(.name==$product) | .version')
+    deployed_version=$(om --env env/"${ENV_FILE}" staged-products -f json | jq -r --arg product "${PRODUCT_NAME}" '.[] | select(.name==$product) | .version')
 
-    cd source
     if [[ $version == $deployed_version ]]; then
       echo "The requested version $version of $PRODUCT_NAME is already deployed"
     else
       echo "There is a new version of $PRODUCT_NAME available: $version"
     fi
 
-    stemcell_family=$(jq -r 'select(.Dependencies != null) | .Dependencies[].Release | select(.Product.Slug|startswith("stemcells-")) | .Version // ""' < ../product/metadata.json | cut -d '.' -f1 | sort -u)
-    if [[ ! -z "${stemcell_family}" ]]; then
-      latest_stemcell_version=$(om interpolate -c ${basedir}/stemcell/metadata.yaml --path /release/version)
-
-      # Changed to check the stemcell version requested first ... this broke when a tile (wavefront) supported both xenial and jammy
-      if [[ "${latest_stemcell_version}" =~ "621." ]]; then
-        stemcell_slug=$(jq -r '.Dependencies[].Release.Product | select(.Slug|startswith("stemcells-ubuntu-xenial")) | .Slug' < ../product/metadata.json | sort -u)
-      else
-        stemcell_slug=$(jq -r '.Dependencies[].Release.Product | select(.Slug|startswith("stemcells-ubuntu-jammy")) | .Slug' < ../product/metadata.json | sort -u)
-      fi
-
-      if [[ ! -z "${stemcell_slug}" ]]; then
-
-        stemcell_os=$(echo -n $stemcell_slug | cut -d '-' -f2)
-
-        current_version=$(om interpolate -c environments/${IAAS}/${ENVIRONMENT}/${CONFIG_DIR}/versions/${PRODUCT_NAME}-stemcell.yml --path /product-version?)
-        [[ $current_version == $latest_stemcell_version ]]
-          "No new version of stemcell"
-        else
-          echo "There is a new version of stemcell available: $latest_stemcell_version"
-        fi
-
-      else
-        echo "Error in retrieving stemcell information"
-      fi
-    fi
-    set +e
-
+    echo "Stemcell checking is not yet implemented"

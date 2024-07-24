@@ -7,7 +7,7 @@ resource_types:
     tag: latest-final
 
 resources:
-- name: platform-automation-image
+- name: platform-automation
   type: pivnet
   source:
     api_token: ((pivnet_token))
@@ -60,52 +60,88 @@ resources:
     - "environments/((iaas))/mgmt-pipelines/get-latest-version-config.yml"
     
 jobs:
+- name: validate-secrets
+  plan:
+  - in_parallel:
+    - get: source
+      trigger: true
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &credhub_interpolate_params
+      CREDHUB_SERVER: ((concourse_credhub_server))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/mgmt-pipelines/secrets"
+    input_mapping:
+      files: configuration
+
 - name: update-ops-manager
   serial: true
   plan:
   - in_parallel:
+    - get: source
+      trigger: true
+      passed: ["validate-secrets"]
     - get: platform-automation-image
+      resource: platform-automation
       params:
         unpack: true
-        globs: ["*.tgz"]
+        globs: ["vsphere-platform-automation-image*"]
     - get: ops-manager
       params:
         globs: [] # Only need the metadata
-    - get: source
-      trigger: true
     - get: jq
       params:
         globs: [jq-linux64]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: configuration
+
   - task: update-product-version
     file: source/ci/tasks-proposed/update-product-version.yml
     image: platform-automation-image
     input_mapping:
       product: ops-manager
+      env: interpolated-files
     params:
-      PIVNET_TOKEN: ((pivnet_token))
-      ENVIRONMENT: ((environment))
-      IAAS: ((iaas))
       PRODUCT_NAME: opsman
       PRODUCT_SLUG: ops-manager
-      CONFIG_DIR: config-director
 
 - name: update-cf
   serial: true
   plan:
   - in_parallel:
+    - get: source
+      trigger: true
+      passed: ["update-ops-manager"]
     - get: platform-automation-image
+      resource: platform-automation
       params:
         unpack: true
-        globs: ["*.tgz"]
+        globs: ["vsphere-platform-automation-image*"]
     - get: stemcell-jammy-1
       params:
         globs: []
     - get: cf
       params:
         globs: [] # Only need the metadata
-    - get: source
-      trigger: true
-      passed: ["update-ops-manager"]
     - get: jq
       params:
         globs: [jq-linux64]
@@ -114,11 +150,8 @@ jobs:
     image: platform-automation-image
     input_mapping:
       product: cf
-      stemcell: stemcell-jammy-1
+      env: interpolated-files
     params:
-      PIVNET_TOKEN: ((pivnet_token))
-      ENVIRONMENT: ((environment))
-      IAAS: ((iaas))
       PRODUCT_NAME: cf
       PRODUCT_SLUG: elastic-runtime
 
@@ -126,19 +159,20 @@ jobs:
   serial: true
   plan:
   - in_parallel:
+    - get: source
+      trigger: true
+      passed: ["update-cf"]
     - get: platform-automation-image
+      resource: platform-automation
       params:
         unpack: true
-        globs: ["*.tgz"]
+        globs: ["vsphere-platform-automation-image*"]
     - get: stemcell-jammy-1
       params:
         globs: []
     - get: twistlock
       params:
         globs: [] # Only need the metadata
-    - get: source
-      trigger: true
-      passed: ["update-cf"]
     - get: jq
       params:
         globs: [jq-linux64]
@@ -147,10 +181,7 @@ jobs:
     image: platform-automation-image
     input_mapping:
       product: twistlock
-      stemcell: stemcell-jammy-1
+      env: interpolated-files
     params:
-      PIVNET_TOKEN: ((pivnet_token))
-      ENVIRONMENT: ((environment))
-      IAAS: ((iaas))
       PRODUCT_NAME: twistlock
       PRODUCT_SLUG: twistlock
