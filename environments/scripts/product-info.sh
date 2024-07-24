@@ -51,6 +51,7 @@ function select_product () {
     p-metric-store \
     apm \
     pivotal_single_sign-on_service \
+    twistlock \
     p-clamav-addon)
 
   for index in ${!PIVNET_PRODUCTS[@]}; do
@@ -106,6 +107,9 @@ function select_product_file () {
 
   PRODUCT_DOWNLOAD=$(echo -e "om download-product --pivnet-api-token "'$PIVNET_API_TOKEN'" --pivnet-product-slug $PRODUCT --product-version $PRODUCT_VERSION --file-glob $PRODUCT_FILE --output-directory ./")
 
+  DEPENDENCIES=$(echo -e "curl -s https://network.tanzu.vmware.com/api/v2/products/p-spring-cloud-services/releases/309011/dependencies | jq '.dependencies[].release | .product.slug + \" \" + .version'")
+  STEMCELL_DEPENDENCIES=$(echo -e "curl -s https://network.tanzu.vmware.com/api/v2/products/p-spring-cloud-services/releases/309011/dependencies | jq '.dependencies[] | select(.release.product.slug | startswith(\"stemcell\")) | .release.product.slug + \" \" + .release.version'")
+
   curlit api/v2/products/$PRODUCT/releases | jq -r '.releases[] | select(.version == '\"$PRODUCT_VERSION\"') '
 
 }
@@ -124,7 +128,10 @@ printf "${formattedOutput}" "PRODUCT_GA_DATE:" "$PRODUCT_GA_DATE"
 printf "${formattedOutput}" "PRODUCT_RELEASE_DATE:" "$PRODUCT_RELEASE_DATE"
 printf "${formattedOutput}" "PRODUCT_EOGS_DATE:" "$PRODUCT_EOGS_DATE"
 printf "${formattedOutput}" "PRODUCT_RELEASE_NOTES:" "$PRODUCT_RELEASE_NOTES"
+printf "${formattedOutput}" "PRODUCT_ID:" "$PRODUCT_ID"
 printf "${formattedOutput}" "PRODUCT_DOWNLOAD:" "$PRODUCT_DOWNLOAD"
+printf "${formattedOutput}" "DEPENDENCIES:" "$DEPENDENCIES"
+printf "${formattedOutput}" "STEMCELL_DEPENDENCIES:" "$STEMCELL_DEPENDENCIES"
 printf '\n%.0s' {1}
 printf "${formattedOutput}" "ADDITIONAL_PRODUCT_FILES:" "$ADDITIONAL_FILES"
 printf '\n%.0s' {1,2}

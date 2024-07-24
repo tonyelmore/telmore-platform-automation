@@ -1,0 +1,156 @@
+---
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation-image
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+    product_version: 5\..*
+
+- name: jq
+  type: github-release
+  check_every: 372h
+  source:
+    owner: stedolan
+    repository: jq
+
+- name: ops-manager
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: ops-manager
+    product_version: ((ops-manager_version_regex))
+
+- name: cf
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: elastic-runtime
+    product_version: ((cf_version_regex))
+
+- name: twistlock
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: twistlock
+    product_version: ((twistlock_version_regex))
+
+- name: stemcell-jammy-1
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: stemcells-ubuntu-jammy
+    product_version: ^1\..*
+
+- name: source
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/mgmt-pipelines/get-latest-version-config.yml"
+    
+jobs:
+- name: update-ops-manager
+  serial: true
+  plan:
+  - in_parallel:
+    - get: platform-automation-image
+      params:
+        unpack: true
+        globs: ["*.tgz"]
+    - get: ops-manager
+      params:
+        globs: [] # Only need the metadata
+    - get: source
+      trigger: true
+    - get: jq
+      params:
+        globs: [jq-linux64]
+  - task: update-product-version
+    file: source/ci/tasks-proposed/update-product-version.yml
+    image: platform-automation-image
+    input_mapping:
+      product: ops-manager
+    params:
+      PIVNET_TOKEN: ((pivnet_token))
+      ENVIRONMENT: ((environment))
+      IAAS: ((iaas))
+      PRODUCT_NAME: opsman
+      PRODUCT_SLUG: ops-manager
+      CONFIG_DIR: config-director
+
+- name: update-cf
+  serial: true
+  plan:
+  - in_parallel:
+    - get: platform-automation-image
+      params:
+        unpack: true
+        globs: ["*.tgz"]
+    - get: stemcell-jammy-1
+      params:
+        globs: []
+    - get: cf
+      params:
+        globs: [] # Only need the metadata
+    - get: source
+      trigger: true
+      passed: ["update-ops-manager"]
+    - get: jq
+      params:
+        globs: [jq-linux64]
+  - task: update-product-version
+    file: source/ci/tasks-proposed/update-product-version.yml
+    image: platform-automation-image
+    input_mapping:
+      product: cf
+      stemcell: stemcell-jammy-1
+    params:
+      PIVNET_TOKEN: ((pivnet_token))
+      ENVIRONMENT: ((environment))
+      IAAS: ((iaas))
+      PRODUCT_NAME: cf
+      PRODUCT_SLUG: elastic-runtime
+
+- name: update-twistlock
+  serial: true
+  plan:
+  - in_parallel:
+    - get: platform-automation-image
+      params:
+        unpack: true
+        globs: ["*.tgz"]
+    - get: stemcell-jammy-1
+      params:
+        globs: []
+    - get: twistlock
+      params:
+        globs: [] # Only need the metadata
+    - get: source
+      trigger: true
+      passed: ["update-cf"]
+    - get: jq
+      params:
+        globs: [jq-linux64]
+  - task: update-product-version
+    file: source/ci/tasks-proposed/update-product-version.yml
+    image: platform-automation-image
+    input_mapping:
+      product: twistlock
+      stemcell: stemcell-jammy-1
+    params:
+      PIVNET_TOKEN: ((pivnet_token))
+      ENVIRONMENT: ((environment))
+      IAAS: ((iaas))
+      PRODUCT_NAME: twistlock
+      PRODUCT_SLUG: twistlock

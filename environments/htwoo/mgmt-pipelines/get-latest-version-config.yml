@@ -1,0 +1,13 @@
+cf_version_regex: ^4\.0\..*$
+p-healthwatch2-pas-exporter_version_regex: ^2\.2\..*$
+apmPostgres_version_regex: ^2\.2\..*$
+pivotal-mysql_version_regex: ^3\.1\..*$
+ops-manager_version_regex: ^3\.0\..*$
+p-rabbitmq_version_regex: ^2\.2\..*$
+p-scheduler_version_regex: ^2\.0\..*$
+p_spring-cloud-services_version_regex: ^3\.1\..*$
+pas-windows_version_regex: ^4\.0\..*$
+p-metric-store_version_regex: ^1\.6\..*$
+wavefront-nozzle_version_regex: ^4\.3\..*$
+p-dataflow_version_regex: ^1\.14\..*$
+twistlock_version_regex: ^32\.07\.123$
