@@ -52,6 +52,7 @@ function select_product () {
     apm \
     pivotal_single_sign-on_service \
     twistlock \
+    p-ipsec-addon \
     p-clamav-addon)
 
   for index in ${!PIVNET_PRODUCTS[@]}; do

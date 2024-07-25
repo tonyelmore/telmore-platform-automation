@@ -42,6 +42,13 @@ resources:
     product_slug: twistlock
     product_version: ((twistlock_version_regex))
 
+- name: ipsec
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: p-ipsec-addon
+    product_version: ((ipsec_version_regex))
+
 - name: stemcell-jammy-1
   type: pivnet
   source:
@@ -219,4 +226,49 @@ jobs:
     params:
       PRODUCT_NAME: twistlock
       PRODUCT_SLUG: twistlock
+      ENV_FILE: environments/((iaas))/mgmt-pipelines/secrets/env.yml
+
+- name: update-ipsec
+  serial: true
+  plan:
+  - in_parallel:
+    - get: source
+      trigger: true
+      passed: ["update-cf"]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+    - get: stemcell-jammy-1
+      params:
+        globs: []
+    - get: ipsec
+      params:
+        globs: [] # Only need the metadata
+    - get: jq
+      params:
+        globs: [jq-linux64]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: *credhub_interpolate_params
+    input_mapping:
+      files: source
+
+  - task: update-product-version
+    file: source/ci/tasks-proposed/update-product-version.yml
+    image: platform-automation-image
+    input_mapping:
+      product: ipsec
+      env: interpolated-files
+    params:
+      PRODUCT_NAME: ipsec
+      PRODUCT_SLUG: p-ipsec-addon
       ENV_FILE: environments/((iaas))/mgmt-pipelines/secrets/env.yml
