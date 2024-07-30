@@ -37,6 +37,7 @@ function select_product () {
     stemcells-ubuntu-jammy \
     stemcells-ubuntu-jammy-fips \
     p-concourse \
+    platform-automation \
     elastic-runtime \
     p-isolation-segment \
     pivotal-mysql \
