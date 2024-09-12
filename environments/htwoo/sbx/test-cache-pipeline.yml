@@ -27,8 +27,10 @@ jobs:
   plan:
   - in_parallel:
     - get: platform-automation-image
+      resource: platform-automation
       params:
         unpack: true
+        globs: ["platform-automation-image*"]
     - get: configuration
 
   - task: call-custom-task
