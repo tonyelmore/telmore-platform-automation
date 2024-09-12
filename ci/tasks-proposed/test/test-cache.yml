@@ -22,7 +22,7 @@ run:
 
     date >> first-directory/first-file
 
-    rm downloaded-product/*.pivotal
+    rm downloaded-product/*.pivotal || true
 
     echo "output from first-directory/first-file"
     cat first-directory/first-file
