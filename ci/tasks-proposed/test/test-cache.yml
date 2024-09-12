@@ -32,7 +32,6 @@ run:
       --pivnet-product-slug p-redis \
       --product-version 3.5.0 \
       --file-glob p-redis-3.5.0-build.1.pivotal \
-      --stemcell-output-directory downloaded-changed-stemcell \
       --output-directory downloaded-changed-product
 
     ls -al downloaded-changed-product
