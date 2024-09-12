@@ -18,9 +18,9 @@ run:
     cat /var/version && echo ""
     set -eux
 
-    date > first-directory/first-file
-    date > second-directory/second-file
-    date > third-directory/third-file
+    date >> first-directory/first-file
+    date >> second-directory/second-file
+    date >> third-directory/third-file
 
     echo "output from first-directory/first-file"
     cat first-directory/first-file
