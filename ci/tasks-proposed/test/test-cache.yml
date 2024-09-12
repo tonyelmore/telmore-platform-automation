@@ -29,9 +29,9 @@ run:
 
     om download-product \
       --pivnet-api-token $PIVNET_TOKEN \
-      --pivnet-product-slug vmware-nsx-t \
-      --product-version 4.1.2.1 \
-      --file-glob VMware-NSX-T-4.1.2.1.23305119.pivotal \
+      --pivnet-product-slug p-redis \
+      --product-version 3.5.0 \
+      --file-glob p-redis-3.5.0-build.1.pivotal \
       --stemcell-output-directory downloaded-stemcell \
       --output-directory downloaded-product
 
