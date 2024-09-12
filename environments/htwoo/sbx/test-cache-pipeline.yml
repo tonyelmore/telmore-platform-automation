@@ -19,8 +19,6 @@ resources:
     password: ((github_token))
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     username: ((github_username))
-    paths:
-    - "environments/((iaas))/((foundation))/config"
 
 jobs:
 - name: job-1
@@ -35,7 +33,7 @@ jobs:
 
   - task: call-custom-task
     image: platform-automation-image
-    file: configuration/tasks-proposed/test/test-cache.yml
+    file: configuration/ci/tasks-proposed/test/test-cache.yml
     params:
       FAIL_FLAG: false
       SOME_STRING: "this is some overloaded string"

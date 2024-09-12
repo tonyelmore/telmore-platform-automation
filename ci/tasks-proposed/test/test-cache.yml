@@ -18,13 +18,13 @@ run:
     cat /var/version && echo ""
     set -eux
 
-    time > first-directory/first-file
-    time > second-directory/second-file
-    time > third-directory/third-file
+    date > first-directory/first-file
+    date > second-directory/second-file
+    date > third-directory/third-file
 
     echo "output from first-directory/first-file"
     cat first-directory/first-file
-    
+
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
       echo "Making the task fail"
