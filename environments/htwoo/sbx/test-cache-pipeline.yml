@@ -37,3 +37,4 @@ jobs:
     params:
       FAIL_FLAG: false
       SOME_STRING: "this is some overloaded string"
+      PIVNET_TOKEN: ((pivnet_token))

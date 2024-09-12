@@ -4,6 +4,8 @@ platform: linux
 params:
   FAIL_FLAG: false
   SOME_STRING: "this is some default string"
+  PIVNET_TOKEN:
+
 
 caches:
 - path: first-directory
@@ -20,10 +22,18 @@ run:
 
     date >> first-directory/first-file
     date >> second-directory/second-file
-    date >> third-directory/third-file
 
     echo "output from first-directory/first-file"
     cat first-directory/first-file
+
+    om download-product \
+      --pivnet-api-token $PIVNET_TOKEN \
+      --pivnet-product-slug vmware-nsx-t \
+      --product-version 4.1.2.1 \
+      --file-glob VMware-NSX-T-4.1.2.1.23305119.pivotal \
+      --output-directory third-directory
+
+    ls -al third-directory
 
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
