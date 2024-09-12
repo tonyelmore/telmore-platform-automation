@@ -1,0 +1,39 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config"
+
+jobs:
+- name: job-1
+  plan:
+  - in_parallel:
+    - get: platform-automation-image
+      params:
+        unpack: true
+    - get: configuration
+
+  - task: call-custom-task
+    image: platform-automation-image
+    file: configuration/tasks-proposed/test/test-cache.yml
+    params:
+      FAIL_FLAG: false
+      SOME_STRING: "this is some overloaded string"

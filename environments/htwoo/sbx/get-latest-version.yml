@@ -1,0 +1,88 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config"
+
+- name: cf-product
+  type: s3
+  source:
+    endpoint: http://minio.h2o-2-23016.h2o.vmware.com:9000
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-key))
+    bucket: ((platform-automation-bucket))
+    regexp: (.*).pivotal
+
+- name: cf-stemcell
+  type: s3
+  source:
+    endpoint: http://minio.h2o-2-23016.h2o.vmware.com:9000
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-key))
+    bucket: ((platform-automation-bucket))
+    regexp: (.*).tgz
+
+# This task is used in multiple jobs
+# The YAML anchor "*prepare-tasks-with-secrets" is used in its place
+prepare-tasks-with-secrets: &prepare-tasks-with-secrets
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+  input_mapping:
+    tasks: platform-automation-tasks
+    config: configuration
+  params:
+    CONFIG_PATHS: config/environments/((foundation))/(environment))/config
+  output_mapping:
+    tasks: platform-automation-tasks
+
+jobs:
+- name: fetch-cf
+  plan:
+  - in_parallel:
+    - get: daily
+      trigger: true
+    - get: platform-automation-image
+      params:
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        unpack: true
+    - get: configuration
+
+  - task: prepare-tasks-with-secrets
+    <<: *prepare-tasks-with-secrets
+
+  - task: download-cf-product-and-stemcell
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/download-product.yml
+    params:
+      CONFIG_FILE: download-product-pivnet/download-cf.yml
+    input_mapping:
+      config: configuration
+    output_mapping: {downloaded-stemcell: cf-stemcell}
+
+  - in_parallel:
+      - put: cf-product
+        params:
+          file: downloaded-product/*.pivotal
+      - put: cf-stemcell
+        params:
+          file: cf-stemcell/*.tgz

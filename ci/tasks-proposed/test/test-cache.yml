@@ -1,0 +1,32 @@
+---
+platform: linux
+
+params:
+  FAIL_FLAG: false
+  SOME_STRING: "this is some default string"
+
+caches:
+- path: first-directory
+- path: second-directory
+- path: third-directory
+
+run:
+  path: bash
+  args:
+  - "-c"
+  - |
+    cat /var/version && echo ""
+    set -eux
+
+    time > first-directory/first-file
+    time > second-directory/second-file
+    time > third-directory/third-file
+    
+    echo "String from param is: ${SOME_STRING}"
+    if [ $FAIL_FLAG == "true" ]; then
+      echo "Making the task fail"
+      exit 1
+    fi
+
+    echo "Task succeeded"
+    exit 0
