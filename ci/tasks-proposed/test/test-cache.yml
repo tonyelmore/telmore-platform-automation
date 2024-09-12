@@ -9,8 +9,8 @@ params:
 
 caches:
 - path: first-directory
-- path: second-directory
-- path: third-directory
+- path: downloaded-product
+- path: downloaded-stemcell
 
 run:
   path: bash
@@ -21,7 +21,8 @@ run:
     set -eux
 
     date >> first-directory/first-file
-    date >> second-directory/second-file
+
+    rm downloaded-product/*.pivotal
 
     echo "output from first-directory/first-file"
     cat first-directory/first-file
@@ -31,12 +32,12 @@ run:
       --pivnet-product-slug vmware-nsx-t \
       --product-version 4.1.2.1 \
       --file-glob VMware-NSX-T-4.1.2.1.23305119.pivotal \
-      --stemcell-output-directory second-directory \
-      --output-directory third-directory
+      --stemcell-output-directory downloaded-stemcell \
+      --output-directory downloaded-product
 
-    ls -al third-directory
+    ls -al downloaded-product
 
-    ls -al second-directory
+    ls -al downloaded-stemcell
 
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
