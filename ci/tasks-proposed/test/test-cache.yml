@@ -41,6 +41,7 @@ run:
 
     rm downloaded-product/assign-stemcell.yml || true
     rm downloaded-product/download-file.json || true
+    rm downloaded-stemcell/*.tgz || true 
     
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
