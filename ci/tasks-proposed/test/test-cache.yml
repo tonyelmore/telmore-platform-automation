@@ -32,7 +32,6 @@ run:
       --pivnet-product-slug p-redis \
       --product-version 3.5.0 \
       --file-glob p-redis-3.5.0-build.1.pivotal \
-      --stemcell-output-directory downloaded-stemcell \
       --output-directory downloaded-product
 
     ls -al downloaded-product
@@ -42,7 +41,7 @@ run:
     rm downloaded-product/assign-stemcell.yml || true
     rm downloaded-product/download-file.json || true
     rm downloaded-stemcell/*.tgz || true 
-    
+
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
       echo "Making the task fail"
