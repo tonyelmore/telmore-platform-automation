@@ -31,9 +31,12 @@ run:
       --pivnet-product-slug vmware-nsx-t \
       --product-version 4.1.2.1 \
       --file-glob VMware-NSX-T-4.1.2.1.23305119.pivotal \
+      --stemcell-output-directory second-directory \
       --output-directory third-directory
 
     ls -al third-directory
+
+    ls -al second-directory
 
     echo "String from param is: ${SOME_STRING}"
     if [ $FAIL_FLAG == "true" ]; then
