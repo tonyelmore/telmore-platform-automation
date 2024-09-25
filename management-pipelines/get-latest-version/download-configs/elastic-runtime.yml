@@ -1,0 +1,9 @@
+---
+pivnet-api-token: ((secret_pivnet_token))
+pivnet-product-slug: "elastic-runtime"
+
+file-glob: "cf*.pivotal"
+product-version-regex: ((version_regex))
+
+# Required so that the downloaded filename is correct format
+blobstore-bucket: foundation-runtime

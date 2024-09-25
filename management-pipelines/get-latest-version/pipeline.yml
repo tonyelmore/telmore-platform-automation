@@ -1,0 +1,115 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config"
+
+- name: pivnet_product
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: ((product_slug))
+    product_version: ((product_version))
+
+- name: s3_product
+  type: s3
+  source:
+    bucket: ((s3_bucket))
+    region_name: ((s3_region))
+    access_key_id: ((s3_access_key_id))
+    secret_access_key: ((s3_secret_access_key))
+    endpoint: ((s3_endpoint))
+    regexp: ((product_s3_filename))
+
+# This task is used in multiple jobs
+# The YAML anchor "*prepare-tasks-with-secrets" is used in its place
+prepare-tasks-with-secrets: &prepare-tasks-with-secrets
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+  input_mapping:
+    tasks: platform-automation-tasks
+    config: configuration
+  params:
+    CONFIG_PATHS: config/management-pipelines/get-latest-version/secrets
+  output_mapping:
+    tasks: platform-automation-tasks
+
+jobs:
+- name: download-from-pivnet-store-in-s3
+  plan:
+  - in_parallel:
+    - get: configuration
+
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+    - get: pivnet_product
+      trigger: true
+      params:
+        globs: []  # Only need the metadata - the download-product task will download the product
+
+  - task: prepare-tasks-with-secrets
+    <<: *prepare-tasks-with-secrets
+
+  - task: add-version-to-config
+    image: platform-automation-image
+    params:
+      REGEX_STRING: ((product_version))
+    config:
+      platform: linux
+      inputs: []
+      outputs:
+        - name: output
+      run:
+        path: /bin/bash
+        args:
+          - -c
+          - |
+            mkdir -p output
+            echo "version_regex: $REGEX_STRING" > output/version_regex.yml
+
+
+  - task: download-pivnet-artifact
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/download-product.yml
+    params:
+      SOURCE: pivnet
+      CONFIG_FILE: config/management-pipelines/get-latest-version/download-configs/((product_slug)).yml
+      VARS_FILES: |
+        secrets/management-pipelines/get-latest-version/secrets/download-secrets.yml
+        vars/version_regex.yml
+    input_mapping:
+      config: configuration
+      vars: output
+      secrets: configuration
+  - in_parallel:
+      - put: s3_product
+        params:
+          file: downloaded-product/((downloaded_product))

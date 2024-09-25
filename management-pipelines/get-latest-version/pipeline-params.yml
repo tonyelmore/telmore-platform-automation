@@ -1,0 +1,18 @@
+pipeline_params:
+  repo:
+    uri:
+    branch: 
+    public_key:
+    # Need private key
+
+concourse:
+  team:
+    product_s3_filename:
+      access_key_id:
+      bucket:
+      endpoint:
+      # Need secret access key
+      skip_ssl_verification: false
+      foundation_artifacts:
+        bucket: foundation_runtime
+        
