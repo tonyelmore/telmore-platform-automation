@@ -1,13 +1,12 @@
 jobs:
-- name: test-job
+- name: hello-world-job
   plan:
-  - task: display-cred
+  - task: print-hello-world
     config:
       platform: linux
       image_resource:
         type: registry-image
-        source:
-          repository: ubuntu
+        source: {repository: alpine}
       run:
-        path: bash
-        args: [-c, "echo Hello, ((provided-by-credhub))"]
+        path: echo
+        args: ["hello world"]

@@ -1,5 +1,5 @@
 ---
-name: emptyvm
+name: emptyvm-sabd
 
 stemcells:
 - alias: default
@@ -15,7 +15,7 @@ update:
   update_watch_time: 5000-60000
 
 instance_groups:
-- name: emptyvm
+- name: emptyvm-sabd
   azs: [az1]
   instances: 1
   jobs: []
