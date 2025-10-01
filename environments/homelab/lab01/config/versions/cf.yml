@@ -1,0 +1,5 @@
+---
+pivnet-api-token: ((pivnet-api-token))
+pivnet-file-glob: "cf*.pivotal"
+pivnet-product-slug: "elastic-runtime"
+product-version: "6.0.15+LTS-T"

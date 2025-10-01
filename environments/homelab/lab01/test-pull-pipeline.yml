@@ -1,0 +1,54 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: platform-automation
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+
+- name: director-configuration
+  type: git
+  source:
+    branch: master
+    password: ((github_token))
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    username: ((github_username))
+    paths:
+    - "environments/((iaas))/((foundation))/config-director"
+
+jobs:
+- name: validate-director-configuration
+  plan:
+  - in_parallel:
+    - get: director-configuration
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+        # globs: ["*image*.tgz"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["platform-automation-task*"]
+        # globs: ["*tasks*"]
+
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params: &director_credhub_interpolate_params
+      CREDHUB_SERVER: ((concourse_credhub_server))
+      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
+      CREDHUB_CLIENT: ((concourse_credhub_client_username))
+      CREDHUB_SECRET: ((concourse_credhub_client_secret))
+      PREFIX: '/concourse/((team))'
+      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config-director/secrets"
+    input_mapping:
+      files: director-configuration

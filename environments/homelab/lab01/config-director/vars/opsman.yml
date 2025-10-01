@@ -1,0 +1,15 @@
+---
+gateway: 192.168.1.1
+network_name: sbx-PAS-Infrastructure
+opsman_netmask: 255.255.255.0
+opsman_vm_name: sbx-opsmgr
+opsman_host: opsman.h2o-2-23016.h2o.vmware.com
+opsman_private_ip: 192.168.1.10
+vsphere_datacenter: vc01
+vsphere_datastore: vsanDatastore
+# Is this correct?
+vsphere_folder: pcf_opsman_vms
+vsphere_resource_pool: /vc01/host/vc01cl01/Resources/tas1
+
+ui_banner_contents: "UI Banner Contents - H2O-23016 Sandbox"
+ssh_banner_contents: "SSH Banner Contents - H2O-23016 Sandbox"

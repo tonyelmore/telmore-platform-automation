@@ -1,0 +1,9 @@
+---
+team: main
+foundation: lab01
+iaas: homelab
+lock_pool_name: homelab-lab01
+concourse_user: admin
+attempts: 5
+concourse_credhub_server: https://concourse.h2o-2-23016.h2o.vmware.com:8844
+platform-automation-bucket: homelab-installation-export-files
