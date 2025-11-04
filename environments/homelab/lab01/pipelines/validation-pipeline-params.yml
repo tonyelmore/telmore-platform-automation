@@ -16,4 +16,4 @@ s3_disable_ssl: true  # for Minio
 s3_skip_ssl_verification: true  # for self-signed certs
 
 # Platform Automation
-env_file_path: env/environments/homelab/common/env.yml
+env_file_path: environments/homelab/lab01/common-config/env.yml
