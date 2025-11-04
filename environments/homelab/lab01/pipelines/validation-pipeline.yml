@@ -104,7 +104,7 @@ jobs:
       tasks: platform-automation-tasks-with-secrets
     params:
       CONFIG_PATHS: |
-        config/environments/homelab/lab01/env
+        config/environments/homelab/lab01/common-config
       VARS_PATHS: |
         config/environments/homelab/common
         config/environments/homelab/lab01/config/defaults
