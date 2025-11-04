@@ -104,14 +104,13 @@ jobs:
       tasks: platform-automation-tasks-with-secrets
     params:
       CONFIG_PATHS: |
-        config/environments/homelab/lab01/config/secrets
-        config/environments/homelab/lab01/config-director/secrets
+        config/environments/homelab/lab01/env
       VARS_PATHS: |
-        config/envrionments/homelab/common
+        config/environments/homelab/common
         config/environments/homelab/lab01/config/defaults
         config/environments/homelab/lab01/config/vars
         config/environments/homelab/lab01/config/versions
-        
+
   # Test 6: Check pending changes in TAS foundation
   - task: check-pending-changes
     image: platform-automation-image
