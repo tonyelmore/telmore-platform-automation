@@ -9,15 +9,15 @@ resources:
 - name: platform-automation
   type: pivnet
   source:
-    api_token: ((pivnet_token))
+    api_token: ((pivnet-token))
     product_slug: platform-automation
 
 - name: configuration
   type: git
   source:
     branch: ((pipeline_params.repo.branch))
-    password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    password: ((github-token))
+    uri: ((pipeline_params.repo.uri))
     # username: ((github_username))
     paths:
     - "environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config"
@@ -25,19 +25,19 @@ resources:
 - name: pivnet_product
   type: pivnet
   source:
-    api_token: ((pivnet_token))
-    product_slug: ((product_slug))
-    product_version: ((product_version))
+    api_token: ((pivnet-token))
+    product_slug: ((pipeline_params.pivnet-product.slug_slug))
+    product_version: ((pipeline_params.pivnet-product.version))
 
 - name: s3_product
   type: s3
   source:
-    bucket: ((s3_bucket))
-    region_name: ((s3_region))
-    access_key_id: ((s3_access_key_id))
-    secret_access_key: ((s3_secret_access_key))
-    endpoint: ((s3_endpoint))
-    regexp: ((product_s3_filename))
+    bucket: ((pipeline_params.s3_products.bucket))
+    region_name: ((pipeline_params.s3_products.region_name))
+    access_key_id: ((minio.access_key))
+    secret_access_key: ((minio.secret_access_key))
+    endpoint: ((pipeline_params.s3_products.s3_endpoint))
+    regexp: ((pipeline_params.s3_products.regexp))
 
 # This task is used in multiple jobs
 # The YAML anchor "*prepare-tasks-with-secrets" is used in its place
@@ -48,12 +48,12 @@ prepare-tasks-with-secrets: &prepare-tasks-with-secrets
     tasks: platform-automation-tasks
     config: configuration
   params:
-    CONFIG_PATHS: config/management-pipelines/get-latest-version/secrets
+    CONFIG_PATHS: config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config
   output_mapping:
     tasks: platform-automation-tasks
 
 jobs:
-- name: download-from-pivnet-store-in-s3
+- name: first-test-job
   plan:
   - in_parallel:
     - get: configuration
@@ -62,7 +62,7 @@ jobs:
       resource: platform-automation
       params:
         unpack: true
-        globs: ["vsphere-platform-automation-image*"]
+        globs: ["platform-automation-image*"]
 
     - get: platform-automation-tasks
       resource: platform-automation
@@ -78,38 +78,15 @@ jobs:
   - task: prepare-tasks-with-secrets
     <<: *prepare-tasks-with-secrets
 
-  - task: add-version-to-config
+  - task: test
+    file: platform-automation-tasks/tasks/test.yml
     image: platform-automation-image
-    params:
-      REGEX_STRING: ((product_version))
-    config:
-      platform: linux
-      inputs: []
-      outputs:
-        - name: output
-      run:
-        path: /bin/bash
-        args:
-          - -c
-          - |
-            mkdir -p output
-            echo "version_regex: $REGEX_STRING" > output/version_regex.yml
 
-
-  - task: download-pivnet-artifact
+  - task: check-pending-changes
     image: platform-automation-image
-    file: platform-automation-tasks/tasks/download-product.yml
-    params:
-      SOURCE: pivnet
-      CONFIG_FILE: config/management-pipelines/get-latest-version/download-configs/((product_slug)).yml
-      VARS_FILES: |
-        secrets/management-pipelines/get-latest-version/secrets/download-secrets.yml
-        vars/version_regex.yml
+    file: platform-automation-tasks/tasks/check-pending-changes.yml
     input_mapping:
-      config: configuration
-      vars: output
-      secrets: configuration
-  - in_parallel:
-      - put: s3_product
-        params:
-          file: downloaded-product/((downloaded_product))
+      env: configuration
+    params:
+      ENV_FILE: environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config-director/secrets"
+      ALLOW_PENDING_CHANGES: true

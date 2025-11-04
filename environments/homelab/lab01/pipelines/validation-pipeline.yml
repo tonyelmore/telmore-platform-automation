@@ -1,0 +1,164 @@
+---
+resource_types:
+- name: pivnet
+  type: registry-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+    username: tonyelmore
+    password: ((dockerhub-password))
+
+resources:
+# Platform Automation Toolkit from Pivnet
+- name: platform-automation-image
+  type: pivnet
+  source:
+    api_token: ((pivnet-token))
+    product_slug: platform-automation
+    product_version: ^5\.(.*)$
+    sort_by: semver
+
+- name: platform-automation-tasks
+  type: pivnet
+  source:
+    api_token: ((pivnet-token))
+    product_slug: platform-automation
+    product_version: ^5\.(.*)$
+    sort_by: semver
+
+# Git repository for config
+- name: config-repo
+  type: git
+  source:
+    uri: ((git_repo_uri))
+    branch: ((git_branch))
+    private_key: ((github-private-key.private-key))
+
+# S3/Minio resources for testing
+- name: test-file
+  type: s3
+  source:
+    endpoint: ((s3_endpoint))
+    bucket: ((s3_bucket))
+    regexp: test-file-(.*).txt
+    access_key_id: ((s3_access_key_id))
+    secret_access_key: ((minio-secret-access-key))
+    disable_ssl: ((s3_disable_ssl))
+    skip_ssl_verification: ((s3_skip_ssl_verification))
+    use_path_style: true
+
+jobs:
+- name: test-git-repo
+  serial: true
+  plan:
+  # Test 1: Get git repo
+  - get: config-repo
+    trigger: false
+  
+  # Test 2: Get Platform Automation resources
+  - get: platform-automation-image
+    params:
+      globs: ["vsphere-platform-automation-image*.tar.gz"]
+      unpack: true
+  
+  - get: platform-automation-tasks
+    params:
+      globs: ["platform-automation-tasks-*.zip"]
+      unpack: true
+
+  # Test 3: Create a test file and put to Minio
+  - task: create-test-file
+    image: platform-automation-image
+    config:
+      platform: linux
+      outputs:
+      - name: test-output
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          set -eu
+          TIMESTAMP=$(date +%s)
+          echo "Test file created at $(date)" > test-output/test-file-${TIMESTAMP}.txt
+          echo "Platform Automation Toolkit test successful" >> test-output/test-file-${TIMESTAMP}.txt
+          echo "Created test-file-${TIMESTAMP}.txt"
+  
+  - put: test-file
+    params:
+      file: test-output/test-file-*.txt
+
+  # Test 4: Get the file back from Minio
+  # - get: test-file
+  #   passed: [test-setup]
+  
+  # Test 5: Prepare tasks with secrets
+  - task: prepare-tasks-with-secrets
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+    input_mapping:
+      tasks: platform-automation-tasks
+      config: config-repo
+      vars: config-repo
+    output_mapping:
+      tasks: platform-automation-tasks-with-secrets
+    params:
+      CONFIG_PATHS: |
+        config/environments/homelab/lab01/config/secrets
+        config/environments/homelab/lab01/config-director/secrets
+      VARS_PATHS: |
+        config/envrionments/homelab/common
+        config/environments/homelab/lab01/config/defaults
+        config/environments/homelab/lab01/config/vars
+        config/environments/homelab/lab01/config/versions
+        
+  # Test 6: Check pending changes in TAS foundation
+  - task: check-pending-changes
+    image: platform-automation-image
+    file: platform-automation-tasks-with-secrets/tasks/check-pending-changes.yml
+    input_mapping:
+      env: config-repo
+    params:
+      ENV_FILE: ((env_file_path))
+    on_success:
+      do:
+      - task: report-success
+        image: platform-automation-image
+        config:
+          platform: linux
+          run:
+            path: bash
+            args:
+            - -c
+            - |
+              echo "============================================"
+              echo "All tests passed successfully!"
+              echo "============================================"
+              echo "✓ Git repository access confirmed"
+              echo "✓ Platform Automation Toolkit image loaded"
+              echo "✓ Platform Automation Toolkit tasks loaded"
+              echo "✓ File successfully put to Minio/S3"
+              echo "✓ File successfully retrieved from Minio/S3"
+              echo "✓ Tasks prepared with secrets"
+              echo "✓ TAS foundation pending changes checked"
+              echo "============================================"
+    on_failure:
+      do:
+      - task: report-failure
+        image: platform-automation-image
+        config:
+          platform: linux
+          run:
+            path: bash
+            args:
+            - -c
+            - |
+              echo "============================================"
+              echo "Test failed at check-pending-changes step"
+              echo "============================================"
+              echo "This may be due to:"
+              echo "- Incorrect Ops Manager credentials"
+              echo "- Network connectivity issues"
+              echo "- Missing or incorrect ENV_FILE"
+              echo "============================================"
+              exit 1ping

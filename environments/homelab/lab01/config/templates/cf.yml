@@ -13,8 +13,6 @@ errand-config:
     post-deploy-state: ((push-apps-manager_post_deploy_state))
   push-offline-docs:
     post-deploy-state: ((push-offline-docs_post_deploy_state))
-  push-tas-portal:
-    post-deploy-state: ((push-tas-portal_post_deploy_state))
   push-usage-service:
     post-deploy-state: ((push-usage-service_post_deploy_state))
   rotate_cc_database_key:
@@ -30,6 +28,8 @@ network-properties:
     name: ((network_name))
   other_availability_zones:
   - name: ((singleton_availability_zone))
+  - name: ((az2_name))
+  - name: ((az3_name))
   singleton_availability_zone:
     name: ((singleton_availability_zone))
 product-name: cf
@@ -38,6 +38,8 @@ product-properties:
     value: ((cloud_controller_allow_app_ssh_access))
   .cloud_controller.apps_domain:
     value: ((cloud_controller_apps_domain))
+  .cloud_controller.asgs_with_commas:
+    value: ((cloud_controller_asgs_with_commas))
   .cloud_controller.default_app_memory:
     value: ((cloud_controller_default_app_memory))
   .cloud_controller.default_app_ssh_access:
@@ -66,6 +68,8 @@ product-properties:
     value: ((diego_brain_starting_container_count_maximum))
   .mysql.cli_history:
     value: ((mysql_cli_history))
+  .mysql.innodb_buffer_pool_size_percent:
+    value: ((mysql_innodb_buffer_pool_size_percent))
   .mysql.max_connections:
     value: ((mysql_max_connections))
   .mysql.prevent_node_auto_rejoin:
@@ -74,8 +78,6 @@ product-properties:
     value: ((mysql_remote_admin_access))
   .mysql_monitor.poll_frequency:
     value: ((mysql_monitor_poll_frequency))
-  .mysql_monitor.recipient_email:
-    value: ((mysql_monitor_recipient_email))
   .mysql_monitor.write_read_delay:
     value: ((mysql_monitor_write_read_delay))
   .mysql_proxy.enable_inactive_mysql_port:
@@ -88,6 +90,8 @@ product-properties:
     value: ((nfs_server_blobstore_internal_access_rules))
   .properties.app_graceful_shutdown_period_in_seconds:
     value: ((app_graceful_shutdown_period_in_seconds))
+  .properties.app_log_rate_limiting:
+    value: disable
   .properties.autoscale_api_disable_connection_pooling:
     value: ((autoscale_api_disable_connection_pooling))
   .properties.autoscale_api_instance_count:
@@ -108,6 +112,8 @@ product-properties:
     value: ((ccdb_connection_validation_timeout))
   .properties.ccdb_read_timeout:
     value: ((ccdb_read_timeout))
+  .properties.ccdb_restore:
+    value: disable
   .properties.ccng_monit_http_healthcheck_timeout_per_retry:
     value: ((ccng_monit_http_healthcheck_timeout_per_retry))
   .properties.cf_networking_database_connection_timeout:
@@ -117,6 +123,8 @@ product-properties:
   .properties.cf_networking_internal_domains:
     value:
     - name: apps.internal
+  .properties.cloud_controller_app_log_revision:
+    value: ((cloud_controller_app_log_revision))
   .properties.cloud_controller_audit_events_cutoff_age_in_days:
     value: ((cloud_controller_audit_events_cutoff_age_in_days))
   .properties.cloud_controller_completed_tasks_cutoff_age_in_days:
@@ -125,14 +133,20 @@ product-properties:
     value: ((cloud_controller_default_health_check_timeout))
   .properties.cloud_controller_default_log_rate_limit_app:
     value: ((cloud_controller_default_log_rate_limit_app))
-  .properties.cloud_controller_fs4_only:
-    value: fs3_and_fs4
-  .properties.cloud_controller_fs4_only.fs3_and_fs4_option.cloud_controller_default_stack:
-    value: ((cloud_controller_fs4_only_fs3_and_fs4_option_cloud_controller_default_stack))
   .properties.cloud_controller_instance_file_descriptor_limit:
     value: ((cloud_controller_instance_file_descriptor_limit))
+  .properties.cloud_controller_number_of_local_workers:
+    value: ((cloud_controller_number_of_local_workers))
   .properties.cloud_controller_post_bbr_healthcheck_timeout_in_seconds:
     value: ((cloud_controller_post_bbr_healthcheck_timeout_in_seconds))
+  .properties.cloud_controller_prometheus_enabled:
+    value: ((cloud_controller_prometheus_enabled))
+  .properties.cloud_controller_puma:
+    value: disable
+  .properties.cloud_controller_stacks:
+    value: fs4_only
+  .properties.cloud_controller_statsd_enabled:
+    value: ((cloud_controller_statsd_enabled))
   .properties.cloud_controller_temporary_disable_deployments:
     value: ((cloud_controller_temporary_disable_deployments))
   .properties.cloud_controller_worker_alert_if_above_mb:
@@ -177,6 +191,8 @@ product-properties:
     value: ((disable_diego_cells))
   .properties.disable_logs_in_firehose:
     value: ((disable_logs_in_firehose))
+  .properties.enable_container_network_metrics:
+    value: ((enable_container_network_metrics))
   .properties.enable_cpu_throttling:
     value: ((enable_cpu_throttling))
   .properties.enable_garden_containerd_mode:
@@ -217,6 +233,8 @@ product-properties:
     value: ((metric_registrar_max_metrics_per_instance))
   .properties.metric_registrar_scrape_interval_in_seconds:
     value: ((metric_registrar_scrape_interval_in_seconds))
+  .properties.mtls_log_cache:
+    value: tls
   .properties.mysql_activity_logging:
     value: enable
   .properties.mysql_activity_logging.enable.audit_logging_events:
@@ -229,11 +247,14 @@ product-properties:
       name: ((networking_poe_ssl_certs_0_name))
   .properties.networkpolicyserver_database_max_open_connections:
     value: ((networkpolicyserver_database_max_open_connections))
+  .properties.networkpolicyserver_max_policies_per_app_source:
+    value: ((networkpolicyserver_max_policies_per_app_source))
   .properties.networkpolicyserverinternal_database_max_open_connections:
     value: ((networkpolicyserverinternal_database_max_open_connections))
   .properties.nfs_volume_driver:
-    selected_option: disable
-    value: disable
+    value: enable
+  .properties.otel_collector_beta_features_enabled:
+    value: ((otel_collector_beta_features_enabled))
   .properties.push_apps_manager_app_poll_interval:
     value: ((push_apps_manager_app_poll_interval))
   .properties.push_apps_manager_buildpack:
@@ -250,7 +271,7 @@ product-properties:
     value: ((push_apps_manager_invitations_buildpack))
   .properties.push_apps_manager_nav_links:
     value:
-    - href: https://docs.vmware.com/en/VMware-Tanzu-Application-Service/index.html
+    - href: https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/6-0/tpcf/concepts-overview.html
       name: Docs
     - href: /tools
       name: Tools
@@ -258,8 +279,6 @@ product-properties:
     value: ((push_apps_manager_poll_interval))
   .properties.push_apps_manager_search_server_buildpack:
     value: ((push_apps_manager_search_server_buildpack))
-  .properties.push_tas_portal_app_accelerator_activate:
-    value: ((push_tas_portal_app_accelerator_activate))
   .properties.push_usage_service_cutoff_age_in_days:
     value: ((push_usage_service_cutoff_age_in_days))
   .properties.route_integrity:
@@ -276,6 +295,8 @@ product-properties:
     value: ((router_backend_max_conn))
   .properties.router_balancing_algorithm:
     value: round-robin
+  .properties.router_balancing_algorithm_az_preference:
+    value: none
   .properties.router_client_cert_validation:
     value: request
   .properties.router_enable_proxy:
@@ -291,6 +312,8 @@ product-properties:
     - name: JSESSIONID
   .properties.router_sticky_sessions_for_auth_negotiate:
     value: ((router_sticky_sessions_for_auth_negotiate))
+  .properties.routing_api_enabled_api_endpoints:
+    value: both
   .properties.routing_disable_http:
     value: ((routing_disable_http))
   .properties.routing_log_client_ips:
@@ -337,20 +360,6 @@ product-properties:
     value: disable
   .properties.uaa:
     value: internal
-  .properties.uaa.internal.password_expires_after_months:
-    value: ((uaa_internal_password_expires_after_months))
-  .properties.uaa.internal.password_max_retry:
-    value: ((uaa_internal_password_max_retry))
-  .properties.uaa.internal.password_min_length:
-    value: ((uaa_internal_password_min_length))
-  .properties.uaa.internal.password_min_lowercase:
-    value: ((uaa_internal_password_min_lowercase))
-  .properties.uaa.internal.password_min_numeric:
-    value: ((uaa_internal_password_min_numeric))
-  .properties.uaa.internal.password_min_special:
-    value: ((uaa_internal_password_min_special))
-  .properties.uaa.internal.password_min_uppercase:
-    value: ((uaa_internal_password_min_uppercase))
   .properties.uaa_database:
     value: internal_mysql
   .properties.uaa_internal_users_password_policies:
@@ -365,8 +374,12 @@ product-properties:
     value: ((router_drain_timeout))
   .router.drain_wait:
     value: ((router_drain_wait))
+  .router.enable_http1_concurrent_read_write:
+    value: ((router_enable_http1_concurrent_read_write))
   .router.enable_http2:
     value: ((router_enable_http2))
+  .router.enable_nontls_health_checks:
+    value: ((router_enable_nontls_health_checks))
   .router.enable_w3c:
     value: ((router_enable_w3c))
   .router.enable_write_access_logs:
@@ -375,12 +388,16 @@ product-properties:
     value: ((router_enable_zipkin))
   .router.frontend_idle_timeout:
     value: ((router_frontend_idle_timeout))
+  .router.httplaxcontentlength:
+    value: ((router_httplaxcontentlength))
   .router.lb_healthy_threshold:
     value: ((router_lb_healthy_threshold))
   .router.max_header_kb:
     value: ((router_max_header_kb))
   .router.request_timeout_in_seconds:
     value: ((router_request_timeout_in_seconds))
+  .router.static_ips:
+    value: ((router_static_ips))
   .uaa.apps_manager_access_token_lifetime:
     value: ((uaa_apps_manager_access_token_lifetime))
   .uaa.cf_cli_access_token_lifetime:
@@ -430,7 +447,6 @@ resource-config:
     instances: ((resource-var-credhub_instances))
     max_in_flight: ((resource-var-credhub_max_in_flight))
   diego_brain:
-    additional_vm_extensions: ((resource-var-diego_brain_additional_vm_extensions))
     instance_type:
       id: ((resource-var-diego_brain_instance_type))
     instances: ((resource-var-diego_brain_instances))
@@ -490,13 +506,11 @@ resource-config:
     persistent_disk:
       size_mb: ((resource-var-nfs_server_persistent_disk_size))
   router:
-    additional_vm_extensions: ((resource-var-router_additional_vm_extensions))
     instance_type:
       id: ((resource-var-router_instance_type))
     instances: ((resource-var-router_instances))
     max_in_flight: ((resource-var-router_max_in_flight))
   tcp_router:
-    additional_vm_extensions: ((resource-var-tcp_router_additional_vm_extensions))
     instance_type:
       id: ((resource-var-tcp_router_instance_type))
     instances: ((resource-var-tcp_router_instances))

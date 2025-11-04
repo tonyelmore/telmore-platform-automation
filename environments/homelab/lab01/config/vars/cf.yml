@@ -1,9 +1,11 @@
-cloud_controller_apps_domain: apps.h2o-2-23016.h2o.vmware.com
-cloud_controller_system_domain: sys.h2o-2-23016.h2o.vmware.com
 singleton_availability_zone: az1
+az2_name: az2
+az3_name: az3
+cloud_controller_apps_domain: apps.lab01.lab.telmore.io
+cloud_controller_system_domain: sys.lab01.lab.telmore.io
 enable_smb_volume_driver: false
+router_static_ips: 10.1.20.20,10.1.20.21,10.1.20.22
 
-cloud_controller_fs4_only_fs3_and_fs4_option_cloud_controller_default_stack: cflinuxfs3
 # enable_log_cache_syslog_ingestion: true
 
 # resource-var-diego_brain_instances: 1

@@ -1,0 +1,19 @@
+# Pivnet
+# pivnet_token: <<from secrets>>
+
+# Git
+git_repo_uri: https://github.com/tonyelmore/telmore-platform-automation.git
+git_branch: master
+# git_private_key: |
+#   <<from secrets>>
+
+# S3/Minio
+s3_endpoint: http://minio.lab.telmore.io
+s3_bucket: test-bucket
+s3_access_key_id: HCer92Ko8GRE5CkAlWL7
+# s3_secret_access_key: <<from secrets>>
+s3_disable_ssl: true  # for Minio
+s3_skip_ssl_verification: true  # for self-signed certs
+
+# Platform Automation
+env_file_path: env/ops-manager.yml

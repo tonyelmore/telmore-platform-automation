@@ -1,4 +1,2 @@
-features/nfs_volume_driver-disable.yml
-resource/router_additional_vm_extensions.yml
-resource/tcp_router_additional_vm_extensions.yml
-resource/diego_brain_additional_vm_extensions.yml
+network/3-az-configuration.yml
+optional/add-router-static_ips.yml

@@ -2,10 +2,20 @@ pipeline_params:
   iaas: homelab
   foundation: lab01
   repo:
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    uri: h’}
     branch: master
     # public_key: ((github_public_key))
     # Need private key
+
+pivnet-product:
+  slug: elastic-runtime
+  version: 6.0.15
+
+s3_product:
+  bucket: products
+  region_name: us-west-2
+  s3_endpoint: minio.lab.telmore.io
+  regexp: 
 
 concourse:
   team:
