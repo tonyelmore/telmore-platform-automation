@@ -8,6 +8,7 @@ git_branch: master
 #   <<from secrets>>
 
 # S3/Minio
+# My previous variables had the s3 endpoint with ":9000" but it seems to work without it.
 s3_endpoint: http://minio.lab.telmore.io
 s3_bucket: test-bucket
 s3_access_key_id: HCer92Ko8GRE5CkAlWL7

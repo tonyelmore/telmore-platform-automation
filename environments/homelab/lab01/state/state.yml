@@ -1,2 +1,2 @@
 iaas: vsphere
-vm_id: /Datacenter/vm/pcf_opsman_vms/sbx-opsmgr
+vm_id: /lab-dc/vm/tas-lab01/tas-lab01-infrastructure/lab01-opsman

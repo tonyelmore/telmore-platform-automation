@@ -1,21 +1,30 @@
 pipeline_params:
   iaas: homelab
   foundation: lab01
+  lock_pool_name: homelab-lab01
+  concourse_user: test
+  attempts: 5
+  concourse_credhub_server: https://concourse.lab.telmore.io:8844
+
+github:
   repo:
-    uri: h’}
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
     branch: master
-    # public_key: ((github_public_key))
-    # Need private key
+    # git_private_key |
+    #   <<from secrets>>
 
 pivnet-product:
   slug: elastic-runtime
   version: 6.0.15
 
-s3_product:
-  bucket: products
+s3_installation_file:
+  endpoint: http://minio.lab.telmore.io
+  bucket: lab01-installation-export-files
+  s3_access_key_id: HCer92Ko8GRE5CkAlWL7
+  # s3_secret_access_key: <<from secrets>>
+  s3_disable_ssl: true  # for Minio
+  s3_skip_ssl_verification: true  # for self-signed certs
   region_name: us-west-2
-  s3_endpoint: minio.lab.telmore.io
-  regexp: 
 
 concourse:
   team:

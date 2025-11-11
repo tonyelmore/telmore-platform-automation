@@ -10,15 +10,7 @@ resource_types:
 
 resources:
 # Platform Automation Toolkit from Pivnet
-- name: platform-automation-image
-  type: pivnet
-  source:
-    api_token: ((pivnet-token))
-    product_slug: platform-automation
-    product_version: ^5\.(.*)$
-    sort_by: semver
-
-- name: platform-automation-tasks
+- name: platform-automation
   type: pivnet
   source:
     api_token: ((pivnet-token))
@@ -57,11 +49,13 @@ jobs:
   
   # Test 2: Get Platform Automation resources
   - get: platform-automation-image
+    resource: platform-automation
     params:
       globs: ["vsphere-platform-automation-image*.tar.gz"]
       unpack: true
   
   - get: platform-automation-tasks
+    resource: platform-automation
     params:
       globs: ["platform-automation-tasks-*.zip"]
       unpack: true
