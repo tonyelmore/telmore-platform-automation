@@ -1,10 +1,9 @@
-pipeline_params:
-  iaas: homelab
-  foundation: lab01
-  lock_pool_name: homelab-lab01
-  concourse_user: test
-  attempts: 5
-  concourse_credhub_server: https://concourse.lab.telmore.io:8844
+iaas: homelab
+foundation: lab01
+lock_pool_name: homelab-lab01
+concourse_user: test
+attempts: 5
+concourse_credhub_server: https://concourse.lab.telmore.io:8844
 
 github:
   repo:
