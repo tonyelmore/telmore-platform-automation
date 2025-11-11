@@ -6,6 +6,24 @@ az-configuration:
       resource_pool: ((az1_resource_pool))
       drs_rule: MUST
       host_group: null
+
+  - name: ((az2_name))
+    iaas_configuration_name: ((iaas_configuration_name))
+    clusters:
+    - cluster: ((az2_cluster))
+      resource_pool: ((az2_resource_pool))
+      drs_rule: MUST
+      host_group: null
+
+  - name: ((az3_name))
+    iaas_configuration_name: ((iaas_configuration_name))
+    clusters:
+    - cluster: ((az3_cluster))
+      resource_pool: ((az3_resource_pool))
+      drs_rule: MUST
+      host_group: null
+
+
 networks-configuration:
   icmp_checks_enabled: ((icmp_checks_enabled))
   networks:
@@ -18,6 +36,9 @@ networks-configuration:
       dns: ((dns))
       availability_zone_names: &1
       - ((az1_name))
+      - ((az2_name))
+      - ((az3_name))
+
   - name: ((deployment_network_name))
     subnets:
     - iaas_identifier: ((deployment_network_vsphere_name))
@@ -26,6 +47,7 @@ networks-configuration:
       gateway: ((deployment_network_gateway))
       dns: ((dns))
       availability_zone_names: *1
+
   - name: ((service_network_name))
     subnets:
     - iaas_identifier: ((service_network_vsphere_name))
@@ -34,12 +56,16 @@ networks-configuration:
       gateway: ((service_network_gateway))
       dns: ((dns))
       availability_zone_names: *1
+
+
 network-assignment:
   network:
     name: ((infra_network_name))
   other_availability_zones: []
   singleton_availability_zone:
     name: ((az1_name))
+
+
 properties-configuration:
   iaas_configuration:
     name: ((iaas_configuration_name))
@@ -53,23 +79,20 @@ properties-configuration:
     vcenter_password: ((vcenter_password))
     ssl_verification_enabled: ((ssl_verification_enabled))
     nsx_networking_enabled: ((nsx_networking_enabled))
-    nsx_address: ((nsx_address))
-    nsx_ca_certificate: ((nsx_ca_certificate))
-    nsx_mode: ((nsx_mode))
-    nsx_t_auth_type: local_user
-    nsx_username: ((nsx_username))
-    nsx_password: ((nsx_password))
     bosh_disk_path: ((bosh_folder_prefix))_disk
     bosh_template_folder: ((bosh_folder_prefix))_templates
     bosh_vm_folder: ((bosh_folder_prefix))_vms
-    nsx_t_use_policy_api: ((nsx_t_use_policy_api))
     additional_cloud_properties: {}
     disk_type: thin
+    enable_human_readable_name: ((enable_human_readable_name))
+    ensure_no_ip_conflicts: ((ensure_no_ip_conflicts))
   director_configuration:
     additional_ssh_users: []
+    automatic_certificate_rotation_enabled: ((automatic_certificate_rotation_enabled))
     allow_legacy_agents: true
     blobstore_type: ((blobstore_type))
     bosh_director_recreate_on_next_deploy: ((bosh_director_recreate_on_next_deploy))
+    bosh_log_level: ((bosh_log_level))
     bosh_recreate_on_next_deploy: ((bosh_recreate_on_next_deploy))
     bosh_recreate_persistent_disks_on_next_deploy: ((bosh_recreate_persistent_disks_on_next_deploy))
     ca_certificate_duration: ((ca_certificate_duration))
@@ -79,7 +102,7 @@ properties-configuration:
     director_hostname: ((director_hostname))
     director_worker_count: ((director_worker_count))
     disable_dns_release: ((disable_dns_release))
-    duration_overrides_enabled: false
+    duration_overrides_enabled: ((duration_overrides_enabled))
     encryption:
       keys: []
       providers: []
@@ -103,6 +126,7 @@ properties-configuration:
     resurrector_enabled: ((resurrector_enabled))
     retry_bosh_deploys: ((retry_bosh_deploys))
     skip_director_drain: ((skip_director_drain))
+    short_lived_nats_bootstrap_credentials_enabled: ((short_lived_nats_bootstrap_credentials_enabled))
     system_metrics_runtime_enabled: ((system_metrics_runtime_enabled))
   dns_configuration:
     excluded_recursors: []
@@ -114,6 +138,8 @@ properties-configuration:
     clear_default_trusted_certificates_store: ((clear_default_trusted_certificates_store))
   syslog_configuration:
     enabled: ((syslog_enabled))
+
+
 resource-configuration:
   compilation:
     instances: ((compilation_instances))
@@ -125,23 +151,10 @@ resource-configuration:
       id: ((director_instance_type))
     persistent_disk:
       size_mb: ((director_disk_size_mb))
+
+
+# Used to define any custom VM types
 vmtypes-configuration: {}
-vmextensions-configuration:
-- name: tas_ssh_vm_extension
-  cloud_properties:
-    nsxt:
-      lb:
-        server_pools:
-        - name: tas-ssh-pool
-- name: tas_tcp_vm_extension
-  cloud_properties:
-    nsxt:
-      lb:
-        server_pools:
-        - name: tas-tcp-pool
-- name: tas_gorouter_vm_extension
-  cloud_properties:
-    nsxt:
-      lb:
-        server_pools:
-        - name: tas-web-pool
+
+# Used to assign routers to nsx load balancers
+vmextensions-configuration: []

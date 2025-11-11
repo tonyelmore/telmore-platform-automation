@@ -1,15 +1,14 @@
 ---
-gateway: 192.168.1.1
-network_name: sbx-PAS-Infrastructure
+gateway: 10.1.10.1
+network_name: tas-lab01-infrastructure
 opsman_netmask: 255.255.255.0
-opsman_vm_name: sbx-opsmgr
-opsman_host: opsman.h2o-2-23016.h2o.vmware.com
-opsman_private_ip: 192.168.1.10
-vsphere_datacenter: vc01
-vsphere_datastore: vsanDatastore
-# Is this correct?
-vsphere_folder: pcf_opsman_vms
-vsphere_resource_pool: /vc01/host/vc01cl01/Resources/tas1
+opsman_vm_name: lab01-opsman
+opsman_host: opsman.lab01.lab.telmore.io
+opsman_private_ip: 10.1.10.10
+vsphere_datacenter: lab-dc
+vsphere_datastore: datastore1
+vsphere_folder: tas-lab01/tas-lab01-infrastructure
+vsphere_resource_pool: /lab-dc/host/lab-cluster/Resources/lab01-rp/lab01-infra-rp
 
-ui_banner_contents: "UI Banner Contents - H2O-23016 Sandbox"
-ssh_banner_contents: "SSH Banner Contents - H2O-23016 Sandbox"
+ui_banner_contents: "UI Banner Contents - HomeLab Lab01"
+ssh_banner_contents: "SSH Banner Contents - HomeLab Lab01"

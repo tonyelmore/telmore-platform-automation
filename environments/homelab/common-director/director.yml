@@ -5,16 +5,15 @@ service_network_name: services
 
 vcenter_username: administrator@vsphere.local
 ssl_verification_enabled: false
-nsx_networking_enabled: true
-# Generate
-nsx_address: nsxt01a.h2o-2-23016.h2o.vmware.com
-nsx_username: admin
-nsx_mode: nsx-t
 
-dns: 10.79.2.5,10.79.2.6
-ntp_servers_string: time1.oc.vmware.com
+dns: 10.1.1.10
+ntp_servers_string: pool.ntp.org
 
+enable_human_readable_name: true
+ensure_no_ip_conflicts: true
+automatic_certificate_rotation_enabled: false
 blobstore_type: local
+bosh_log_level: none
 bosh_recreate_on_next_deploy: false
 bosh_recreate_persistent_disks_on_next_deploy: false
 bosh_director_recreate_on_next_deploy: false
@@ -41,9 +40,11 @@ post_deploy_enabled: false
 resurrector_enabled: false
 retry_bosh_deploys: false
 skip_director_drain: false
+short_lived_nats_bootstrap_credentials_enabled: false
 system_metrics_runtime_enabled: true
 
 # security_configuration:
+include_opsman_root_ca: true
 generate_vm_passwords: true
 clear_default_trusted_certificates_store: false
 
@@ -52,6 +53,6 @@ syslog_enabled: false
 
 #resource configuration
 compilation_instances: automatic
-compilation_instance_type: xlarge.disk
+compilation_instance_type: automatic
 director_disk_size_mb: automatic
 director_instance_type: automatic
