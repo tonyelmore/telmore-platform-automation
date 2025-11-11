@@ -7,7 +7,8 @@ concourse_credhub_server: https://concourse.lab.telmore.io:8844
 
 github:
   repo:
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    # uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    uri: git@github.com:tonyelmore/telmore-platform-automation.git
     branch: master
     # git_private_key |
     #   <<from secrets>>

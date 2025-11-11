@@ -18,7 +18,7 @@ resources:
     endpoint: ((s3_installation_file.endpoint))
     bucket: ((s3_installation_file.bucket))
     access_key_id: ((s3_installation_file.s3_access_key_id))
-    secret_access_key: ((s3-secret-access-key))
+    secret_access_key: ((minio-secret-access-key))
     regexp: installation-(.*).zip
     disable_ssl: ((s3_installation_file.s3_disable_ssl))
     skip_ssl_verification: ((s3_installation_file.s3_skip_ssl_verification))
