@@ -2,9 +2,11 @@
 bosh_folder_prefix: lab01_pcf
 iaas_configuration_name: default
 datacenter: lab-dc
-ephemeral_datastores_string: datastore1
-persistent_datastores_string: datastore1
+ephemeral_datastores_string: nvme-990pro-1
+persistent_datastores_string: nvme-990pro-1
 nsx_networking_enabled: false
+vcenter_host: vcenter.lab01.lab.telmore.io
+vcenter_username: administrator@vsphere.local
 
 # director_configuration
 director_hostname: director.lab01.lab.telmore.io
