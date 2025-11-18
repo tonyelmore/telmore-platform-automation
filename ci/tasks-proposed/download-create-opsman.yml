@@ -53,8 +53,6 @@ run:
       fi
     fi
 
-    echo "State file is empty or does not exist, proceeding with vm creation"
-
     vars_files_args=("")
     for vf in ${VARS_FILES}
     do
@@ -63,12 +61,11 @@ run:
 
     downloaded_files=$(mktemp -d)
 
-    echo "Downloading product using config: ${DOWNLOAD_CONFIG_FILE}"
-
     # shellcheck disable=SC2068
     om download-product \
        --config download-config/"${DOWNLOAD_CONFIG_FILE}" \
-       --output-directory ${downloaded_files} 
+       --output-directory ${downloaded_files} \
+       ${vars_files_args[@]}
 
     export IMAGE_FILE
     IMAGE_FILE="$(find ${downloaded_files}/*.{yml,ova,raw} 2>/dev/null | head -n1)"
@@ -80,8 +77,6 @@ run:
       exit 1
     fi
 
-    echo "Found image file: ${IMAGE_FILE}"
-    
     # ${vars_files_args[@] needs to be globbed to split properly
     # shellcheck disable=SC2068
     om vm-lifecycle create-vm \
