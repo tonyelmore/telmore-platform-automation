@@ -53,6 +53,8 @@ run:
       fi
     fi
 
+    echo "State file is empty or does not exist, proceeding with vm creation"
+
     vars_files_args=("")
     for vf in ${VARS_FILES}
     do
@@ -60,6 +62,8 @@ run:
     done
 
     downloaded_files=$(mktemp -d)
+
+    echo "Downloading product using config: ${DOWNLOAD_CONFIG_FILE}"
 
     # shellcheck disable=SC2068
     om download-product \
@@ -76,6 +80,8 @@ run:
       exit 1
     fi
 
+    echo "Found image file: ${IMAGE_FILE}"
+    
     # ${vars_files_args[@] needs to be globbed to split properly
     # shellcheck disable=SC2068
     om vm-lifecycle create-vm \
