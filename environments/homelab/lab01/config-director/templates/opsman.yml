@@ -4,7 +4,7 @@ opsman-configuration:
     vcenter:
       url: ((vcenter_hostname))
       username: ((vcenter_username))
-      password: ((vcenter_password))
+      password: ((vcenter-password))
       datastore: ((vsphere_datastore))
       datacenter: ((vsphere_datacenter))
       resource_pool: ((vsphere_resource_pool))

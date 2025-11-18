@@ -69,7 +69,7 @@ network-assignment:
 properties-configuration:
   iaas_configuration:
     name: ((iaas_configuration_name))
-    vcenter_host: ((vcenter_host))
+    vcenter_host: ((vcenter_hostname))
     datacenter: ((datacenter))
     ephemeral_datastore_clusters_string: ""
     ephemeral_datastores_string: ((ephemeral_datastores_string))
