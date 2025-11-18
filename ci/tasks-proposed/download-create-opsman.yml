@@ -64,8 +64,7 @@ run:
     # shellcheck disable=SC2068
     om download-product \
        --config download-config/"${DOWNLOAD_CONFIG_FILE}" \
-       --output-directory ${downloaded_files} \
-       ${vars_files_args[@]}
+       --output-directory ${downloaded_files} 
 
     export IMAGE_FILE
     IMAGE_FILE="$(find ${downloaded_files}/*.{yml,ova,raw} 2>/dev/null | head -n1)"

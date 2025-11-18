@@ -74,13 +74,13 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
   image: platform-automation-image
   file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
   input_mapping:
-    tasks: platform-automation-tasks
+    tasks: director-configuration
     config: director-configuration
     vars: director-configuration
   output_mapping:
     tasks: custom-tasks-with-secrets
   params:
-    TASK_PARH: tasks/ci/tasks-proposed
+    TASK_PATH: tasks/ci/tasks-proposed
     CONFIG_PATHS: |
       config/environments/((iaas))/((foundation))/config-director/templates
       config/environments/((iaas))/((foundation))/common-config
@@ -170,8 +170,10 @@ jobs:
       OPSMAN_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/opsman.yml
       VARS_FILES: |
         vars/environments/((iaas))/common-director/opsman.yml
+        vars/environments/((iaas))/common-director/director.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
+        vars/environments/((iaas))/((foundation))/config-director/vars/director.yml
 
     ensure: &make-state-commit
       do:
