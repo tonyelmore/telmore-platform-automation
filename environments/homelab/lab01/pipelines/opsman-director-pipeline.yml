@@ -65,10 +65,9 @@ prepare-tasks-with-secrets: &prepare-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config-director/templates
       config/environments/((iaas))/((foundation))/common-config
     VARS_PATHS: |
-      config/environments/((iaas))/common
-      config/environments/((iaas))/((foundation))/config/defaults
-      config/environments/((iaas))/((foundation))/config/vars
-      config/environments/((iaas))/((foundation))/config/versions
+      config/environments/((iaas))/common-director
+      config/environments/((iaas))/((foundation))/config-director/vars
+      config/environments/((iaas))/((foundation))/config-director/versions
 
 prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
   image: platform-automation-image
@@ -85,10 +84,9 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config-director/templates
       config/environments/((iaas))/((foundation))/common-config
     VARS_PATHS: |
-      config/environments/((iaas))/common
-      config/environments/((iaas))/((foundation))/config/defaults
-      config/environments/((iaas))/((foundation))/config/vars
-      config/environments/((iaas))/((foundation))/config/versions
+      config/environments/((iaas))/common-director
+      config/environments/((iaas))/((foundation))/config-director/vars
+      config/environments/((iaas))/((foundation))/config-director/versions
 
 jobs:
 - name: force-unlock

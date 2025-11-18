@@ -5,7 +5,7 @@ datacenter: lab-dc
 ephemeral_datastores_string: nvme-990pro-1
 persistent_datastores_string: nvme-990pro-1
 nsx_networking_enabled: false
-vcenter_host: vcenter.lab01.lab.telmore.io
+vcenter_hostname: vcenter.lab01.lab.telmore.io
 vcenter_username: administrator@vsphere.local
 
 # director_configuration

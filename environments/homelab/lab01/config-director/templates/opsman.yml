@@ -3,7 +3,7 @@ opsman-configuration:
   vsphere:
     vcenter:
       url: ((vcenter_hostname))
-      username: ((vcenter_userid))
+      username: ((vcenter_username))
       password: ((vcenter_password))
       datastore: ((vsphere_datastore))
       datacenter: ((vsphere_datacenter))
@@ -13,9 +13,9 @@ opsman-configuration:
     disk_type: thin                          # example: thin|thick
     private_ip: ((opsman_private_ip))
     dns: ((dns))
-    ntp: ((ntp))                     # example: ntp.ubuntu.com
+    ntp: ((ntp_servers_string))                     # example: ntp.ubuntu.com
 #     ssh_password: ((opsman_ssh_password))
-    ssh_public_key: ((opsman_ssh_public_key))
+    ssh_public_key: ((opsman-ssh-public-key))
     hostname: ((opsman_host))
     network: ((network_name))                 # vcenter network to deploy to
     netmask: ((opsman_netmask))
