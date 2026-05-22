@@ -6,7 +6,7 @@ service_network_name: services
 vcenter_username: administrator@vsphere.local
 ssl_verification_enabled: false
 
-dns: 10.1.1.10
+dns: 10.1.1.10,8.8.8.8
 ntp_servers_string: pool.ntp.org
 
 enable_human_readable_name: true

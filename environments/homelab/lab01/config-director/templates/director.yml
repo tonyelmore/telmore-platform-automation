@@ -76,7 +76,8 @@ properties-configuration:
     persistent_datastore_clusters_string: ""
     persistent_datastores_string: ((persistent_datastores_string))
     vcenter_username: ((vcenter_username))
-    vcenter_password: ((vcenter-password))
+    vcenter_password: ((vcenter_password))
+    vcenter_ca_certificate: ((vcenter_ca_certificate))
     ssl_verification_enabled: ((ssl_verification_enabled))
     nsx_networking_enabled: ((nsx_networking_enabled))
     bosh_disk_path: ((bosh_folder_prefix))_disk

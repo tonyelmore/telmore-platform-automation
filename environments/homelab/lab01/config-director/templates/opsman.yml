@@ -4,7 +4,7 @@ opsman-configuration:
     vcenter:
       url: ((vcenter_hostname))
       username: ((vcenter_username))
-      password: ((vcenter-password))
+      password: ((vcenter_password))
       datastore: ((vsphere_datastore))
       datacenter: ((vsphere_datacenter))
       resource_pool: ((vsphere_resource_pool))
@@ -15,7 +15,7 @@ opsman-configuration:
     dns: ((dns))
     ntp: ((ntp_servers_string))                     # example: ntp.ubuntu.com
 #     ssh_password: ((opsman_ssh_password))
-    ssh_public_key: ((opsman-ssh-public-key))
+    ssh_public_key: ((opsman_ssh_public_key))
     hostname: ((opsman_host))
     network: ((network_name))                 # vcenter network to deploy to
     netmask: ((opsman_netmask))

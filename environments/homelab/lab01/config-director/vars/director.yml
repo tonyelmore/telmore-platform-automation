@@ -5,8 +5,7 @@ datacenter: lab-dc
 ephemeral_datastores_string: nvme-990pro-1
 persistent_datastores_string: nvme-990pro-1
 nsx_networking_enabled: false
-vcenter_hostname: vcenter.lab01.lab.telmore.io
-vcenter_username: administrator@vsphere.local
+vcenter_hostname: vcenter.lab.telmore.io
 
 # director_configuration
 director_hostname: director.lab01.lab.telmore.io
@@ -16,15 +15,15 @@ identification_tags:
 # AZ Config:
 az1_name: az1
 az1_cluster: lab-cluster
-az1_resource_pool: lab01-az1
+az1_resource_pool: lab01-az1-rp
 
 az2_name: az2
 az2_cluster: lab-cluster
-az2_resource_pool: lab01-az2
+az2_resource_pool: lab01-az2-rp
 
 az3_name: az3
 az3_cluster: lab-cluster
-az3_resource_pool: lab01-az3
+az3_resource_pool: lab01-az3-rp
 
 singleton_availability_zone: az1
 

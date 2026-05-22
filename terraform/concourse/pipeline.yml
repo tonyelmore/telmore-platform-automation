@@ -1,4 +1,4 @@
-jobs:
+  jobs:
 - name: test-job
   plan:
   - task: display-cred

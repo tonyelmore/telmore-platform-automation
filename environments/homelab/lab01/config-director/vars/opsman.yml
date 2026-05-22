@@ -7,8 +7,15 @@ opsman_host: opsman.lab01.lab.telmore.io
 opsman_private_ip: 10.1.10.10
 vsphere_datacenter: lab-dc
 vsphere_datastore: nvme-990pro-1
-vsphere_folder: tas-lab01/tas-lab01-infrastructure
-vsphere_resource_pool: /lab-dc/host/lab-cluster/Resources/lab01-rp/lab01-infra-rp
+vsphere_folder: /lab-dc/vm/lab01/lab01_opsman
+vsphere_resource_pool: /lab-dc/host/lab-cluster/Resources/lab01-opsman-rp
 
 ui_banner_contents: "UI Banner Contents - HomeLab Lab01"
 ssh_banner_contents: "SSH Banner Contents - HomeLab Lab01"
+
+dns: 10.1.1.10
+ntp_servers_string: ntp.ubuntu.com
+vcenter_hostname: vcenter.lab.telmore.io
+vcenter_username: administrator@vsphere.local
+
+opsman_ssh_public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE/ArpBL+og1G2Rp8+53npftp84hryrb4OtJdd9CqgeG ops-manager@lab.telmore.io
