@@ -5,8 +5,8 @@ resource_types:
   source:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
-    # username: tonyelmore
-    # password: ((dockerhub-password))
+    # username: ((dockerhub.username))
+    # password: ((dockerhub.password))
 
 resources:
 # Platform Automation Toolkit from Pivnet
