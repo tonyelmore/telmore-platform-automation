@@ -1,19 +1,19 @@
 ---
-gateway: 10.1.10.1
-network_name: tas-lab01-infrastructure
+gateway: 192.168.30.1
+network_name: tas1-infra
 opsman_netmask: 255.255.255.0
 opsman_vm_name: lab01-opsman
 opsman_host: opsman.lab01.lab.telmore.io
-opsman_private_ip: 10.1.10.10
-vsphere_datacenter: lab-dc
-vsphere_datastore: nvme-990pro-1
-vsphere_folder: /lab-dc/vm/lab01/lab01_opsman
-vsphere_resource_pool: /lab-dc/host/lab-cluster/Resources/lab01-opsman-rp
+opsman_private_ip: 192.168.30.10
+vsphere_datacenter: telmore-dc
+vsphere_datastore: nvme-primary
+vsphere_folder: /telmore-dc/vm/lab01/lab01_opsman
+vsphere_resource_pool: /telmore-dc/host/lab-cluster/Resources/lab01-opsman-rp
 
 ui_banner_contents: "UI Banner Contents - HomeLab Lab01"
 ssh_banner_contents: "SSH Banner Contents - HomeLab Lab01"
 
-dns: 10.1.1.10
+dns: 192.168.10.12
 ntp_servers_string: ntp.ubuntu.com
 vcenter_hostname: vcenter.lab.telmore.io
 vcenter_username: administrator@vsphere.local

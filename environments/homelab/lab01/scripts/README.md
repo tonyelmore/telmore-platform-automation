@@ -110,7 +110,7 @@ Once the Director is deployed, source the environment script again to target bot
 
 Product files are located in `~/dev/om-products`.
 
-> **Note:** Uploading from the vjumpbox is faster than from a laptop, but the vjumpbox currently has insufficient disk space allocated. This needs to be fixed before using it for uploads.
+> **Note:** Uploading from the vjumpbox is faster than from a laptop
 
 > **⚠️ Important:** Always supply the shasum when uploading. Omitting it causes validation to run locally which takes too long and can cause the upload to fail.
 

@@ -5,39 +5,39 @@ resource_types:
   source:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
-    username: tonyelmore
-    password: ((dockerhub-password))
+    # username: tonyelmore
+    # password: ((dockerhub-password))
 
 resources:
 # Platform Automation Toolkit from Pivnet
 - name: platform-automation
   type: pivnet
   source:
-    api_token: ((pivnet-token))
-    product_slug: platform-automation
-    product_version: ^5\.(.*)$
-    sort_by: semver
+    api_token: ((pivnet_token))
+    product_slug: ((pipeline_params.platform_automation.slug))
+    product_version: ((pipeline_params.platform_automation.version))
+    # sort_by: semver
 
 # Git repository for config
 - name: config-repo
   type: git
   source:
-    uri: ((git_repo_uri))
-    branch: ((git_branch))
-    private_key: ((github-private-key.private-key))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
 
 # S3/Minio resources for testing
 - name: test-file
   type: s3
   source:
-    endpoint: ((s3_endpoint))
-    bucket: ((s3_bucket))
+    endpoint: ((pipeline_params.s3.endpoint))
+    bucket: ((pipeline_params.s3.bucket))
     regexp: test-file-(.*).txt
-    access_key_id: ((s3_access_key_id))
-    secret_access_key: ((minio-secret-access-key))
-    disable_ssl: ((s3_disable_ssl))
-    skip_ssl_verification: ((s3_skip_ssl_verification))
-    use_path_style: true
+    access_key_id: ((pipeline_params.s3.access_key_id))
+    secret_access_key: ((minio-key.secret-access-key))
+    disable_ssl: ((pipeline_params.s3.disable_ssl))
+    skip_ssl_verification: ((pipeline_params.s3.skip_ssl_verification))
+    use_path_style: ((pipeline_params.s3.use_path_style))
 
 jobs:
 - name: test-git-repo
@@ -98,12 +98,12 @@ jobs:
       tasks: platform-automation-tasks-with-secrets
     params:
       CONFIG_PATHS: |
-        config/environments/homelab/lab01/common-config
+        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/common-config
       VARS_PATHS: |
-        config/environments/homelab/common
-        config/environments/homelab/lab01/config/defaults
-        config/environments/homelab/lab01/config/vars
-        config/environments/homelab/lab01/config/versions
+        config/environments/((pipeline_params.iaas))/common
+        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/defaults
+        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/vars
+        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/versions
 
   # Test 6: Check pending changes in TAS foundation
   - task: check-pending-changes
@@ -112,7 +112,9 @@ jobs:
     input_mapping:
       env: config-repo
     params:
-      ENV_FILE: ((env_file_path))
+      ENV_FILE: environments/((pipeline_params.iaas))/((pipeline_params.foundation))/common-config/env.yml
+      # ENV_FILE: ((env_file_path))
+      ALLOW_PENDING_CHANGES: true
     on_success:
       do:
       - task: report-success

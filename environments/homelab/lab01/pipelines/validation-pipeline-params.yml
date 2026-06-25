@@ -1,20 +1,22 @@
-# Pivnet
-# pivnet_token: <<from secrets>>
-
-# Git
-git_repo_uri: https://github.com/tonyelmore/telmore-platform-automation.git
-git_branch: master
-# git_private_key: |
-#   <<from secrets>>
-
-# S3/Minio
-# My previous variables had the s3 endpoint with ":9000" but it seems to work without it.
-s3_endpoint: http://minio.lab.telmore.io
-s3_bucket: test-bucket
-s3_access_key_id: HCer92Ko8GRE5CkAlWL7
-# s3_secret_access_key: <<from secrets>>
-s3_disable_ssl: true  # for Minio
-s3_skip_ssl_verification: true  # for self-signed certs
-
-# Platform Automation
-env_file_path: environments/homelab/lab01/common-config/env.yml
+# Pipeline parameters
+pipeline_params:
+  iaas: homelab
+  foundation: lab01
+  platform_automation:
+    slug: platform-automation
+    version: ^5\.(.*)$
+  s3_products:
+    bucket: test-bucket
+    region_name: us-east-1
+    s3_endpoint: http://minio.lab.telmore.io
+    regexp: test-file-(.*).txt
+  git:
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    branch: master
+  s3:
+    endpoint: http://minio.lab.telmore.io
+    bucket: test-bucket
+    access_key_id: aUGkErhFyj3TyfGmqvvm
+    disable_ssl: true  # for Minio
+    skip_ssl_verification: true  # for self-signed certs
+    use_path_style: true

@@ -1,0 +1,2 @@
+iaas: vsphere
+vm_id: /telmore-dc/vm/lab01/lab01_opsman/lab01-opsman
