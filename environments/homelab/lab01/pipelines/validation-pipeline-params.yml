@@ -1,7 +1,8 @@
 # Pipeline parameters
+iaas: homelab
+foundation: lab01
+
 pipeline_params:
-  iaas: homelab
-  foundation: lab01
   platform_automation:
     slug: platform-automation
     version: ^5\.(.*)$

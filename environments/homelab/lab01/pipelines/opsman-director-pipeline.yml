@@ -29,26 +29,26 @@ resources:
 - name: state
   type: git
   source:
-    uri: ((github.repo.uri))
-    branch: ((github.repo.branch))
-    private_key: ((github-private-key.private-key))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
 
 
 - name: director-configuration
   type: git
   source:
-    uri: ((github.repo.uri))
-    branch: ((github.repo.branch))
-    private_key: ((github-private-key.private-key))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
     paths:
     - "environments/((iaas))/((foundation))/config-director"
 
 - name: lock
   type: pool
   source:
-    uri: ((github.repo.uri))
-    branch: ((github.repo.branch))
-    private_key: ((github-private-key.private-key))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
     pool: locks/((lock_pool_name))
     retry_delay: 1m
 

@@ -5,24 +5,14 @@ concourse_user: test
 attempts: 5
 concourse_credhub_server: https://concourse.lab.telmore.io:8844
 
-github:
-  repo:
-    # uri: https://github.com/tonyelmore/telmore-platform-automation.git
-    uri: git@github.com:tonyelmore/telmore-platform-automation.git
-    branch: master
-    # git_private_key |
-    #   <<from secrets>>
-
 pivnet-product:
   slug: elastic-runtime
   version: 6.0.15
 
-s3_installation_file:
-  s3_disable_ssl: true  # for Minio
-  s3_skip_ssl_verification: true  # for self-signed certs
-  region_name: us-west-2
-
 pipeline_params:
+  git:
+    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    branch: master
   s3:
     endpoint: http://minio.lab.telmore.io
     bucket: test-bucket

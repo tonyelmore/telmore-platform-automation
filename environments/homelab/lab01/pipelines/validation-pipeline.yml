@@ -39,6 +39,24 @@ resources:
     use_path_style: ((pipeline_params.s3.use_path_style))
     region_name: ((pipeline_params.s3.region_name))
     regexp: test-file-(.*).txt
+ 
+prepare-tasks-with-secrets: &prepare-tasks-with-secrets
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+    input_mapping:
+      tasks: platform-automation-tasks
+      config: config-repo
+      vars: config-repo
+    output_mapping:
+      tasks: platform-automation-tasks-with-secrets
+    params:
+      CONFIG_PATHS: |
+        config/environments/((iaas))/((foundation))/common-config
+      VARS_PATHS: |
+        config/environments/((iaas))/common
+        config/environments/((iaas))/((foundation))/config/defaults
+        config/environments/((iaas))/((foundation))/config/vars
+        config/environments/((iaas))/((foundation))/config/versions
 
 jobs:
 - name: validate-pipeline-interfaces
@@ -89,22 +107,7 @@ jobs:
   
   # Test 5: Prepare tasks with secrets
   - task: prepare-tasks-with-secrets
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
-    input_mapping:
-      tasks: platform-automation-tasks
-      config: config-repo
-      vars: config-repo
-    output_mapping:
-      tasks: platform-automation-tasks-with-secrets
-    params:
-      CONFIG_PATHS: |
-        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/common-config
-      VARS_PATHS: |
-        config/environments/((pipeline_params.iaas))/common
-        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/defaults
-        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/vars
-        config/environments/((pipeline_params.iaas))/((pipeline_params.foundation))/config/versions
+    <<: *prepare-tasks-with-secrets
 
   # Test 6: Check pending changes in TAS foundation
   - task: check-pending-changes
@@ -113,7 +116,7 @@ jobs:
     input_mapping:
       env: config-repo
     params:
-      ENV_FILE: environments/((pipeline_params.iaas))/((pipeline_params.foundation))/common-config/env.yml
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
       # ENV_FILE: ((env_file_path))
       ALLOW_PENDING_CHANGES: true
     on_success:
