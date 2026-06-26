@@ -1,6 +1,5 @@
 iaas: homelab
 foundation: lab01
-lock_pool_name: homelab-lab01
 concourse_user: test
 attempts: 5
 concourse_credhub_server: https://concourse.lab.telmore.io:8844
@@ -13,6 +12,8 @@ pipeline_params:
   git:
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     branch: master
+  lock_pool:
+    name: homelab-lab01
   s3:
     endpoint: http://minio.lab.telmore.io
     bucket: test-bucket

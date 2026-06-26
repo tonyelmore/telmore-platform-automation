@@ -9,7 +9,7 @@ resources:
 - name: platform-automation
   type: pivnet
   source:
-    api_token: ((pivnet-token))
+    api_token: ((pivnet_token))
     product_slug: platform-automation
     version: ^5\.(.*)$
 
@@ -49,7 +49,7 @@ resources:
     uri: ((pipeline_params.git.uri))
     branch: ((pipeline_params.git.branch))
     private_key: ((github-key.private-key))
-    pool: locks/((lock_pool_name))
+    pool: locks/((pipeline_params.lock_pool.name))
     retry_delay: 1m
 
 prepare-tasks-with-secrets: &prepare-tasks-with-secrets
