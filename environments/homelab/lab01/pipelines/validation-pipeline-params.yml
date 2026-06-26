@@ -16,7 +16,6 @@ pipeline_params:
   s3:
     endpoint: http://minio.lab.telmore.io
     bucket: test-bucket
-    access_key_id: aUGkErhFyj3TyfGmqvvm
     disable_ssl: true  # for Minio
     skip_ssl_verification: true  # for self-signed certs
     use_path_style: true
