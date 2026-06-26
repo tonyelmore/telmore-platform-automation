@@ -1,6 +1,6 @@
 resource_types:
 - name: pivnet
-  type: docker-image
+  type: registry-image
   source:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
@@ -11,19 +11,20 @@ resources:
   source:
     api_token: ((pivnet-token))
     product_slug: platform-automation
+    version: ^5\.(.*)$
 
 - name: installation
   type: s3
   source:
-    endpoint: ((s3_installation_file.endpoint))
-    bucket: ((s3_installation_file.bucket))
-    access_key_id: ((s3_installation_file.s3_access_key_id))
-    secret_access_key: ((minio-secret-access-key))
+    endpoint: ((pipeline_params.s3.endpoint))
+    bucket: ((pipeline_params.s3.bucket))
+    access_key_id: ((minio-key.access-key))
+    secret_access_key: ((minio-key.secret-access-key))
+    disable_ssl: ((pipeline_params.s3.disable_ssl))
+    skip_ssl_verification: ((pipeline_params.s3.skip_ssl_verification))
+    use_path_style: ((pipeline_params.s3.use_path_style))
+    region_name: ((pipeline_params.s3.region_name))
     regexp: installation-(.*).zip
-    disable_ssl: ((s3_installation_file.s3_disable_ssl))
-    skip_ssl_verification: ((s3_installation_file.s3_skip_ssl_verification))
-    region_name: ((s3_installation_file.region_name))
-    use_path_style: true
 
 - name: state
   type: git

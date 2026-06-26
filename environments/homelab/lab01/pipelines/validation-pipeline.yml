@@ -32,12 +32,13 @@ resources:
   source:
     endpoint: ((pipeline_params.s3.endpoint))
     bucket: ((pipeline_params.s3.bucket))
-    regexp: test-file-(.*).txt
     access_key_id: ((minio-key.access-key))
     secret_access_key: ((minio-key.secret-access-key))
     disable_ssl: ((pipeline_params.s3.disable_ssl))
     skip_ssl_verification: ((pipeline_params.s3.skip_ssl_verification))
     use_path_style: ((pipeline_params.s3.use_path_style))
+    region_name: ((pipeline_params.s3.region_name))
+    regexp: test-file-(.*).txt
 
 jobs:
 - name: validate-pipeline-interfaces

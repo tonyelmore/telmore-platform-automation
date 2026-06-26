@@ -5,11 +5,6 @@ pipeline_params:
   platform_automation:
     slug: platform-automation
     version: ^5\.(.*)$
-  s3_products:
-    bucket: test-bucket
-    region_name: us-east-1
-    s3_endpoint: http://minio.lab.telmore.io
-    regexp: test-file-(.*).txt
   git:
     uri: https://github.com/tonyelmore/telmore-platform-automation.git
     branch: master
@@ -19,3 +14,4 @@ pipeline_params:
     disable_ssl: true  # for Minio
     skip_ssl_verification: true  # for self-signed certs
     use_path_style: true
+    region_name: us-east-1

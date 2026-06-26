@@ -18,13 +18,18 @@ pivnet-product:
   version: 6.0.15
 
 s3_installation_file:
-  endpoint: http://minio.lab.telmore.io
-  bucket: lab01-installation-export-files
-  s3_access_key_id: HCer92Ko8GRE5CkAlWL7
-  # s3_secret_access_key: <<from secrets>>
   s3_disable_ssl: true  # for Minio
   s3_skip_ssl_verification: true  # for self-signed certs
   region_name: us-west-2
+
+pipeline_params:
+  s3:
+    endpoint: http://minio.lab.telmore.io
+    bucket: test-bucket
+    disable_ssl: true  # for Minio
+    skip_ssl_verification: true  # for self-signed certs
+    use_path_style: true
+    region_name: us-east-1
 
 concourse:
   team:
