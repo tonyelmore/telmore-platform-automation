@@ -7,7 +7,7 @@ pipeline_params:
     slug: platform-automation
     version: ^5\.(.*)$
   git:
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    uri: git@github.com:tonyelmore/telmore-platform-automation.git
     branch: master
   s3:
     endpoint: http://minio.lab.telmore.io

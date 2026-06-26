@@ -10,7 +10,7 @@ pivnet-product:
 
 pipeline_params:
   git:
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
+    uri: git@github.com:tonyelmore/telmore-platform-automation.git
     branch: master
   lock_pool:
     name: homelab-lab01
