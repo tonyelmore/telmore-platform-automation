@@ -172,7 +172,6 @@ jobs:
       VARS_FILES: |
         vars/environments/((iaas))/common-director/opsman.yml
         vars/environments/((iaas))/common-director/director.yml
-        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/director.yml
 
@@ -220,7 +219,6 @@ jobs:
       DIRECTOR_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/director.yml
       VARS_FILES: |
         vars/environments/((iaas))/common-director/director.yml
-        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/director.yml
 
   - task: apply-director-changes
