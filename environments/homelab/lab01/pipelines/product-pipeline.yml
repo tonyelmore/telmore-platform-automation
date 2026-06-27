@@ -142,7 +142,6 @@ jobs:
     image: platform-automation-image
     file: custom-tasks-with-secrets/ci/tasks-proposed/download-stage-tile-stemcell.yml
     input_mapping:
-      config: configuration
       download-config: configuration
       env: configuration
     params:

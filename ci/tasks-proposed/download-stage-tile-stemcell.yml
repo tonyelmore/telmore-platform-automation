@@ -2,7 +2,6 @@
 platform: linux
 
 inputs:
-- name: config # contains download-file config file
 - name: env
 - name: download-config
 - name: vars # variable files to be made available
