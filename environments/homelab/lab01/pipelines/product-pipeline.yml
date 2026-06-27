@@ -1,6 +1,6 @@
 resource_types:
 - name: pivnet
-  type: docker-image
+  type: registry-image
   source:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
@@ -15,22 +15,61 @@ resources:
 - name: configuration
   type: git
   source:
-    branch: master
-    password: ((github_token))
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
-    username: ((github_username))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
     paths:
     - "environments/((iaas))/((foundation))/config"
 
 - name: lock
   type: pool
   source:
-    uri: https://github.com/tonyelmore/telmore-platform-automation.git
-    branch: master
-    username: ((github_username))
-    password: ((github_token))
-    pool: locks/((lock_pool_name))
+    uri: ((pipeline_params.git.uri))
+    branch: ((pipeline_params.git.branch))
+    private_key: ((github-key.private-key))
+    pool: locks/((pipeline_params.lock_pool.name))
     retry_delay: 1m
+
+prepare-tasks-with-secrets: &prepare-tasks-with-secrets
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+  input_mapping:
+    tasks: platform-automation-tasks
+    config: configuration
+    vars: configuration
+  output_mapping:
+    tasks: platform-automation-tasks-with-secrets
+  params:
+    CONFIG_PATHS: |
+      config/environments/((iaas))/((foundation))/config/templates
+      config/environments/((iaas))/((foundation))/common-config
+      config/environments/((iaas))/((foundation))/config/versions
+    VARS_PATHS: |
+      config/environments/((iaas))/common
+      config/environments/((iaas))/((foundation))/config/defaults
+      config/environments/((iaas))/((foundation))/config/vars
+      config/environments/((iaas))/((foundation))/config/versions
+
+prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+  input_mapping:
+    tasks: configuration
+    config: configuration
+    vars: configuration
+  output_mapping:
+    tasks: custom-tasks-with-secrets
+  params:
+    TASK_PATH: tasks/ci/tasks-proposed
+    CONFIG_PATHS: |
+      config/environments/((iaas))/((foundation))/config/templates
+      config/environments/((iaas))/((foundation))/common-config
+      config/environments/((iaas))/((foundation))/config/versions
+    VARS_PATHS: |
+      config/environments/((iaas))/common
+      config/environments/((iaas))/((foundation))/config/defaults
+      config/environments/((iaas))/((foundation))/config/vars
+      config/environments/((iaas))/((foundation))/config/versions
 
 jobs:
 - name: force-unlock
@@ -67,18 +106,11 @@ jobs:
         unpack: true
         globs: ["*tasks*"]
 
-  - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: &credhub_interpolate_params
-      CREDHUB_SERVER: ((concourse_credhub_server))
-      CREDHUB_CA_CERT: ((concourse_credhub_ca.certificate))
-      CREDHUB_CLIENT: ((concourse_credhub_client_username))
-      CREDHUB_SECRET: ((concourse_credhub_client_secret))
-      PREFIX: '/concourse/((team))'
-      INTERPOLATION_PATHS: "environments/((iaas))/((foundation))/config/secrets"
-    input_mapping:
-      files: configuration
+  - task: prepare-tasks-with-secrets
+    <<: *prepare-tasks-with-secrets
+
+  - task: prepare-custom-tasks-with-secrets
+    <<: *prepare-custom-tasks-with-secrets
       
 - name: pas
   serial: true
@@ -98,12 +130,11 @@ jobs:
         unpack: true
         globs: ["*tasks*"]
 
-  - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+  - task: prepare-tasks-with-secrets
+    <<: *prepare-tasks-with-secrets
+
+  - task: prepare-custom-tasks-with-secrets
+    <<: *prepare-custom-tasks-with-secrets
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
@@ -111,170 +142,168 @@ jobs:
     input_mapping:
       config: configuration
       download-config: configuration
-      env: interpolated-files
-      secrets: interpolated-files
+      env: configuration
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      VARS_FILES: secrets/environments/((iaas))/((foundation))/config/secrets/pivnet.yml
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
-  - task: configure
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/configure-product.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-      vars: configuration
-      secrets: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      VARS_FILES: |
-        vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
-        vars/environments/((iaas))/common/cf.yml
-        vars/environments/((iaas))/((foundation))/config/vars/cf.yml
-        secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#   - task: configure
+#     image: platform-automation-image
+#     file: platform-automation-tasks/tasks/configure-product.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#       vars: configuration
+#       secrets: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       VARS_FILES: |
+#         vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
+#         vars/environments/((iaas))/common/cf.yml
+#         vars/environments/((iaas))/((foundation))/config/vars/cf.yml
+#         secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-  - task: apply-product-changes
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/apply-product-changes.yml
-    attempts: 10
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#   - task: apply-product-changes
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/apply-product-changes.yml
+#     attempts: 10
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
 
-- name: pas-errands
-  plan:
-  - in_parallel:
-    - get: configuration
-      trigger: true
-      passed: [ pas ]
-    - get: platform-automation-image
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["vsphere-platform-automation-image*"]
-    - get: platform-automation-tasks
-      resource: platform-automation
-      params:
-        unpack: true
-        globs: ["*tasks*"]
+# - name: pas-errands
+#   plan:
+#   - in_parallel:
+#     - get: configuration
+#       trigger: true
+#       passed: [ pas ]
+#     - get: platform-automation-image
+#       resource: platform-automation
+#       params:
+#         unpack: true
+#         globs: ["vsphere-platform-automation-image*"]
+#     - get: platform-automation-tasks
+#       resource: platform-automation
+#       params:
+#         unpack: true
+#         globs: ["*tasks*"]
 
-  - task: credhub-interpolate
-    image: platform-automation-image
-    file: platform-automation-tasks/tasks/credhub-interpolate.yml
-    params: *credhub_interpolate_params
-    input_mapping:
-      files: configuration
+#   - task: credhub-interpolate
+#     image: platform-automation-image
+#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
+#     params: *credhub_interpolate_params
+#     input_mapping:
+#       files: configuration
 
-  - task: smoke_tests
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: smoke_tests
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: smoke_tests
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: smoke_tests
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: push-usage-service
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: push-usage-service
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: push-usage-service
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: push-usage-service
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: push-apps-manager
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: push-apps-manager
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: push-apps-manager
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: push-apps-manager
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: deploy-notifications
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: deploy-notifications
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: deploy-notifications
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: deploy-notifications
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: deploy-notifications-ui
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: deploy-notifications-ui
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: deploy-notifications-ui
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: deploy-notifications-ui
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: deploy-autoscaler
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: deploy-autoscaler
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: deploy-autoscaler
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: deploy-autoscaler
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: nfsbrokerpush
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: nfsbrokerpush
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: nfsbrokerpush
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: nfsbrokerpush
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
-  - task: deploy-notifications-ui
-    attempts: 5
-    image: platform-automation-image
-    file: configuration/ci/tasks-proposed/z_run-errand.yml
-    input_mapping:
-      config: configuration
-      env: interpolated-files
-    params:
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-      ERRAND_NAME: deploy-notifications-ui
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-      INSTANCE: clock_global/first
+#   - task: deploy-notifications-ui
+#     attempts: 5
+#     image: platform-automation-image
+#     file: configuration/ci/tasks-proposed/z_run-errand.yml
+#     input_mapping:
+#       config: configuration
+#       env: interpolated-files
+#     params:
+#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+#       ERRAND_NAME: deploy-notifications-ui
+#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+#       INSTANCE: clock_global/first
 
 - name: unlock-tile
   serial: true
@@ -282,7 +311,7 @@ jobs:
   - get: configuration
     trigger: true
     passed:
-    - "pas-errands"
+    - "pas"
   - get: lock
   - put: lock
     params:
