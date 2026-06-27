@@ -142,18 +142,12 @@ jobs:
     image: platform-automation-image
     file: custom-tasks-with-secrets/ci/tasks-proposed/download-stage-tile-stemcell.yml
     input_mapping:
-      config: configuration
       download-config: configuration
       env: configuration
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
-      VARS_FILES: |
-        vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
-        vars/environments/((iaas))/common/cf.yml
-        vars/environments/((iaas))/((foundation))/config/vars/cf.yml
 
 #   - task: configure
 #     image: platform-automation-image
