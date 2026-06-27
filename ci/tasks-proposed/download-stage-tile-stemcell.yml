@@ -34,9 +34,6 @@ params:
   # - The path is relative to the root of the `download-config` input
   REPLICATOR_NAME: replicated
   # - name to use when using replicator cli
-  CONFIG_FILE: config.yml
-  # - Filepath to the product configuration yaml file
-  # - The path is relative to the root of the `config` input
 
 run:
   path: bash
@@ -46,7 +43,7 @@ run:
     cat /var/version && echo ""
     set -eux
     expected_version=$(bosh int download-config/${DOWNLOAD_CONFIG_FILE} --path /product-version)
-    expected_product=$(bosh int config/${CONFIG_FILE} --path /product-name)
+    expected_product=$(bosh int config/${DOWNLOAD_CONFIG_FILE} --path /product-name)
     staged_products=$(mktemp)
     om --env env/"${ENV_FILE}" staged-products -f json > ${staged_products}
     set +e

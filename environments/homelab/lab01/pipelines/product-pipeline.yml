@@ -44,6 +44,7 @@ prepare-tasks-with-secrets: &prepare-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config/templates
       config/environments/((iaas))/((foundation))/common-config
       config/environments/((iaas))/((foundation))/config/versions
+      config/environments/((iaas))/((foundation))/config/secrets
     VARS_PATHS: |
       config/environments/((iaas))/common
       config/environments/((iaas))/((foundation))/config/defaults
@@ -65,6 +66,7 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config/templates
       config/environments/((iaas))/((foundation))/common-config
       config/environments/((iaas))/((foundation))/config/versions
+      config/environments/((iaas))/((foundation))/config/secrets
     VARS_PATHS: |
       config/environments/((iaas))/common
       config/environments/((iaas))/((foundation))/config/defaults
@@ -138,7 +140,7 @@ jobs:
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
-    file: configuration/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    file: custom-tasks-with-secrets/ci/tasks-proposed/download-stage-tile-stemcell.yml
     input_mapping:
       config: configuration
       download-config: configuration
@@ -146,7 +148,6 @@ jobs:
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
-      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
 #   - task: configure
