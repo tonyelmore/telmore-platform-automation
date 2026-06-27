@@ -65,6 +65,7 @@ prepare-tasks-with-secrets: &prepare-tasks-with-secrets
     CONFIG_PATHS: |
       config/environments/((iaas))/((foundation))/config-director/templates
       config/environments/((iaas))/((foundation))/common-config
+      config/environments/((iaas))/((foundation))/config-director/versions
     VARS_PATHS: |
       config/environments/((iaas))/common-director
       config/environments/((iaas))/((foundation))/config-director/vars
@@ -84,6 +85,7 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
     CONFIG_PATHS: |
       config/environments/((iaas))/((foundation))/config-director/templates
       config/environments/((iaas))/((foundation))/common-config
+      config/environments/((iaas))/((foundation))/config-director/versions
     VARS_PATHS: |
       config/environments/((iaas))/common-director
       config/environments/((iaas))/((foundation))/config-director/vars
@@ -302,7 +304,6 @@ jobs:
       OPSMAN_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/templates/opsman.yml
       VARS_FILES: |
         vars/environments/((iaas))/common-director/opsman.yml
-        vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
     ensure: *make-state-commit
