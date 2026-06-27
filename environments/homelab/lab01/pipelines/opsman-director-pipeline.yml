@@ -162,7 +162,7 @@ jobs:
       state: state
       config: director-configuration
       vars: director-configuration
-      secrets: interpolated-files
+      secrets: director-configuration
     params:
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config-director/versions/opsman.yml
       STATE_FILE: environments/((iaas))/((foundation))/state/state.yml
@@ -220,13 +220,12 @@ jobs:
         vars/environments/((iaas))/common-director/director.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/director.yml
-        secrets/environments/((iaas))/((foundation))/config-director/secrets/director.yml
 
   - task: apply-director-changes
     image: platform-automation-image
     file: platform-automation-tasks-with-secrets/tasks/apply-director-changes.yml
     input_mapping:
-      env: interpolated-files
+      env: director-configuration
     params:
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
@@ -254,7 +253,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks-with-secrets/tasks/export-installation.yml
     input_mapping:
-      env: interpolated-files
+      env: director-configuration
     params:
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
   - put: installation
@@ -305,8 +304,6 @@ jobs:
         vars/environments/((iaas))/common-director/opsman.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/infra.yml
         vars/environments/((iaas))/((foundation))/config-director/vars/opsman.yml
-        secrets/environments/((iaas))/((foundation))/config-director/secrets/opsman.yml
-        secrets/environments/((iaas))/((foundation))/config-director/secrets/pivnet.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
     ensure: *make-state-commit
 
