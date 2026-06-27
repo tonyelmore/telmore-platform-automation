@@ -44,7 +44,6 @@ prepare-tasks-with-secrets: &prepare-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config/templates
       config/environments/((iaas))/((foundation))/common-config
       config/environments/((iaas))/((foundation))/config/versions
-      config/environments/((iaas))/((foundation))/config/secrets
     VARS_PATHS: |
       config/environments/((iaas))/common
       config/environments/((iaas))/((foundation))/config/defaults
@@ -66,7 +65,6 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config/templates
       config/environments/((iaas))/((foundation))/common-config
       config/environments/((iaas))/((foundation))/config/versions
-      config/environments/((iaas))/((foundation))/config/secrets
     VARS_PATHS: |
       config/environments/((iaas))/common
       config/environments/((iaas))/((foundation))/config/defaults
