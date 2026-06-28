@@ -435,6 +435,54 @@ jobs:
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
       SELECTIVE_DEPLOY_PRODUCTS: pivotal-mysql
 
+- name: pivotal-mysql-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pivotal-mysql ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
+
+  - task: prepare-secrets-for-pivotal-mysql
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+    input_mapping:
+      tasks: platform-automation-tasks
+      config: configuration
+      vars: configuration
+    output_mapping:
+      tasks: configure-pivotal-mysql-tasks
+    params:
+      CONFIG_PATHS: |
+        config/environments/((iaas))/((foundation))/common-config
+        config/environments/((iaas))/((foundation))/config/secrets/pivotal-mysql
+      VARS_PATHS: |
+        config/environments/((iaas))/common
+        config/environments/((iaas))/((foundation))/config/defaults
+        config/environments/((iaas))/((foundation))/config/vars
+        config/environments/((iaas))/((foundation))/config/versions
+
+  - task: smoke_tests
+    attempts: 5
+    image: platform-automation-image
+    file: configure-pivotal-mysql-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: pivotal-mysql
+      ERRAND_NAME: smoke_tests
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      # INSTANCE: clock_global/first
+
 - name: unlock-tile
   serial: true
   plan:
@@ -442,7 +490,7 @@ jobs:
     trigger: true
     passed:
     - "pas-errands"
-    - "pivotal-mysql"
+    - "pivotal-mysql-errands"
   - get: lock
   - put: lock
     params:
