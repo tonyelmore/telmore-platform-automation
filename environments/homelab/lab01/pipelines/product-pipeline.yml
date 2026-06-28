@@ -189,7 +189,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
     input_mapping:
-      tasks: configuration
+      tasks: platform-automation-tasks
       config: configuration
       vars: configuration
     output_mapping:
@@ -218,7 +218,7 @@ jobs:
         vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
         vars/environments/((iaas))/common/cf.yml
         vars/environments/((iaas))/((foundation))/config/vars/cf.yml
-        secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/cf/cf.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
 #   - task: apply-product-changes

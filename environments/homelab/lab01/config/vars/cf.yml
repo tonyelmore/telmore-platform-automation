@@ -8,11 +8,6 @@ router_static_ips: 192.168.31.20,192.168.31.21,192.168.31.22
 
 # enable_log_cache_syslog_ingestion: true
 
-# These used to be in the secrets file, but they are not secrets, so they have been moved here
-# Because prepare-tasks-with-secrets doesn't play well with a secrets file.
-credhub_internal_provider_keys_0_name: default
-networking_poe_ssl_certs_0_name: goroutercert
-
 # resource-var-diego_brain_instances: 1
 resource-var-router_instances: 2
 resource-var-router_additional_vm_extensions: ["tas_gorouter_vm_extension"]
