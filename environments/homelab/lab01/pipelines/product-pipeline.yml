@@ -221,143 +221,137 @@ jobs:
         secrets/environments/((iaas))/((foundation))/config/secrets/cf/cf.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
+# Explain why I had to use configure-cf-tasks instead of platform-automation-tasks-with-secrets for the apply-product-changes task.
   - task: apply-product-changes
     image: platform-automation-image
-    file: platform-automation-tasks-with-secrets/tasks/apply-changes.yml
+    file: configure-cf-tasks/tasks/apply-changes.yml
     attempts: 3
     input_mapping:
-      env: interpolated-files
+      env: configuration
     params:
-      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
       SELECTIVE_DEPLOY_PRODUCTS: cf
 
-# - name: pas-errands
-#   plan:
-#   - in_parallel:
-#     - get: configuration
-#       trigger: true
-#       passed: [ pas ]
-#     - get: platform-automation-image
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["vsphere-platform-automation-image*"]
-#     - get: platform-automation-tasks
-#       resource: platform-automation
-#       params:
-#         unpack: true
-#         globs: ["*tasks*"]
+- name: pas-errands
+  plan:
+  - in_parallel:
+    - get: configuration
+      trigger: true
+      passed: [ pas ]
+    - get: platform-automation-image
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["vsphere-platform-automation-image*"]
+    - get: platform-automation-tasks
+      resource: platform-automation
+      params:
+        unpack: true
+        globs: ["*tasks*"]
 
-#   - task: credhub-interpolate
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/credhub-interpolate.yml
-#     params: *credhub_interpolate_params
-#     input_mapping:
-#       files: configuration
+  - task: prepare-secrets-for-cf
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+    input_mapping:
+      tasks: platform-automation-tasks
+      config: configuration
+      vars: configuration
+    output_mapping:
+      tasks: configure-cf-tasks
+    params:
+      CONFIG_PATHS: |
+        config/environments/((iaas))/((foundation))/common-config
+        config/environments/((iaas))/((foundation))/config/secrets/cf
+      VARS_PATHS: |
+        config/environments/((iaas))/common
+        config/environments/((iaas))/((foundation))/config/defaults
+        config/environments/((iaas))/((foundation))/config/vars
+        config/environments/((iaas))/((foundation))/config/versions
 
-#   - task: smoke_tests
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: smoke_tests
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: smoke_tests
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: smoke_tests
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: push-usage-service
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: push-usage-service
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: push-usage-service
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: push-usage-service
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: push-apps-manager
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: push-apps-manager
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: push-apps-manager
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: push-apps-manager
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: deploy-notifications
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: deploy-notifications
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: deploy-notifications
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: deploy-notifications-ui
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications-ui
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: deploy-notifications-ui
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: deploy-notifications-ui
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: deploy-autoscaler
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-autoscaler
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: deploy-autoscaler
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: deploy-autoscaler
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: nfsbrokerpush
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: nfsbrokerpush
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
+  - task: nfsbrokerpush
+    attempts: 5
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/run-bosh-errand.yml
+    input_mapping:
+      env: configuration
+    params:
+      PRODUCT_NAME: cf
+      ERRAND_NAME: nfsbrokerpush
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
+      INSTANCE: clock_global/first
 
-#   - task: deploy-notifications-ui
-#     attempts: 5
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/z_run-errand.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ERRAND_NAME: deploy-notifications-ui
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
-#       INSTANCE: clock_global/first
 
 - name: unlock-tile
   serial: true
@@ -365,7 +359,7 @@ jobs:
   - get: configuration
     trigger: true
     passed:
-    - "pas"
+    - "pas-errands"
   - get: lock
   - put: lock
     params:
