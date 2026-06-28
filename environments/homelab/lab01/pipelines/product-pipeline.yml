@@ -30,6 +30,25 @@ resources:
     pool: locks/((pipeline_params.lock_pool.name))
     retry_delay: 1m
 
+# Here is the best way I think I can explain prepare-tasks-with-secrets.
+# The files in the directories listed in the CONFIG_PATHS will have the secrets defined in them
+# Not all of fields need to be from the secret store though (credhub or vault)
+# So, if the field will be a var and not a secret, then you need to list the folders that have the vars in them in the VARS_PATHS.
+# All of the fields that do not have a var, will be defined as a secret
+# The secrets will be set up as environment variables with on OM_ prefix and value from credhub / vault.
+# Variables will be passed in to the task as a file
+# Then, all of the tasks in the directory listed in the TASK_PATH (at the tasks input_mapping) will be modifed to define
+# the the env variables ... that will be put into the output_mapping.
+# Therefore, the output_mapping would be used to identify the task when executing the task in the pipeline.
+
+# Here we have a global prepare-tasks-with-secrets that update all of the tasks in the platform-automation-tasks
+# Then, we have a prepare-custom-tasks-with-secrets that will update all of the tasks in the ci/tasks-proposed directory
+# Finally, a prepare-download-with-secrets that will update all of the tasks in the ci/tasks-proposed directory, but only for the 
+# secrets defined in the common-config folder.
+
+# So, maybe it is better to keep the secrets folder with all of the secrets defined for a product, but a folder per product instead of just a file.
+# If that is the case, then we wouldn't really use an anchor because the "CONFIG_PATHS" would be different for each product
+
 prepare-tasks-with-secrets: &prepare-tasks-with-secrets
   image: platform-automation-image
   file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
@@ -166,22 +185,41 @@ jobs:
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
-#   - task: configure
-#     image: platform-automation-image
-#     file: platform-automation-tasks/tasks/configure-product.yml
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#       vars: configuration
-#       secrets: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       VARS_FILES: |
-#         vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
-#         vars/environments/((iaas))/common/cf.yml
-#         vars/environments/((iaas))/((foundation))/config/vars/cf.yml
-#         secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: prepare-secrets-for-cf
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+    input_mapping:
+      tasks: configuration
+      config: configuration
+      vars: configuration
+    output_mapping:
+      tasks: configure-cf-tasks
+    params:
+      CONFIG_PATHS: |
+        config/environments/((iaas))/((foundation))/common-config
+        config/environments/((iaas))/((foundation))/config/secrets/cf
+      VARS_PATHS: |
+        config/environments/((iaas))/common
+        config/environments/((iaas))/((foundation))/config/defaults
+        config/environments/((iaas))/((foundation))/config/vars
+        config/environments/((iaas))/((foundation))/config/versions
+
+  - task: configure
+    image: platform-automation-image
+    file: configure-cf-tasks/tasks/configure-product.yml
+    input_mapping:
+      config: configuration
+      env: configuration
+      vars: configuration
+      secrets: configuration
+    params:
+      CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
+      VARS_FILES: |
+        vars/environments/((iaas))/((foundation))/config/defaults/cf.yml
+        vars/environments/((iaas))/common/cf.yml
+        vars/environments/((iaas))/((foundation))/config/vars/cf.yml
+        secrets/environments/((iaas))/((foundation))/config/secrets/cf.yml
+      ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
 #   - task: apply-product-changes
 #     image: platform-automation-image
