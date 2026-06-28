@@ -1,6 +1,5 @@
 ---
 pivnet-api-token: ((pivnet_token))
-product-name: cf
 pivnet-file-glob: "cf*.pivotal"
 pivnet-product-slug: "elastic-runtime"
 product-version: "10.4.0"

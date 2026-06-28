@@ -181,6 +181,7 @@ jobs:
       download-config: configuration
       env: configuration
     params:
+      PRODUCT_NAME: cf
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf.yml
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/cf-stemcell.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
@@ -384,6 +385,7 @@ jobs:
       download-config: configuration
       env: configuration
     params:
+      PRODUCT_NAME: pivotal-mysql
       DOWNLOAD_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql.yml
       DOWNLOAD_STEMCELL_CONFIG_FILE: environments/((iaas))/((foundation))/config/versions/pivotal-mysql-stemcell.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
