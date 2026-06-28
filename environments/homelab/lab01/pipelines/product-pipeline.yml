@@ -71,6 +71,25 @@ prepare-custom-tasks-with-secrets: &prepare-custom-tasks-with-secrets
       config/environments/((iaas))/((foundation))/config/vars
       config/environments/((iaas))/((foundation))/config/versions
 
+prepare-download-with-secrets: &prepare-download-with-secrets
+  image: platform-automation-image
+  file: platform-automation-tasks/tasks/prepare-tasks-with-secrets.yml
+  input_mapping:
+    tasks: configuration
+    config: configuration
+    vars: configuration
+  output_mapping:
+    tasks: custom-download-tasks-with-secrets
+  params:
+    TASK_PATH: tasks/ci/tasks-proposed
+    CONFIG_PATHS: |
+      config/environments/((iaas))/((foundation))/common-config
+    VARS_PATHS: |
+      config/environments/((iaas))/common
+      config/environments/((iaas))/((foundation))/config/defaults
+      config/environments/((iaas))/((foundation))/config/vars
+      config/environments/((iaas))/((foundation))/config/versions
+
 jobs:
 - name: force-unlock
   serial: true
@@ -133,12 +152,12 @@ jobs:
   - task: prepare-tasks-with-secrets
     <<: *prepare-tasks-with-secrets
 
-  - task: prepare-custom-tasks-with-secrets
-    <<: *prepare-custom-tasks-with-secrets
+  - task: prepare-download-with-secrets
+    <<: *prepare-download-with-secrets
 
   - task: download-stage-tile-stemcell
     image: platform-automation-image
-    file: custom-tasks-with-secrets/ci/tasks-proposed/download-stage-tile-stemcell.yml
+    file: custom-download-tasks-with-secrets/ci/tasks-proposed/download-stage-tile-stemcell.yml
     input_mapping:
       download-config: configuration
       env: configuration
