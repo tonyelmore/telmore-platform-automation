@@ -1,9 +1,11 @@
 az2_name: az2
 az3_name: az3
-global_az_multi_select: 
+global_az_multi_select: ["az1","az2", "az3"]
 network_name: deployment 
-plan1_selector_single_node_az_multi_select: 
-plan2_selector_single_node_az_multi_select: 
-plan3_selector_single_node_az_multi_select: 
+plan1_selector_single_node_az_multi_select: ["az1","az2", "az3"]
+plan2_selector_single_node_az_multi_select: ["az1","az2", "az3"]
+plan3_selector_single_node_az_multi_select: ["az1","az2", "az3"]
 service_network_name: services
 singleton_availability_zone: az1
+
+
