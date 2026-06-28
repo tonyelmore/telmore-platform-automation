@@ -45,7 +45,7 @@ run:
     cat /var/version && echo ""
     set -eux
     expected_version=$(bosh int download-config/${DOWNLOAD_CONFIG_FILE} --path /product-version)
-   #  expected_product=$(bosh int download-config/${DOWNLOAD_CONFIG_FILE} --path /product-name)
+    #  expected_product=$(bosh int download-config/${DOWNLOAD_CONFIG_FILE} --path /product-name)
     expected_product=${PRODUCT_NAME}
     staged_products=$(mktemp)
     om --env env/"${ENV_FILE}" staged-products -f json > ${staged_products}
