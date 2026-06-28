@@ -221,16 +221,15 @@ jobs:
         secrets/environments/((iaas))/((foundation))/config/secrets/cf/cf.yml
       ENV_FILE: environments/((iaas))/((foundation))/common-config/env.yml
 
-#   - task: apply-product-changes
-#     image: platform-automation-image
-#     file: configuration/ci/tasks-proposed/apply-product-changes.yml
-#     attempts: 10
-#     input_mapping:
-#       config: configuration
-#       env: interpolated-files
-#     params:
-#       CONFIG_FILE: environments/((iaas))/((foundation))/config/templates/cf.yml
-#       ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+  - task: apply-product-changes
+    image: platform-automation-image
+    file: platform-automation-tasks-with-secrets/tasks/apply-changes.yml
+    attempts: 3
+    input_mapping:
+      env: interpolated-files
+    params:
+      ENV_FILE: environments/((iaas))/((foundation))/config/secrets/env.yml
+      SELECTIVE_DEPLOY_PRODUCTS: cf
 
 # - name: pas-errands
 #   plan:
