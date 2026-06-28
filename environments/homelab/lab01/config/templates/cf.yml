@@ -1,6 +1,12 @@
 errand-config:
+  blockstoragebrokerpush:
+    post-deploy-state: ((blockstoragebrokerpush_post_deploy_state))
+  delete-credhub-windows-gmsa-service-broker:
+    pre-delete-state: ((delete-credhub-windows-gmsa-service-broker_pre_delete_state))
   deploy-autoscaler:
     post-deploy-state: ((deploy-autoscaler_post_deploy_state))
+  deploy-credhub-windows-gmsa-service-broker:
+    post-deploy-state: ((deploy-credhub-windows-gmsa-service-broker_post_deploy_state))
   deploy-notifications:
     post-deploy-state: ((deploy-notifications_post_deploy_state))
   deploy-notifications-ui:
@@ -76,10 +82,6 @@ product-properties:
     value: ((mysql_prevent_node_auto_rejoin))
   .mysql.remote_admin_access:
     value: ((mysql_remote_admin_access))
-  .mysql_monitor.poll_frequency:
-    value: ((mysql_monitor_poll_frequency))
-  .mysql_monitor.write_read_delay:
-    value: ((mysql_monitor_write_read_delay))
   .mysql_proxy.enable_inactive_mysql_port:
     value: ((mysql_proxy_enable_inactive_mysql_port))
   .mysql_proxy.shutdown_delay:
@@ -100,12 +102,16 @@ product-properties:
     value: ((autoscale_enable_notifications))
   .properties.autoscale_enable_verbose_logging:
     value: ((autoscale_enable_verbose_logging))
+  .properties.autoscale_event_retention_days:
+    value: ((autoscale_event_retention_days))
   .properties.autoscale_instance_count:
     value: ((autoscale_instance_count))
   .properties.autoscale_metric_bucket_count:
     value: ((autoscale_metric_bucket_count))
   .properties.autoscale_scaling_interval_in_seconds:
     value: ((autoscale_scaling_interval_in_seconds))
+  .properties.block_storage_database_max_open_connections:
+    value: ((block_storage_database_max_open_connections))
   .properties.cc_api_rate_limit:
     value: disable
   .properties.ccdb_connection_validation_timeout:
@@ -123,8 +129,10 @@ product-properties:
   .properties.cf_networking_internal_domains:
     value:
     - name: apps.internal
-  .properties.cloud_controller_app_log_revision:
-    value: ((cloud_controller_app_log_revision))
+  .properties.cloud_controller_additional_allowed_process_users:
+    value: ((cloud_controller_additional_allowed_process_users))
+  .properties.cloud_controller_allow_docker_root_user:
+    value: ((cloud_controller_allow_docker_root_user))
   .properties.cloud_controller_audit_events_cutoff_age_in_days:
     value: ((cloud_controller_audit_events_cutoff_age_in_days))
   .properties.cloud_controller_completed_tasks_cutoff_age_in_days:
@@ -133,6 +141,12 @@ product-properties:
     value: ((cloud_controller_default_health_check_timeout))
   .properties.cloud_controller_default_log_rate_limit_app:
     value: ((cloud_controller_default_log_rate_limit_app))
+  .properties.cloud_controller_enable_docker:
+    value: ((cloud_controller_enable_docker))
+  .properties.cloud_controller_enable_org_manager_user_creation:
+    value: ((cloud_controller_enable_org_manager_user_creation))
+  .properties.cloud_controller_enable_user_group_roles:
+    value: ((cloud_controller_enable_user_group_roles))
   .properties.cloud_controller_instance_file_descriptor_limit:
     value: ((cloud_controller_instance_file_descriptor_limit))
   .properties.cloud_controller_number_of_local_workers:
@@ -142,9 +156,11 @@ product-properties:
   .properties.cloud_controller_prometheus_enabled:
     value: ((cloud_controller_prometheus_enabled))
   .properties.cloud_controller_puma:
-    value: disable
-  .properties.cloud_controller_stacks:
-    value: fs4_only
+    value: auto
+  .properties.cloud_controller_puma.auto.max_db_connections_per_process:
+    value: ((cloud_controller_puma_auto_max_db_connections_per_process))
+  .properties.cloud_controller_puma.auto.max_threads:
+    value: ((cloud_controller_puma_auto_max_threads))
   .properties.cloud_controller_statsd_enabled:
     value: ((cloud_controller_statsd_enabled))
   .properties.cloud_controller_temporary_disable_deployments:
@@ -157,6 +173,8 @@ product-properties:
     value: ((cloud_controller_worker_restart_if_consistently_above_mb))
   .properties.container_networking_interface_plugin:
     value: silk
+  .properties.container_networking_interface_plugin.silk.disable_checksum_offloading:
+    value: ((container_networking_interface_plugin_silk_disable_checksum_offloading))
   .properties.container_networking_interface_plugin.silk.enable_dynamic_asgs:
     value: ((container_networking_interface_plugin_silk_enable_dynamic_asgs))
   .properties.container_networking_interface_plugin.silk.enable_log_traffic:
@@ -183,14 +201,26 @@ product-properties:
         secret: ((credhub_internal_provider_keys_0_key))
       name: ((credhub_internal_provider_keys_0_name))
       primary: ((credhub_internal_provider_keys_0_primary))
+  .properties.credhub_windows_gmsa_service_broker:
+    value: disable
+  .properties.debug_lrp_start_heartbeats:
+    value: ((debug_lrp_start_heartbeats))
   .properties.default_loggregator_drain_metadata:
     value: ((default_loggregator_drain_metadata))
+  .properties.diego_database_connection_timeout:
+    value: ((diego_database_connection_timeout))
   .properties.diego_database_max_open_connections:
     value: ((diego_database_max_open_connections))
+  .properties.diego_database_read_timeout:
+    value: ((diego_database_read_timeout))
+  .properties.diego_database_write_timeout:
+    value: ((diego_database_write_timeout))
   .properties.disable_diego_cells:
     value: ((disable_diego_cells))
   .properties.disable_logs_in_firehose:
     value: ((disable_logs_in_firehose))
+  .properties.enable_block_storage_volume_driver:
+    value: ((enable_block_storage_volume_driver))
   .properties.enable_container_network_metrics:
     value: ((enable_container_network_metrics))
   .properties.enable_cpu_throttling:
@@ -219,10 +249,16 @@ product-properties:
     value: ((gorouter_ssl_ciphers))
   .properties.isolated_routing:
     value: accept_all
-  .properties.legacy_md5_buildpack_paths_enabled:
-    value: ((legacy_md5_buildpack_paths_enabled))
+  .properties.license_key:
+    value: ((license_key))
+  .properties.locket_database_connection_timeout:
+    value: ((locket_database_connection_timeout))
   .properties.locket_database_max_open_connections:
     value: ((locket_database_max_open_connections))
+  .properties.locket_database_read_timeout:
+    value: ((locket_database_read_timeout))
+  .properties.locket_database_write_timeout:
+    value: ((locket_database_write_timeout))
   .properties.log_cache_max_per_source:
     value: ((log_cache_max_per_source))
   .properties.metric_registrar_blacklisted_tags:
@@ -233,12 +269,20 @@ product-properties:
     value: ((metric_registrar_max_metrics_per_instance))
   .properties.metric_registrar_scrape_interval_in_seconds:
     value: ((metric_registrar_scrape_interval_in_seconds))
-  .properties.mtls_log_cache:
-    value: tls
   .properties.mysql_activity_logging:
     value: enable
   .properties.mysql_activity_logging.enable.audit_logging_events:
     value: ((mysql_activity_logging_enable_audit_logging_events))
+  .properties.nats_debug:
+    value: ((nats_debug))
+  .properties.nats_monitor:
+    value: enable
+  .properties.nats_monitor.enable.fix_split_brain:
+    value: ((nats_monitor_enable_fix_split_brain))
+  .properties.nats_monitor.enable.log_level:
+    value: ((nats_monitor_enable_log_level))
+  .properties.nats_monitor.enable.test_frequency:
+    value: ((nats_monitor_enable_test_frequency))
   .properties.networking_poe_ssl_certs:
     value:
     - certificate:
@@ -255,12 +299,20 @@ product-properties:
     value: enable
   .properties.otel_collector_beta_features_enabled:
     value: ((otel_collector_beta_features_enabled))
+  .properties.otel_collector_ingress_grpc_port:
+    value: ((otel_collector_ingress_grpc_port))
+  .properties.otel_collector_ingress_http_high_cardinality_port:
+    value: ((otel_collector_ingress_http_high_cardinality_port))
+  .properties.otel_collector_ingress_http_jvm_metrics_port:
+    value: ((otel_collector_ingress_http_jvm_metrics_port))
+  .properties.policy_server_asg_syncer_interval:
+    value: ((policy_server_asg_syncer_interval))
+  .properties.policy_server_asg_syncer_retry_deadline:
+    value: ((policy_server_asg_syncer_retry_deadline))
   .properties.push_apps_manager_app_poll_interval:
     value: ((push_apps_manager_app_poll_interval))
   .properties.push_apps_manager_buildpack:
     value: ((push_apps_manager_buildpack))
-  .properties.push_apps_manager_cf_cli_packages:
-    value: cf_cli_v8
   .properties.push_apps_manager_currency_lookup:
     value: ((push_apps_manager_currency_lookup))
   .properties.push_apps_manager_display_plan_prices:
@@ -269,9 +321,11 @@ product-properties:
     value: ((push_apps_manager_enable_invitations))
   .properties.push_apps_manager_invitations_buildpack:
     value: ((push_apps_manager_invitations_buildpack))
+  .properties.push_apps_manager_license_expiration_warning:
+    value: ((push_apps_manager_license_expiration_warning))
   .properties.push_apps_manager_nav_links:
     value:
-    - href: https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/6-0/tpcf/concepts-overview.html
+    - href: https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/elastic-application-runtime/10-4/eart/concepts-overview.html
       name: Docs
     - href: /tools
       name: Tools
@@ -279,10 +333,12 @@ product-properties:
     value: ((push_apps_manager_poll_interval))
   .properties.push_apps_manager_search_server_buildpack:
     value: ((push_apps_manager_search_server_buildpack))
+  .properties.push_usage_service_app_server_memory:
+    value: ((push_usage_service_app_server_memory))
   .properties.push_usage_service_cutoff_age_in_days:
     value: ((push_usage_service_cutoff_age_in_days))
-  .properties.route_integrity:
-    value: tls_verify
+  .properties.reserved_for_system_applications:
+    value: ((reserved_for_system_applications))
   .properties.route_services:
     value: enable
   .properties.route_services.enable.ignore_ssl_cert_verification:
@@ -299,6 +355,8 @@ product-properties:
     value: none
   .properties.router_client_cert_validation:
     value: request
+  .properties.router_enable_log_attempt_details:
+    value: ((router_enable_log_attempt_details))
   .properties.router_enable_proxy:
     value: ((router_enable_proxy))
   .properties.router_keepalive_connections:
@@ -312,8 +370,6 @@ product-properties:
     - name: JSESSIONID
   .properties.router_sticky_sessions_for_auth_negotiate:
     value: ((router_sticky_sessions_for_auth_negotiate))
-  .properties.routing_api_enabled_api_endpoints:
-    value: both
   .properties.routing_disable_http:
     value: ((routing_disable_http))
   .properties.routing_log_client_ips:
@@ -356,6 +412,8 @@ product-properties:
     value: internal_pxc
   .properties.system_metrics_scraper_scrape_interval:
     value: ((system_metrics_scraper_scrape_interval))
+  .properties.tanzu_cf_cli_enable_auto_upgrades:
+    value: ((tanzu_cf_cli_enable_auto_upgrades))
   .properties.tcp_routing:
     value: disable
   .properties.uaa:
@@ -368,6 +426,10 @@ product-properties:
     value: ((uaa_session_cookie_max_age))
   .properties.uaa_session_idle_timeout:
     value: ((uaa_session_idle_timeout))
+  .properties.vxlan_policy_agent_asg_update_interval:
+    value: ((vxlan_policy_agent_asg_update_interval))
+  .properties.vxlan_policy_agent_http_client_timeout:
+    value: ((vxlan_policy_agent_http_client_timeout))
   .router.disable_insecure_cookies:
     value: ((router_disable_insecure_cookies))
   .router.drain_timeout:
@@ -388,8 +450,8 @@ product-properties:
     value: ((router_enable_zipkin))
   .router.frontend_idle_timeout:
     value: ((router_frontend_idle_timeout))
-  .router.httplaxcontentlength:
-    value: ((router_httplaxcontentlength))
+  .router.http_2_request_timeout_in_seconds:
+    value: ((router_http_2_request_timeout_in_seconds))
   .router.lb_healthy_threshold:
     value: ((router_lb_healthy_threshold))
   .router.max_header_kb:

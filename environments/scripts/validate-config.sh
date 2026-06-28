@@ -36,8 +36,8 @@ if [ -f "../${iaas}/${environment_name}/config/vars/${product}.yml" ]; then
   vars_files_args+=("--vars-file ../${iaas}/${environment_name}/config/vars/${product}.yml")
 fi
 
-if [ -f "../${iaas}/${environment_name}/config/secrets/${product}.yml" ]; then
-  vars_files_args+=("--vars-file ../${iaas}/${environment_name}/config/secrets/${product}.yml")
+if [ -f "../${iaas}/${environment_name}/config/secrets/${product}/${product}.yml" ]; then
+  vars_files_args+=("--vars-file ../${iaas}/${environment_name}/config/secrets/${product}/${product}.yml")
 fi
 
 if [ "${deploy_type}" == "tile" ]; then

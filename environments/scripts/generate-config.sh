@@ -28,6 +28,8 @@ version=$(bosh interpolate ${versionfile} --path=/product-version)
 glob=$(bosh interpolate ${versionfile} --path=/pivnet-file-glob)
 slug=$(bosh interpolate ${versionfile} --path=/pivnet-product-slug)
 
+echo "version: ${version}, glob: ${glob}, slug: ${slug}"
+
 # ---- Execute om config-template 
 tmpdir=tile-configs/${product}-config
 mkdir -p ${tmpdir}
@@ -105,7 +107,7 @@ fi
 
 # ---- Ensure secrets file exists
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/secrets
-touch ../${iaas}/${INITIAL_FOUNDATION}/config/secrets/${product}.yml
+touch ../${iaas}/${INITIAL_FOUNDATION}/config/secrets/${product}/${product}.yml
 
 # ---- Ensure vars file exists
 mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/vars
