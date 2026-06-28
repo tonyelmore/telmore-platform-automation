@@ -106,7 +106,7 @@ if [ -f ${wrkdir}/resource-vars.yml ]; then
 fi
 
 # ---- Ensure secrets file exists
-mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/secrets
+mkdir -p ../${iaas}/${INITIAL_FOUNDATION}/config/secrets/${product}
 touch ../${iaas}/${INITIAL_FOUNDATION}/config/secrets/${product}/${product}.yml
 
 # ---- Ensure vars file exists
