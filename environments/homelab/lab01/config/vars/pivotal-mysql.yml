@@ -8,4 +8,7 @@ plan3_selector_single_node_az_multi_select: ["az1","az2", "az3"]
 service_network_name: services
 singleton_availability_zone: az1
 
-
+backups_selector_s3_bucket_name: mysql-backups
+backups_selector_s3_cron_schedule: "0 */8 * * *"
+backups_selector_s3_force_path_style: false
+backups_selector_s3_endpoint_url: "http://minio.lab.telmore.io:9200"
